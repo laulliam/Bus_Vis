@@ -1,0 +1,20 @@
+#area_line{
+    position: relative;
+    float: left;
+    clear: both;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: white;
+    stroke-width: 2px;
+    shape-rendering: crispEdges;
+}
+
+.axis text {
+    font-family: sans-serif;
+    font-size: 8px;
+    fill: white;
+    font-weight: bold;
+}

@@ -1,0 +1,8 @@
+#main {
+    position: relative;
+    float: left;
+    border: solid gray;
+    border-width: 0 1px 1px 1px;
+    width:100%;
+    height:100%;
+}

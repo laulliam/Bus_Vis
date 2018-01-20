@@ -1,0 +1,16 @@
+#time_line {
+    position: relative;
+    float: left;
+    border: solid gray;
+    border-width: 1px 0 0 0;
+    clear: both;
+}
+.rect_selected {
+	fill: black;
+	fill-opacity: 0.75;
+}
+
+.rect_scanned {
+	fill: gray;
+	fill-opacity: 0.75;
+}

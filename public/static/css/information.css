@@ -1,0 +1,10 @@
+#information {
+    position: relative;
+    float: left;
+    border: solid gray;
+    border-width: 0 0 1px 1px;
+}
+.character_line{
+    stroke: #0CC5E8;
+    fill:none;
+}
