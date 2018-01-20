@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="c7571ffe-9a61-46b8-bc7d-a0883f3a2cea" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.js" afterPath="$PROJECT_DIR$/app.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/static/js/main.js" afterPath="$PROJECT_DIR$/public/static/js/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/station.js" afterPath="$PROJECT_DIR$/routes/station.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -35,12 +33,13 @@
       <file leaf-file-name="main.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/static/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="60" column="0" lean-forward="true" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
+            <state relative-caret-position="285">
+              <caret line="152" column="0" lean-forward="false" selection-start-line="152" selection-start-column="0" selection-end-line="152" selection-end-column="0" />
               <folding>
                 <element signature="e#47#685#0" expanded="false" />
-                <element signature="e#1853#5532#0" expanded="false" />
-                <marker date="1516455668498" expanded="true" signature="286:292" ph="©" />
+                <element signature="e#1501#1676#0" expanded="false" />
+                <element signature="e#2194#6145#0" expanded="false" />
+                <marker date="1516457574312" expanded="true" signature="286:292" ph="©" />
               </folding>
             </state>
           </provider>
@@ -255,7 +254,7 @@
       <workItem from="1516415290242" duration="17000" />
       <workItem from="1516416061863" duration="729000" />
       <workItem from="1516447104016" duration="1444000" />
-      <workItem from="1516450802965" duration="4920000" />
+      <workItem from="1516450802965" duration="6763000" />
     </task>
     <task id="LOCAL-00001" summary="station data ajax   --Liang Liu">
       <created>1516453352020</created>
@@ -264,17 +263,23 @@
       <option name="project" value="LOCAL" />
       <updated>1516453352020</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="optimize the map  --Liang Liu">
+      <created>1516455808022</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1516455808023</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="28758000" />
+    <option name="totallyTimeSpent" value="30601000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24963397" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24963397" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.328594" sideWeight="0.5058565" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -302,10 +307,13 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="station data ajax   --Liang Liu" />
-    <option name="LAST_COMMIT_MESSAGE" value="station data ajax   --Liang Liu" />
+    <MESSAGE value="optimize the map  --Liang Liu" />
+    <option name="LAST_COMMIT_MESSAGE" value="optimize the map  --Liang Liu" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
@@ -635,12 +643,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/static/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="60" column="0" lean-forward="true" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
+        <state relative-caret-position="285">
+          <caret line="152" column="0" lean-forward="false" selection-start-line="152" selection-start-column="0" selection-end-line="152" selection-end-column="0" />
           <folding>
             <element signature="e#47#685#0" expanded="false" />
-            <element signature="e#1853#5532#0" expanded="false" />
-            <marker date="1516455668498" expanded="true" signature="286:292" ph="©" />
+            <element signature="e#1501#1676#0" expanded="false" />
+            <element signature="e#2194#6145#0" expanded="false" />
+            <marker date="1516457574312" expanded="true" signature="286:292" ph="©" />
           </folding>
         </state>
       </provider>
