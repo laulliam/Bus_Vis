@@ -34,9 +34,9 @@ console.log(map.getCenter());*/
      type: "GET",   //请求方式
      beforeSend: function () {//请求前的处理
      },
-     success: function (data, textStatus) {
-     console.log(data);
-     Drawmap(data);
+     success: function (station_data, textStatus) {
+     //console.log(data);
+     Drawmap(station_data);
      },
      complete: function () {//请求完成的处理
      },
@@ -44,7 +44,7 @@ console.log(map.getCenter());*/
      }
      });
 
-    function Drawmap(data) {
+    function Drawmap(station_data) {
 
         mapboxgl.accessToken = 'pk.eyJ1Ijoic2lsZW50bGwiLCJhIjoiY2o4NGEycGN2MDZ4ZDMza2Exemg4YmtkaCJ9.LaSV_2wU1XbulGlrDiUgTw';
 
@@ -61,25 +61,40 @@ console.log(map.getCenter());*/
 
         var features=[];
 
-        data.forEach(function (d, i) {
-            features.push({
+        station_data.forEach(function (d) {
+            features.push({ "type": "Feature",
                 "geometry": {
                     "type": "Point",
                     "coordinates": [d.longitude, d.latitude]
-                }
-            });
+                }});
         });
 
+        // console.log(features);
 
-        function pointOnCircle(data) {
-            return {
-                "type": "Point",
-                "coordinates": [data.longitude, data.latitude]
-            };
-        }
+        var geojson = {
+            "type": "FeatureCollection",
+            "features": features
+        };
 
         map.on('load', function () {
 
+            //station point
+            map.addSource('point', {
+                "type": "geojson",
+                "data": geojson
+            });
+
+            map.addLayer({
+                "id": "point",
+                "source": "point",
+                "type": "circle",
+                "paint": {
+                    "circle-radius": 1.5,
+                    "circle-color": "#007cbf"
+                }
+            });
+
+            //routes
             map.addLayer({
                 'id': 'lines',
                 'type': 'line',
