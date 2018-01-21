@@ -24,54 +24,67 @@ map.setMaxBounds(mybounds);
 console.log(map.getBounds());
 console.log(map.getCenter());*/
 //offline osm map
-    function Get_data() {
+function Get_data() {
 
-        $.ajax({
-         url: "/station_info",    //请求的url地址
-         data:{
-         },
-         dataType: "json",   //返回格式为json
-         async: true, //请求是否异步，默认为异步，这也是ajax重要特性
-         type: "GET",   //请求方式
-         beforeSend: function () {//请求前的处理
-         },
-         success: function (station_data, textStatus) {
-             $.ajax({
-                 url: "/section_info",    //请求的url地址
-                 data:{
-                 },
-                 dataType: "json",   //返回格式为json
-                 async: true, //请求是否异步，默认为异步，这也是ajax重要特性
-                 type: "GET",   //请求方式
-                 beforeSend: function () {//请求前的处理
-                 },
-                 success: function (section_data, textStatus) {
-                     console.log(section_data);
-                     Drawmap(station_data,section_data);
-                 },
-                 complete: function () {//请求完成的处理
-                 },
-                 error: function () {//请求出错处理
-                 }
-             });
-         },
-         complete: function () {//请求完成的处理
-         },
-         error: function () {//请求出错处理
-         }
-         });
+    $.ajax({
+        url: "/station_info",    //请求的url地址
+        data:{
+        },
+        dataType: "json",   //返回格式为json
+        async: true, //请求是否异步，默认为异步，这也是ajax重要特性
+        type: "GET",   //请求方式
+        beforeSend: function () {//请求前的处理
+        },
+        success: function (station_data, textStatus) {
+            $.ajax({
+                url: "/section_info",    //请求的url地址
+                data:{
+                },
+                dataType: "json",   //返回格式为json
+                async: true, //请求是否异步，默认为异步，这也是ajax重要特性
+                type: "GET",   //请求方式
+                beforeSend: function () {//请求前的处理
+                },
+                success: function (section_data, textStatus) {
+                    console.log(section_data);
+                    Drawmap(station_data,section_data);
+                    $.ajax({
+                        url: "/section_run_data",    //请求的url地址
+                        data:{
+                            section_id:1001
+                        },
+                        dataType: "json",   //返回格式为json
+                        async: true, //请求是否异步，默认为异步，这也是ajax重要特性
+                        type: "GET",   //请求方式
+                        beforeSend: function () {//请求前的处理
+                        },
+                        success: function (section_run_data, textStatus) {
+                            console.log(section_run_data);
+                        },
+                        complete: function () {//请求完成的处理
+                        },
+                        error: function () {//请求出错处理
+                        }
+                    });
+                },
+                complete: function () {//请求完成的处理
+                },
+                error: function () {//请求出错处理
+                }
+            });
+        },
+        complete: function () {//请求完成的处理
+        },
+        error: function () {//请求出错处理
+        }
+    });
 
-    }
-
-    Get_data();
+}
+    //Get_data();
 
     function Drawmap(station_data,section_data) {
 
         mapboxgl.accessToken = 'pk.eyJ1Ijoic2lsZW50bGwiLCJhIjoiY2o4NGEycGN2MDZ4ZDMza2Exemg4YmtkaCJ9.LaSV_2wU1XbulGlrDiUgTw';
-
-        /*var southWest = L.latLng(31.32255387, 104.57336425),
-         northEast = L.latLng(31.59725256, 104.91016387),
-         mybounds = L.latLngBounds(southWest, northEast);*/
 
         var map = new mapboxgl.Map({
             container: 'main',
@@ -100,10 +113,24 @@ console.log(map.getCenter());*/
                 s[1] = tem;
             });
 
+            //查询 speed
+            function Search_speed(section_id) {
+
+                //var speed = Section_run_data(section_id);
+                //console.log(section_id);
+
+                if(Math.round(Math.random()*100%6)==0)
+                    return '#f72822';
+                else if(Math.round(Math.random()*10%3)==1)
+                    return '#69f722';
+                else
+                    return '#f7e515';
+            }
+
             features_line.push({
                 'type': 'Feature',
                 'properties': {
-                    'color': '#2af725' // red
+                    'color': Search_speed(d.section_id)
                 },
                 'geometry': {
                     'type': 'LineString',
@@ -119,20 +146,6 @@ console.log(map.getCenter());*/
 
         map.on('load', function () {
 
-            //station point
-            map.addSource('point', {
-                "type": "geojson",
-                "data": geojson_point
-            });
-            map.addLayer({
-                "id": "point",
-                "source": "point",
-                "type": "circle",
-                "paint": {
-                    "circle-radius": 1.5,
-                    "circle-color": "#007cbf"
-                }
-            });
 
             //routes
             map.addLayer({
@@ -151,7 +164,20 @@ console.log(map.getCenter());*/
                 }
             });
 
-
+            //station point
+            map.addSource('point', {
+                "type": "geojson",
+                "data": geojson_point
+            });
+            map.addLayer({
+                "id": "point",
+                "source": "point",
+                "type": "circle",
+                "paint": {
+                    "circle-radius": 1.5,
+                    "circle-color": "#007cbf"
+                }
+            });
 
         });
     }
