@@ -90,7 +90,6 @@ console.log(map.getCenter());*/
         });
 
         var features_line=[];
-
         section_data.forEach(function (d) {
 
             d.path=eval(d.path);
@@ -100,9 +99,7 @@ console.log(map.getCenter());*/
                 s[0] = s[1];
                 s[1] = tem;
             });
-        });
 
-        section_data.forEach(function (d) {
             features_line.push({
                 'type': 'Feature',
                 'properties': {
@@ -114,8 +111,6 @@ console.log(map.getCenter());*/
                 }
             });
         });
-
-        //console.log(features_line);
 
         var geojson_point = {
             "type": "FeatureCollection",

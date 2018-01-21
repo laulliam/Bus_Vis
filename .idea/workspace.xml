@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c7571ffe-9a61-46b8-bc7d-a0883f3a2cea" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/bin_www.xml" afterPath="$PROJECT_DIR$/.idea/runConfigurations/bin_www.xml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/public/static/js/main.js" afterPath="$PROJECT_DIR$/public/static/js/main.js" />
     </list>
@@ -21,18 +20,18 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="396">
+            <state relative-caret-position="1062">
               <caret line="59" column="0" lean-forward="false" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="section.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="section.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/routes/section.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-80">
-              <caret line="15" column="50" lean-forward="true" selection-start-line="15" selection-start-column="50" selection-end-line="15" selection-end-column="50" />
+            <state relative-caret-position="108">
+              <caret line="20" column="13" lean-forward="true" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -40,17 +39,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/static/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="332">
-              <caret line="112" column="40" lean-forward="true" selection-start-line="112" selection-start-column="40" selection-end-line="112" selection-end-column="40" />
+            <state relative-caret-position="1260">
+              <caret line="119" column="36" lean-forward="true" selection-start-line="119" selection-start-column="36" selection-end-line="119" selection-end-column="36" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <element signature="e#47#685#0" expanded="false" />
-                <element signature="e#3449#3540#0" expanded="false" />
-                <element signature="e#3644#3732#0" expanded="false" />
-                <element signature="e#3760#4008#0" expanded="false" />
+                <element signature="e#2528#2741#0" expanded="false" />
+                <element signature="e#2817#3321#0" expanded="false" />
+                <element signature="e#2894#2996#0" expanded="false" />
+                <element signature="e#3353#3444#0" expanded="false" />
+                <element signature="e#3664#3912#0" expanded="false" />
+                <element signature="e#3962#4414#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -96,8 +98,8 @@
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="652" />
-    <option name="y" value="329" />
+    <option name="x" value="708" />
+    <option name="y" value="312" />
     <option name="width" value="965" />
     <option name="height" value="733" />
   </component>
@@ -117,6 +119,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -151,8 +155,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -176,255 +178,6 @@
       <recent name="E:\Bus_Vis\views" />
       <recent name="E:\Bus_Vis\public" />
     </key>
-  </component>
-  <component name="RestoreUpdateTree" date="Moments ago" ActionInfo="_Update">
-    <UpdatedFiles>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Updated from server" />
-        <option name="myStatusName" value="Changed on server" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="CHANGED_ON_SERVER" />
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Updated" />
-          <option name="myStatusName" value="Changed" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="UPDATED" />
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/.idea/runConfigurations/bin_www.xml</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/.idea/workspace.xml</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/app.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/package.json</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/routes/index.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/views/index.html</PATH>
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Created" />
-          <option name="myStatusName" value="Created" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="CREATED" />
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/bson/HISTORY.md</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/bson/LICENSE.md</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/bson/README.md</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/bson/bower.json</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/bson/browser_build/bson.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/bson/browser_build/package.json</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/bson/index.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/bson/lib/bson/binary.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/bson/lib/bson/bson.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/bson/lib/bson/code.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/bson/lib/bson/db_ref.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/bson/lib/bson/decimal128.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/bson/lib/bson/double.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/bson/lib/bson/float_parser.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/bson/lib/bson/int_32.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/bson/lib/bson/long.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/bson/lib/bson/map.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/bson/lib/bson/max_key.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/bson/lib/bson/min_key.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/bson/lib/bson/objectid.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/bson/lib/bson/parser/calculate_size.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/bson/lib/bson/parser/deserializer.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/bson/lib/bson/parser/serializer.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/bson/lib/bson/regexp.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/bson/lib/bson/symbol.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/bson/lib/bson/timestamp.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/bson/package.json</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb-core/.coveralls.yml</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb-core/.eslintrc</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb-core/HISTORY.md</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb-core/LICENSE</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb-core/Makefile</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb-core/README.md</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb-core/TESTING.md</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb-core/THIRD-PARTY-NOTICES</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb-core/conf.json</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb-core/index.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb-core/lib/auth/gssapi.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb-core/lib/auth/mongocr.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb-core/lib/auth/plain.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb-core/lib/auth/scram.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb-core/lib/auth/sspi.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb-core/lib/auth/x509.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb-core/lib/connection/command_result.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb-core/lib/connection/commands.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb-core/lib/connection/connection.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb-core/lib/connection/logger.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb-core/lib/connection/pool.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb-core/lib/connection/utils.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb-core/lib/cursor.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb-core/lib/error.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb-core/lib/tools/smoke_plugin.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb-core/lib/topologies/mongos.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb-core/lib/topologies/read_preference.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb-core/lib/topologies/replset.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb-core/lib/topologies/replset_state.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb-core/lib/topologies/server.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb-core/lib/topologies/shared.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb-core/lib/utils.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb-core/lib/wireprotocol/2_4_support.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb-core/lib/wireprotocol/2_6_support.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb-core/lib/wireprotocol/3_2_support.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb-core/lib/wireprotocol/commands.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb-core/lib/wireprotocol/shared.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb-core/package.json</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb-core/test.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb-core/test1.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb/.coveralls.yml</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb/.eslintrc</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb/HISTORY.md</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb/LICENSE</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb/Makefile</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb/README.md</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb/THIRD-PARTY-NOTICES</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb/boot_auth.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb/conf.json</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb/index.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb/insert_bench.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb/lib/admin.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb/lib/aggregation_cursor.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb/lib/apm.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb/lib/authenticate.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb/lib/bulk/common.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb/lib/bulk/ordered.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb/lib/bulk/unordered.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb/lib/collection.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb/lib/command_cursor.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb/lib/cursor.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb/lib/db.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb/lib/gridfs-stream/download.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb/lib/gridfs-stream/index.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb/lib/gridfs-stream/upload.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb/lib/gridfs/chunk.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb/lib/gridfs/grid_store.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb/lib/metadata.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb/lib/mongo_client.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb/lib/mongos.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb/lib/read_preference.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb/lib/replset.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb/lib/server.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb/lib/topology_base.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb/lib/url_parser.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb/lib/utils.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb/package.json</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb/rev.md</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/mongodb/yarn.lock</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/require_optional/.npmignore</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/require_optional/.travis.yml</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/require_optional/HISTORY.md</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/require_optional/LICENSE</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/require_optional/README.md</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/require_optional/index.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/require_optional/package.json</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/require_optional/test/nestedTest/index.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/require_optional/test/nestedTest/package.json</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/require_optional/test/require_optional_tests.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/resolve-from/index.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/resolve-from/license</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/resolve-from/package.json</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/resolve-from/readme.md</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/semver/LICENSE</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/semver/README.md</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/semver/bin/semver</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/semver/package.json</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/semver/range.bnf</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/node_modules/semver/semver.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/public/static/js/init_data.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/public/static/js/main.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/public/static/mapbox/mapbox-gl.css</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/public/static/mapbox/mapbox-gl.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/routes/section.js</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/routes/station.js</PATH>
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Deleted" />
-          <option name="myStatusName" value="Deleted" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="true" />
-          <option name="myId" value="REMOVED_FROM_REPOSITORY" />
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/public/static/css/lib/mapbox-gl.css</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/public/static/lib/mapbox-gl.js</PATH>
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Restored" />
-          <option name="myStatusName" value="Will be restored" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="RESTORED" />
-        </FILE-GROUP>
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Modified" />
-        <option name="myStatusName" value="Modified" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MODIFIED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Skipped" />
-        <option name="myStatusName" value="Skipped" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="SKIPPED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Merged with conflicts" />
-        <option name="myStatusName" value="Will be merged with conflicts" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MERGED_WITH_CONFLICTS" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Merged with tree conflicts" />
-        <option name="myStatusName" value="Merged with tree conflicts" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MERGED_WITH_TREE_CONFLICT" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Merged with property conflicts" />
-        <option name="myStatusName" value="Will be merged with property conflicts" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MERGED_WITH_PROPERTY_CONFLICT" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Merged" />
-        <option name="myStatusName" value="Will be merged" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MERGED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Not in repository" />
-        <option name="myStatusName" value="Not in repository" />
-        <option name="mySupportsDeletion" value="true" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="UNKNOWN" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Locally added" />
-        <option name="myStatusName" value="Locally added" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="LOCALLY_ADDED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Locally removed" />
-        <option name="myStatusName" value="Locally removed" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="LOCALLY_REMOVED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Switched" />
-        <option name="myStatusName" value="Switched" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="SWITCHED" />
-      </FILE-GROUP>
-    </UpdatedFiles>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -460,15 +213,24 @@
       <workItem from="1516415290242" duration="17000" />
       <workItem from="1516416061863" duration="729000" />
       <workItem from="1516417972901" duration="123000" />
-      <workItem from="1516499800197" duration="4769000" />
+      <workItem from="1516499800197" duration="5709000" />
+      <workItem from="1516513492954" duration="7000" />
     </task>
+    <task id="LOCAL-00001" summary="Draw section line  --Liang Liu">
+      <created>1516505429496</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1516505429496</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="27286000" />
+    <option name="totallyTimeSpent" value="28233000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="652" y="329" width="965" height="733" extended-state="0" />
+    <frame x="708" y="312" width="965" height="733" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24973656" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -476,8 +238,8 @@
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12116317" sideWeight="0.5057956" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.12116317" sideWeight="0.49420443" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12116317" sideWeight="0.49420443" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -498,13 +260,51 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <option name="LAST_COMMIT_MESSAGE" value="" />
+    <MESSAGE value="Draw section line  --Liang Liu" />
+    <option name="LAST_COMMIT_MESSAGE" value="Draw section line  --Liang Liu" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/views/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1062">
+          <caret line="59" column="0" lean-forward="false" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/static/js/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1260">
+          <caret line="119" column="36" lean-forward="true" selection-start-line="119" selection-start-column="36" selection-end-line="119" selection-end-column="36" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#47#685#0" expanded="false" />
+            <element signature="e#2528#2741#0" expanded="false" />
+            <element signature="e#2817#3321#0" expanded="false" />
+            <element signature="e#2894#2996#0" expanded="false" />
+            <element signature="e#3353#3444#0" expanded="false" />
+            <element signature="e#3664#3912#0" expanded="false" />
+            <element signature="e#3962#4414#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/section.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="15" column="50" lean-forward="true" selection-start-line="15" selection-start-column="50" selection-end-line="15" selection-end-column="50" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/views/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -517,10 +317,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="720">
           <caret line="40" column="0" lean-forward="false" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
-          <folding>
-            <element signature="e#66#901#0" expanded="false" />
-            <marker date="1516499842445" expanded="true" signature="902:1645" ph="/*...*/" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -536,10 +332,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="40" column="0" lean-forward="false" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
-          <folding>
-            <element signature="e#66#901#0" expanded="false" />
-            <marker date="1516499842445" expanded="true" signature="902:1645" ph="/*...*/" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -555,10 +347,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="40" column="0" lean-forward="false" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
-          <folding>
-            <element signature="e#66#901#0" expanded="false" />
-            <marker date="1516499842445" expanded="true" signature="902:1645" ph="/*...*/" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -574,10 +362,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="40" column="0" lean-forward="false" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
-          <folding>
-            <element signature="e#66#901#0" expanded="false" />
-            <marker date="1516499842445" expanded="true" signature="902:1645" ph="/*...*/" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -593,10 +377,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="40" column="0" lean-forward="false" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
-          <folding>
-            <element signature="e#66#901#0" expanded="false" />
-            <marker date="1516499842445" expanded="true" signature="902:1645" ph="/*...*/" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -612,10 +392,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="40" column="0" lean-forward="false" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
-          <folding>
-            <element signature="e#66#901#0" expanded="false" />
-            <marker date="1516499842445" expanded="true" signature="902:1645" ph="/*...*/" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -631,10 +407,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="40" column="0" lean-forward="true" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
-          <folding>
-            <element signature="e#66#901#0" expanded="false" />
-            <marker date="1516499842445" expanded="true" signature="902:1645" ph="/*...*/" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -671,10 +443,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#66#901#0" expanded="false" />
-            <marker date="1516499842445" expanded="true" signature="902:1645" ph="/*...*/" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -695,20 +463,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/static/css/lib/mapbox-gl.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4212">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/static/lib/mapbox-gl.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/public/static/css/lib/mapbox-gl.css" />
+    <entry file="file://$PROJECT_DIR$/public/static/lib/mapbox-gl.js" />
     <entry file="file://$PROJECT_DIR$/public/static/js/layout.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="488">
@@ -788,41 +544,40 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="69" column="0" lean-forward="false" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
-          <folding>
-            <element signature="e#66#901#0" expanded="false" />
-            <marker date="1516499842445" expanded="true" signature="902:1645" ph="/*...*/" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/views/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
+        <state relative-caret-position="1062">
           <caret line="59" column="0" lean-forward="false" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/section.js">
+    <entry file="file://$PROJECT_DIR$/public/static/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-80">
-          <caret line="15" column="50" lean-forward="true" selection-start-line="15" selection-start-column="50" selection-end-line="15" selection-end-column="50" />
+        <state relative-caret-position="1260">
+          <caret line="119" column="36" lean-forward="true" selection-start-line="119" selection-start-column="36" selection-end-line="119" selection-end-column="36" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
+            <element signature="e#47#685#0" expanded="false" />
+            <element signature="e#2528#2741#0" expanded="false" />
+            <element signature="e#2817#3321#0" expanded="false" />
+            <element signature="e#2894#2996#0" expanded="false" />
+            <element signature="e#3353#3444#0" expanded="false" />
+            <element signature="e#3664#3912#0" expanded="false" />
+            <element signature="e#3962#4414#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/static/js/main.js">
+    <entry file="file://$PROJECT_DIR$/routes/section.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="332">
-          <caret line="112" column="40" lean-forward="true" selection-start-line="112" selection-start-column="40" selection-end-line="112" selection-end-column="40" />
+        <state relative-caret-position="108">
+          <caret line="20" column="13" lean-forward="true" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
-            <element signature="e#47#685#0" expanded="false" />
-            <element signature="e#3449#3540#0" expanded="false" />
-            <element signature="e#3644#3732#0" expanded="false" />
-            <element signature="e#3760#4008#0" expanded="false" />
           </folding>
         </state>
       </provider>
