@@ -90,6 +90,18 @@ console.log(map.getCenter());*/
         });
 
         var features_line=[];
+
+        section_data.forEach(function (d) {
+
+            d.path=eval(d.path);
+
+            d.path.forEach(function (s) {
+                var tem=s[0];
+                s[0] = s[1];
+                s[1] = tem;
+            });
+        });
+
         section_data.forEach(function (d) {
             features_line.push({
                 'type': 'Feature',
@@ -103,7 +115,7 @@ console.log(map.getCenter());*/
             });
         });
 
-        console.log(features_line);
+        //console.log(features_line);
 
         var geojson_point = {
             "type": "FeatureCollection",
@@ -133,10 +145,13 @@ console.log(map.getCenter());*/
                 'type': 'line',
                 'source': {
                     'type': 'geojson',
-                    'data': features_line
+                    'data':  {
+                        'type': 'FeatureCollection',
+                        'features':features_line
+                    }
                 },
                 'paint': {
-                    'line-width': 3,
+                    'line-width': 2,
                     'line-color': ['get', 'color']
                 }
             });
