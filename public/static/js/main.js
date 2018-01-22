@@ -24,63 +24,6 @@ map.setMaxBounds(mybounds);
 console.log(map.getBounds());
 console.log(map.getCenter());*/
 //offline osm map
-function Get_data() {
-
-    $.ajax({
-        url: "/station_info",    //请求的url地址
-        data:{
-        },
-        dataType: "json",   //返回格式为json
-        async: true, //请求是否异步，默认为异步，这也是ajax重要特性
-        type: "GET",   //请求方式
-        beforeSend: function () {//请求前的处理
-        },
-        success: function (station_data, textStatus) {
-            $.ajax({
-                url: "/section_info",    //请求的url地址
-                data:{
-                },
-                dataType: "json",   //返回格式为json
-                async: true, //请求是否异步，默认为异步，这也是ajax重要特性
-                type: "GET",   //请求方式
-                beforeSend: function () {//请求前的处理
-                },
-                success: function (section_data, textStatus) {
-                    console.log(section_data);
-                    Drawmap(station_data,section_data);
-                    $.ajax({
-                        url: "/section_run_data",    //请求的url地址
-                        data:{
-                            section_id:1001
-                        },
-                        dataType: "json",   //返回格式为json
-                        async: true, //请求是否异步，默认为异步，这也是ajax重要特性
-                        type: "GET",   //请求方式
-                        beforeSend: function () {//请求前的处理
-                        },
-                        success: function (section_run_data, textStatus) {
-                            console.log(section_run_data);
-                        },
-                        complete: function () {//请求完成的处理
-                        },
-                        error: function () {//请求出错处理
-                        }
-                    });
-                },
-                complete: function () {//请求完成的处理
-                },
-                error: function () {//请求出错处理
-                }
-            });
-        },
-        complete: function () {//请求完成的处理
-        },
-        error: function () {//请求出错处理
-        }
-    });
-
-}
-    //Get_data();
 
     function Drawmap(station_data,section_data) {
 
@@ -96,6 +39,10 @@ function Get_data() {
         var features_point=[];
         station_data.forEach(function (d) {
             features_point.push({ "type": "Feature",
+                "properties": {
+                    "description":d.station_name,
+                   // "icon": "music"
+                },
                 "geometry": {
                     "type": "Point",
                     "coordinates": [d.longitude, d.latitude]
@@ -116,7 +63,6 @@ function Get_data() {
             //查询 speed
             function Search_speed(section_id) {
 
-                //var speed = Section_run_data(section_id);
                 //console.log(section_id);
 
                 if(Math.round(Math.random()*100%6)==0)
@@ -149,7 +95,7 @@ function Get_data() {
 
             //routes
             map.addLayer({
-                'id': 'lines',
+                'id': 'section',
                 'type': 'line',
                 'source': {
                     'type': 'geojson',
@@ -174,11 +120,46 @@ function Get_data() {
                 "source": "point",
                 "type": "circle",
                 "paint": {
-                    "circle-radius": 1.5,
-                    "circle-color": "#007cbf"
+                    "circle-radius": 3,
+                    "circle-color": "#0cadbf"
                 }
+            });
+
+            map.on('click', 'point', function (e) {
+                new mapboxgl.Popup()
+                    .setLngLat(e.features[0].geometry.coordinates)
+                    .setHTML(e.features[0].properties.description)
+                    .addTo(map);
+            });
+
+            map.on('click', 'section', function (e) {
+                new mapboxgl.Popup()
+                    .setLngLat(e.features[0].geometry.coordinates[1])
+                    .setHTML(e.features[0].properties.description)
+                    .addTo(map);
+            });
+
+            // Change the cursor to a pointer when the mouse is over the places layer.
+            map.on('mouseenter', 'point', function () {
+                map.getCanvas().style.cursor = 'pointer';
+            });
+
+            // Change it back to a pointer when it leaves.
+            map.on('mouseleave', 'point', function () {
+                map.getCanvas().style.cursor = '';
+            });
+
+            map.on('mouseenter', 'section', function () {
+                map.getCanvas().style.cursor = 'pointer';
+            });
+
+            // Change it back to a pointer when it leaves.
+            map.on('mouseleave', 'section', function () {
+                map.getCanvas().style.cursor = '';
             });
 
         });
     }
+
+
 

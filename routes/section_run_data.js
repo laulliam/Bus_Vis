@@ -14,7 +14,7 @@ router.get('/section_run_data', function(req, res, next) {
         var collection = db.collection('section_run_data');
         //查询数据
         var whereStr = {};
-        collection.find({"section_id":"1001"}).toArray(function(err, result) {
+        collection.find({"id":1}).toArray(function(err, result) {
             if(err)
             {
                 console.log('Error:'+ err);
