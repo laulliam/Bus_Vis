@@ -294,7 +294,7 @@ console.log(map.getCenter());*/
             map.getCanvas().style.cursor = '';
         });
 
-        Get_section_speed(1001,new Date('2015-12-31T22:00:00.000Z'),new Date('2015-12-31T23:00:00.000Z'));
+        Get_section_speed(969,new Date(2016,0,1,6,0,0),new Date(2016,0,1,7,0,0));
     }
     
     function Get_section_speed(section_id,date_start,date_end) {
@@ -317,8 +317,8 @@ console.log(map.getCenter());*/
                 section_data.forEach(function (d) {
                     sum+=d.speed;
                 });
-                console.log(section_data);
-                Update_section_layer(sum/section_data.length);
+                console.log(sum/section_data.length);
+                Update_section_layer(section_id,sum/section_data.length);
             },
             complete: function () {//请求完成的处理
             },
@@ -328,21 +328,20 @@ console.log(map.getCenter());*/
     }
     
     function Update_section_layer(section_id,section_speed) {
+
         data_section.features.forEach(function (d) {
             if (d.section_id == section_id) {
-
-                if (section_speed < 20) {
+                if (section_speed < 20)
                     d.properties.color = '#ff3023';
-                }
-                else if (section_speed >= 20 && section_speed < 40) {
+                else if (section_speed >= 20 && section_speed < 40)
                     d.properties.color = '#fff823';
-                }
                 else
                     d.properties.color = '#83ff24';
 
                 map.on("load", function () {
                     map.getSource('section_source').setData(data_section);
-                }
+                });
             }
             });
     }
+

@@ -13,7 +13,7 @@ router.get('/section_run_data', function(req, res, next) {
     var date_start=req.query.date_start;
     var date_end = req.query.date_end;
 
-    console.log(section_id,date_start,date_end);
+    console.log(new Date(date_start));
 
     var selectData = function(db, callback) {
         //连接到表
@@ -21,9 +21,8 @@ router.get('/section_run_data', function(req, res, next) {
         //查询数据
         var whereStr = {};
         collection.find({
-            "id":1
-            /*"section_id":section_id,
-            "start_date_time" :{$gte:new Date('2015-12-31T22:00:00.000Z'),$lte:new Date('2015-12-31T23:00:00.000Z')}*/
+            "section_id":section_id,
+            "start_date_time" :{$gte:new Date(date_start),$lte:new Date(date_end)}
         }).toArray(function(err, result) {
             if(err)
             {
