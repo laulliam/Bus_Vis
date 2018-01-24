@@ -27,7 +27,8 @@
                     beforeSend: function () {//请求前的处理
                     },
                     success: function (section_data, textStatus) {
-                        Drawmap(station_data,section_data);
+                        DrawStation(station_data);
+                        DrawSection(section_data);
                     },
                     complete: function () {//请求完成的处理
                     },
