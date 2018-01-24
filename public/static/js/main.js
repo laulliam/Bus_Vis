@@ -293,16 +293,18 @@ console.log(map.getCenter());*/
         map.on('mouseleave', 'section', function () {
             map.getCanvas().style.cursor = '';
         });
-        Update_section_layer();
+
+        Get_section_speed(1001,new Date('2015-12-31T22:00:00.000Z'),new Date('2015-12-31T23:00:00.000Z'));
     }
     
-    function Get_section_speed(section_id,date) {
+    function Get_section_speed(section_id,date_start,date_end) {
 
         $.ajax({
             url: "/section_run_data",    //请求的url地址
             data:{
                 "section_id":section_id,
-                "date":date
+                "date_start":date_start,
+                "date_end":date_end
             },
             dataType: "json",   //返回格式为json
             async: true, //请求是否异步，默认为异步，这也是ajax重要特性
@@ -310,33 +312,37 @@ console.log(map.getCenter());*/
             contentType: "application/json",
             beforeSend: function () {//请求前的处理
             },
-            success: function (section_speed, textStatus) {
+            success: function (section_data, textStatus) {
+                var sum=0;
+                section_data.forEach(function (d) {
+                    sum+=d.speed;
+                });
+                console.log(section_data);
+                Update_section_layer(sum/section_data.length);
             },
             complete: function () {//请求完成的处理
             },
             error: function () {//请求出错处理
             }
         });
-
-      return Math.round(Math.random()*400)
     }
     
-    function Update_section_layer(date) {
+    function Update_section_layer(section_id,section_speed) {
         data_section.features.forEach(function (d) {
+            if (d.section_id == section_id) {
 
-            var section_speed=Get_section_speed(d.properties.section_id,date);
+                if (section_speed < 20) {
+                    d.properties.color = '#ff3023';
+                }
+                else if (section_speed >= 20 && section_speed < 40) {
+                    d.properties.color = '#fff823';
+                }
+                else
+                    d.properties.color = '#83ff24';
 
-            if(section_speed<20){
-                d.properties.color='#ff3023';
+                map.on("load", function () {
+                    map.getSource('section_source').setData(data_section);
+                }
             }
-            else if(section_speed>=20&&section_speed<40){
-                d.properties.color='#fff823';
-            }
-            else
-                d.properties.color='#83ff24'
-        });
-
-        map.on("load",function () {
-            map.getSource('section_source').setData(data_section);
-        });
+            });
     }
