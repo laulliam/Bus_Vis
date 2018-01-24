@@ -13,7 +13,7 @@ router.get('/station_info', function(req, res, next) {
         var collection = db.collection('station');
         //查询数据
         var whereStr = {}
-        collection.find({},{"station_name":1,"longitude":1,"latitude":1}).toArray(function(err, result) {
+        collection.find({}).toArray(function(err, result) {
             if(err)
             {
                 console.log('Error:'+ err);

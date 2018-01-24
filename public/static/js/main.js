@@ -25,14 +25,23 @@ console.log(map.getBounds());
 console.log(map.getCenter());*/
 
     //mapbox
+
+    var bounds = [
+        [104.57336425,31.32255387], // Southwest coordinates
+        [104.91016387,31.59725256]  // Northeast coordinates
+    ];
+
     mapboxgl.accessToken = 'pk.eyJ1Ijoic2lsZW50bGwiLCJhIjoiY2o4NGEycGN2MDZ4ZDMza2Exemg4YmtkaCJ9.LaSV_2wU1XbulGlrDiUgTw';
 
     var map = new mapboxgl.Map({
         container: 'main',
         style: 'mapbox://styles/silentll/cjckbaggi8de22sp5g6cblhnx',
         zoom: 12,
-        center: [104.7416, 31.46]
+        center: [104.7416, 31.46],
+        //maxBounds: bounds // Sets bounds as max
     });
+
+    var data_section;
     //.......................
 
     function DrawStation(station_data,station_color) {
@@ -41,7 +50,9 @@ console.log(map.getCenter());*/
         station_data.forEach(function (d) {
             features_point.push({ "type": "Feature",
                 "properties": {
-                    "description":d.station_name,
+                    "station_id":d.station_id,
+                    "description":d.station_name+d.station_id,
+                    "color":"#8fa9ff"
                     // "icon": "music"
                 },
                 "geometry": {
@@ -50,27 +61,37 @@ console.log(map.getCenter());*/
                 }});
         });
 
-        map.on('load', function () {
+        var data_point = {
+            "type": "FeatureCollection",
+            "features": features_point
+        };
 
+        map.on('load', function () {
             //station point
+            map.addSource("station_source",{
+                "type":"geojson",
+                'data': data_point
+            });
+
             map.addLayer({
                 "id": "station_point",
-                "source": {
-                    "type": "geojson",
-                    "data": {
-                        "type": "FeatureCollection",
-                        "features": features_point
-                    }
-                },
+                "source": "station_source",
                 "type": "circle",
                 "paint": {
                     "circle-radius": 3.5,
-                    "circle-color": "#0cadbf"//station_color
+                    "circle-color": ['get','color']//station_color
                 }
             });
         });
 
         map.on('click', 'station_point', function (e) {
+
+            data_point.features.forEach(function (d) {
+                if(d.properties.station_id%32==0)
+                d.properties.color="red";
+            });
+            map.getSource("station_source").setData(data_point );
+
             new mapboxgl.Popup()
                 .setLngLat(e.features[0].geometry.coordinates)
                 .setHTML(e.features[0].properties.description)
@@ -208,7 +229,7 @@ console.log(map.getCenter());*/
 
     }
 
-    function DrawSection(section_data,date) {
+    function DrawSection(section_data) {
 
         var features_line=[];
         section_data.forEach(function (d) {
@@ -220,40 +241,10 @@ console.log(map.getCenter());*/
                 s[1] = tem;
             });
 
-
-            function Search_speed() {
-
-                //console.log(section_id);
-                /* $.ajax({
-                url: "/section_run",    //请求的url地址
-                    data:{
-                },
-                dataType: "json",   //返回格式为json
-                    async: true, //请求是否异步，默认为异步，这也是ajax重要特性
-                    type: "GET",   //请求方式
-                    contentType: "application/json",
-                    beforeSend: function () {//请求前的处理
-                },
-                success: function (section_data, textStatus) {
-                },
-                complete: function () {//请求完成的处理
-                },
-                error: function () {//请求出错处理
-                }
-            });*/
-
-                if(Math.round(Math.random()*100%6)==0)
-                    return '#f72822';
-                else if(Math.round(Math.random()*10%3)==1)
-                    return '#69f722';
-                else
-                    return '#f7e515';
-    }
-
-        features_line.push({
+             features_line.push({
             'type': 'Feature',
             'properties': {
-                'color': Search_speed(),//'#69f722',
+                'color': '#949494',
                 'section_id':d.section_id
             },
             'geometry': {
@@ -261,20 +252,25 @@ console.log(map.getCenter());*/
                 'coordinates':d.path
             }
             });
+
         });
 
+        data_section =  {
+                "type": "FeatureCollection",
+                "features": features_line
+        };
+
         map.on("load",function () {
+
+            map.addSource("section_source",{
+                'type': 'geojson',
+                'data':data_section
+            });
 
             map.addLayer({
                 'id': 'section',
                 'type': 'line',
-                'source': {
-                    'type': 'geojson',
-                    'data':  {
-                        'type': 'FeatureCollection',
-                        'features':features_line
-                    }
-                },
+                'source':'section_source',
                 'paint': {
                     'line-width': 2,
                     'line-color': ['get', 'color']
@@ -297,5 +293,50 @@ console.log(map.getCenter());*/
         map.on('mouseleave', 'section', function () {
             map.getCanvas().style.cursor = '';
         });
+        Update_section_layer();
+    }
+    
+    function Get_section_speed(section_id,date) {
 
+        $.ajax({
+            url: "/section_run_data",    //请求的url地址
+            data:{
+                "section_id":section_id,
+                "date":date
+            },
+            dataType: "json",   //返回格式为json
+            async: true, //请求是否异步，默认为异步，这也是ajax重要特性
+            type: "GET",   //请求方式
+            contentType: "application/json",
+            beforeSend: function () {//请求前的处理
+            },
+            success: function (section_speed, textStatus) {
+            },
+            complete: function () {//请求完成的处理
+            },
+            error: function () {//请求出错处理
+            }
+        });
+
+      return Math.round(Math.random()*400)
+    }
+    
+    function Update_section_layer(date) {
+        data_section.features.forEach(function (d) {
+
+            var section_speed=Get_section_speed(d.properties.section_id,date);
+
+            if(section_speed<20){
+                d.properties.color='#ff3023';
+            }
+            else if(section_speed>=20&&section_speed<40){
+                d.properties.color='#fff823';
+            }
+            else
+                d.properties.color='#83ff24'
+        });
+
+        map.on("load",function () {
+            map.getSource('section_source').setData(data_section);
+        });
     }
