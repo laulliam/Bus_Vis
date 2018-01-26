@@ -43,8 +43,15 @@
         });
     }
 
+    Init_data();
+
     $(window).resize(function () {
         window.location.reload();
     });
 
-    Init_data();
+    function currentTime() {
+        var date = (new Date()).toLocaleString();
+        $("#header").find(".time").text(date);
+    }
+
+    window.setInterval(currentTime, 1000);

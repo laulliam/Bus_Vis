@@ -41,7 +41,7 @@ console.log(map.getCenter());*/
         //maxBounds: bounds // Sets bounds as max
     });
 
-    var data_section;
+    var data_section = null;
     //.......................
 
     function DrawStation(station_data,station_color) {
@@ -78,7 +78,7 @@ console.log(map.getCenter());*/
                 "source": "station_source",
                 "type": "circle",
                 "paint": {
-                    "circle-radius": 3.5,
+                    "circle-radius": 2,
                     "circle-color": ['get','color']//station_color
                 }
             });
@@ -275,7 +275,7 @@ console.log(map.getCenter());*/
         map.on('click', 'section', function (e) {
 
             new mapboxgl.Popup()
-                .setLngLat(e.features[0].geometry.coordinates[1])
+                .setLngLat(e.features[0].geometry.coordinates[2])
                 .setHTML(e.features[0].properties.section_id)
                 .addTo(map);
         });
@@ -288,19 +288,15 @@ console.log(map.getCenter());*/
         map.on('mouseleave', 'section', function () {
             map.getCanvas().style.cursor = '';
         });
-
-        Get_section_speed(new Date(2016,0,1,6,0,0),new Date(2016,0,1,7,0,0));
-
     }
 
-    function Get_section_speed(date_start,date_end) {
+    //Get_section_speed(new Date(2016,0,1,7,0,0),new Date(2016,0,1,7,1,0));
 
-        data_section.features.forEach(function (d) {
+    function Get_section_speed(date_start,date_end) {
 
             $.ajax({
                 url: "/section_run_data",    //请求的url地址
                 data: {
-                    "section_id": d.properties.section_id,
                     "date_start": date_start,
                     "date_end": date_end
                 },
@@ -311,33 +307,26 @@ console.log(map.getCenter());*/
                 beforeSend: function () {//请求前的处理
                 },
                 success: function (section_data, textStatus) {
-                    var sum = 0;
-                    section_data.forEach(function (d) {
-                        sum += d.speed;
-                    });
-                   var section_speed = sum / section_data.length;
 
-                    if(section_speed) {
+                    console.log(section_data);
+                   /* if(section_speed) {
                         if (section_speed < 20)
                             d.properties.color = '#ff3023';
                         else if (section_speed >= 20 && section_speed < 40)
                             d.properties.color = '#fff823';
                         else
                             d.properties.color = '#83ff24';
-                    }
-
-
-                    map.on("load", function () {
-                        map.getSource('section_source').setData(data_section);
-                    });
-
+                    }*/
                 },
                 complete: function () {//请求完成的处理
                 },
                 error: function () {//请求出错处理
                 }
             });
-        });
+
+/*                map.on("load", function () {
+                    map.getSource('section_source').setData(data_section);
+                });*/
 
     }
 
