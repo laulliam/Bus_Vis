@@ -33,13 +33,13 @@ function Layout() {
     importance.style.height=(body_height * 0.35 -  2 * border) + "px";
 
     test1.style.width = (body_width * 0.15 - border) + "px";
-    test1.style.height = (body_height * 0.3 - 2* border) + "px";
+    test1.style.height = (body_height * 0.3 - 3* border) + "px";
 
     time_line.style.width = (body_width * 0.7 - 2 * border)+ "px";
-    time_line.style.height = (body_height * 0.3 - 2 * border) + "px";
+    time_line.style.height = (body_height * 0.3 - 3 * border) + "px";
 
     test2.style.width = (body_width * 0.15 -  border) + "px";
-    test2.style.height = (body_height * 0.3 - 2 * border) + "px";
+    test2.style.height = (body_height * 0.3 - 3 * border) + "px";
 
     $(window).resize(function () {
         window.location.reload();

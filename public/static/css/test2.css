@@ -1,5 +1,5 @@
 #test2{
     float: left;
-    border: solid gray;
+    border: dashed gray;
     border-width: 1px 1px 1px 0;
 }
