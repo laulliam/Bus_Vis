@@ -43,7 +43,7 @@
         });
     }
 
-    Init_data();
+    //Init_data();
 
     $(window).resize(function () {
         window.location.reload();

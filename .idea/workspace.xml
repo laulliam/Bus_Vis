@@ -2,21 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c7571ffe-9a61-46b8-bc7d-a0883f3a2cea" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/static/css/lib/dat.gui.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/static/js/control.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/static/css/all_view.css" afterPath="$PROJECT_DIR$/public/static/css/all_view.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/static/css/calender.css" afterPath="$PROJECT_DIR$/public/static/css/calender.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/static/css/control.css" afterPath="$PROJECT_DIR$/public/static/css/control.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/static/css/importance.css" afterPath="$PROJECT_DIR$/public/static/css/importance.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/static/css/information.css" afterPath="$PROJECT_DIR$/public/static/css/information.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/static/css/main.css" afterPath="$PROJECT_DIR$/public/static/css/main.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/static/css/test1.css" afterPath="$PROJECT_DIR$/public/static/css/test1.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/static/css/test2.css" afterPath="$PROJECT_DIR$/public/static/css/test2.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/static/css/time_line.css" afterPath="$PROJECT_DIR$/public/static/css/time_line.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/static/js/layout.js" afterPath="$PROJECT_DIR$/public/static/js/layout.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/static/css/lib/dat.gui.css" afterPath="$PROJECT_DIR$/public/static/css/lib/dat.gui.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/static/js/control.js" afterPath="$PROJECT_DIR$/public/static/js/control.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/static/js/init_data.js" afterPath="$PROJECT_DIR$/public/static/js/init_data.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/static/lib/dat.gui/dat.gui.js" afterPath="$PROJECT_DIR$/public/static/lib/dat.gui/dat.gui.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/index.html" afterPath="$PROJECT_DIR$/views/index.html" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -31,36 +22,16 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/views/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="76">
-              <caret line="90" column="22" lean-forward="false" selection-start-line="90" selection-start-column="22" selection-end-line="90" selection-end-column="22" />
+            <state relative-caret-position="-266">
+              <caret line="39" column="0" lean-forward="true" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#div#1;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#2;n#div#1;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#3;n#div#1;n#html#0;n#!!top" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="control.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/static/js/control.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="380">
-              <caret line="20" column="24" lean-forward="true" selection-start-line="20" selection-start-column="24" selection-end-line="20" selection-end-column="24" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="dat.gui.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/public/static/lib/dat.gui/dat.gui.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="36366">
-              <caret line="2562" column="4" lean-forward="true" selection-start-line="2562" selection-start-column="4" selection-end-line="2562" selection-end-column="4" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -80,6 +51,14 @@
       <find>dg</find>
       <find>245</find>
       <find>ul</find>
+      <find>li</find>
+      <find>float</find>
+      <find>left</find>
+      <find>#fff</find>
+      <find>#000</find>
+      <find>000</find>
+      <find>111</find>
+      <find>222</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -102,7 +81,6 @@
         <option value="$PROJECT_DIR$/public/static/js/main.js" />
         <option value="$PROJECT_DIR$/public/static/js/area_line.js" />
         <option value="$PROJECT_DIR$/public/static/css/area_line.css" />
-        <option value="$PROJECT_DIR$/public/static/js/init_data.js" />
         <option value="$PROJECT_DIR$/public/static/css/calender.css" />
         <option value="$PROJECT_DIR$/public/static/css/importance.css" />
         <option value="$PROJECT_DIR$/public/static/css/information.css" />
@@ -110,12 +88,14 @@
         <option value="$PROJECT_DIR$/public/static/css/test1.css" />
         <option value="$PROJECT_DIR$/public/static/css/test2.css" />
         <option value="$PROJECT_DIR$/public/static/css/time_line.css" />
-        <option value="$PROJECT_DIR$/public/static/css/all_view.css" />
         <option value="$PROJECT_DIR$/public/static/js/layout.js" />
-        <option value="$PROJECT_DIR$/public/static/css/control.css" />
+        <option value="$PROJECT_DIR$/public/static/js/init_data.js" />
+        <option value="$PROJECT_DIR$/public/static/css/all_view.css" />
         <option value="$PROJECT_DIR$/views/index.html" />
-        <option value="$PROJECT_DIR$/public/static/lib/dat.gui/dat.gui.js" />
+        <option value="$PROJECT_DIR$/public/static/css/control.css" />
         <option value="$PROJECT_DIR$/public/static/js/control.js" />
+        <option value="$PROJECT_DIR$/public/static/css/lib/dat.gui.css" />
+        <option value="$PROJECT_DIR$/public/static/lib/dat.gui/dat.gui.js" />
       </list>
     </option>
   </component>
@@ -280,6 +260,54 @@
               <option name="myItemId" value="public" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="static" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="css" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Bus_Vis" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Bus_Vis" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="static" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="css" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Bus_Vis" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Bus_Vis" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
@@ -416,7 +444,7 @@
       <workItem from="1516447104016" duration="1444000" />
       <workItem from="1516450802965" duration="36680000" />
       <workItem from="1516779885631" duration="22446000" />
-      <workItem from="1516952445070" duration="11729000" />
+      <workItem from="1516952445070" duration="15741000" />
     </task>
     <task id="LOCAL-00001" summary="station data ajax   --Liang Liu">
       <created>1516453352020</created>
@@ -495,11 +523,18 @@
       <option name="project" value="LOCAL" />
       <updated>1516959485050</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Optimize layout; Add #Control --Liang Liu">
+      <created>1516964220335</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1516964220335</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="94693000" />
+    <option name="totallyTimeSpent" value="98705000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -542,27 +577,16 @@
     <MESSAGE value="Read section_run_data  --Liang Liu" />
     <MESSAGE value="optimize map --Liang Liu" />
     <MESSAGE value="Optimize layout; Add #header --Liang Liu" />
-    <option name="LAST_COMMIT_MESSAGE" value="Optimize layout; Add #header --Liang Liu" />
+    <MESSAGE value="Optimize layout; Add #Control --Liang Liu" />
+    <option name="LAST_COMMIT_MESSAGE" value="Optimize layout; Add #Control --Liang Liu" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="4" />
+      <option name="time" value="5" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/views/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#1;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#2;n#div#1;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#3;n#div#1;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/routes/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -784,19 +808,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/static/js/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="377">
-          <caret line="289" column="11" lean-forward="true" selection-start-line="289" selection-start-column="11" selection-end-line="289" selection-end-column="11" />
-          <folding>
-            <element signature="e#47#685#0" expanded="false" />
-            <element signature="e#718#847#0" expanded="false" />
-            <element signature="e#3128#7265#0" expanded="false" />
-            <marker date="1516952646822" expanded="true" signature="286:292" ph="©" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="38">
@@ -821,26 +832,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/static/js/init_data.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="42" column="11" lean-forward="true" selection-start-line="42" selection-start-column="11" selection-end-line="42" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/static/css/calender.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="38">
           <caret line="2" column="18" lean-forward="false" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/static/css/all_view.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="159">
-          <caret line="12" column="18" lean-forward="false" selection-start-line="12" selection-start-column="18" selection-end-line="12" selection-end-column="18" />
           <folding />
         </state>
       </provider>
@@ -893,14 +888,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/static/css/control.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="4" column="1" lean-forward="true" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/static/js/layout.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="57">
@@ -909,31 +896,77 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/index.html">
+    <entry file="file://$PROJECT_DIR$/public/static/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="90" column="22" lean-forward="false" selection-start-line="90" selection-start-column="22" selection-end-line="90" selection-end-column="22" />
+        <state relative-caret-position="833">
+          <caret line="289" column="11" lean-forward="true" selection-start-line="289" selection-start-column="11" selection-end-line="289" selection-end-column="11" />
           <folding>
-            <element signature="n#style#0;n#div#0;n#div#1;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#2;n#div#1;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#3;n#div#1;n#html#0;n#!!top" expanded="true" />
+            <element signature="e#47#685#0" expanded="false" />
+            <element signature="e#718#847#0" expanded="false" />
+            <element signature="e#3128#7265#0" expanded="false" />
+            <element signature="n#!!block;n#Get_section_speed#0" expanded="false" />
+            <marker date="1516952646822" expanded="true" signature="286:292" ph="©" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/static/js/control.js">
+    <entry file="file://$PROJECT_DIR$/public/static/js/init_data.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="20" column="24" lean-forward="true" selection-start-line="20" selection-start-column="24" selection-end-line="20" selection-end-column="24" />
+        <state relative-caret-position="244">
+          <caret line="49" column="7" lean-forward="true" selection-start-line="49" selection-start-column="7" selection-end-line="49" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/static/css/all_view.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="11" column="9" lean-forward="true" selection-start-line="11" selection-start-column="9" selection-end-line="11" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/static/css/control.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="5" column="1" lean-forward="true" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/static/css/lib/dat.gui.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="8" column="1" lean-forward="true" selection-start-line="8" selection-start-column="1" selection-end-line="8" selection-end-column="1" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/static/lib/dat.gui/dat.gui.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36366">
-          <caret line="2562" column="4" lean-forward="true" selection-start-line="2562" selection-start-column="4" selection-end-line="2562" selection-end-column="4" />
+        <state relative-caret-position="122">
+          <caret line="4226" column="4896" lean-forward="false" selection-start-line="4226" selection-start-column="4896" selection-end-line="4226" selection-end-column="4896" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/static/js/control.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="9" column="24" lean-forward="true" selection-start-line="9" selection-start-column="24" selection-end-line="9" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-266">
+          <caret line="39" column="0" lean-forward="true" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#1;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#2;n#div#1;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#3;n#div#1;n#html#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

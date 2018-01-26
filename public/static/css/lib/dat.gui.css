@@ -1,8 +1,9 @@
 .dg.main.a {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100% !important;
+    top: 1px;
+    left: 1px;
+    right: 1px;
+    width: 14.9% !important;
     height: auto;
     margin-right: 0 !important;
 }
@@ -18,7 +19,7 @@
 .dg .c select {
     margin-top: 3px;
     width: auto !important;
-    color: black;
+    color: #303030;
 }
 
 .gears {
