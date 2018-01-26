@@ -9,11 +9,11 @@ var DB_CONN_STR = 'mongodb://localhost:27017/traffic_data';
 
 router.get('/section_run_data', function(req, res, next) {
 
-    var section_id=req.query.section_id;
+    var section_id=parseInt(req.query.section_id);
     var date_start=req.query.date_start;
     var date_end = req.query.date_end;
 
-    console.log(new Date(date_start));
+    console.log(new Date(date_start),new Date(date_end));
 
     var selectData = function(db, callback) {
         //连接到表
@@ -36,7 +36,6 @@ router.get('/section_run_data', function(req, res, next) {
     MongoClient.connect(DB_CONN_STR, function(err, db) {
         selectData(db, function(result) {
             res.json(result);
-            console.log(result);
             db.close();
         });
     });
