@@ -12,7 +12,7 @@ function Layout() {
     var importance = document.getElementById("importance");
     var test1 =document.getElementById("test1");
     var time_line = document.getElementById("time_line");
-    var test2 =document.getElementById("test2");
+    var radar =document.getElementById("radar");
 
     header.style.width=(body_width - 2 * border) + "px";
     header.style.height = 20 + "px";
@@ -38,8 +38,8 @@ function Layout() {
     time_line.style.width = (body_width * 0.7 - 2 * border)+ "px";
     time_line.style.height = (body_height * 0.3 - 3 * border) + "px";
 
-    test2.style.width = (body_width * 0.15 -  border) + "px";
-    test2.style.height = (body_height * 0.3 - 3 * border) + "px";
+    radar.style.width = (body_width * 0.15 -  border) + "px";
+    radar.style.height = (body_height * 0.3 - 3 * border) + "px";
 
     $(window).resize(function () {
         window.location.reload();

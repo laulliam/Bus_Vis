@@ -27,7 +27,7 @@
                  beforeSend: function () {//请求前的处理
                  },
                  success: function (section_data, textStatus) {
-                    DrawSection(section_data);
+                   // DrawSection(section_data);
                  },
                  complete: function () {//请求完成的处理
                  },
@@ -43,7 +43,7 @@
         });
     }
 
-    //Init_data();
+    Init_data();
 
     $(window).resize(function () {
         window.location.reload();
