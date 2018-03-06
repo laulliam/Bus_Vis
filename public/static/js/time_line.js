@@ -5,7 +5,7 @@ var colorrange = [];
 
 function chart(csvpath, color) {
 
-    colorrange = [d3.rgb(79, 107, 218), d3.rgb(165, 241, 88), d3.rgb(38, 232, 145),d3.rgb(27, 191, 202), d3.rgb(27, 191, 202),d3.rgb(100, 80, 195)];
+    colorrange = [d3.rgb(79, 107, 218), d3.rgb(165, 241, 88), d3.rgb(38, 232, 145),d3.rgb(27, 191, 202), d3.rgb(32, 227, 155),d3.rgb(100, 80, 195)];
 
     var strokecolor = colorrange[0];
 

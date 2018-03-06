@@ -6,10 +6,10 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
-var users = require('./routes/users');
 var station = require('./routes/station');
 var section = require('./routes/section');
 var section_run_data = require('./routes/section_run_data');
+var all_routes = require('./routes/all_routes');
 
 var app = express();
 
@@ -31,7 +31,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 // app.use('/', index);
 app.use('/',station);
 app.use('/',section);
-app.use('/',section_run_data)
+app.use('/',section_run_data);
+app.use('/',all_routes);
 // app.use('/users', users);
 
 // catch 404 and forward to error handler

@@ -34,3 +34,5 @@ function Control_Chart() {
         customContainer.appendChild(gui.domElement);
 }
     Control_Chart();
+
+    var STATION_COLOR = "#ff2513";
