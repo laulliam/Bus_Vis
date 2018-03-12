@@ -40,6 +40,10 @@ console.log(map.getCenter());*/
         //maxBounds: bounds // Sets bounds as max
     });
 
+    var data_section;
+
+    DrawSection(section_info);
+
     function DrawStation(station_info) {
 
         var features_point = [];
@@ -222,20 +226,110 @@ console.log(map.getCenter());*/
 
     }
 
-    //Section_render(new Date(2016,1,1,0,0,0),new Date(2016,1,1,1,0,0));
+    function DrawSection(section_info) {
+
+        var features_line = [];
+
+        section_info.forEach(function (d) {
+
+            features_line.push({
+                'type': 'Feature',
+                'properties':{
+                    'color':"#c8c6c4",
+                    'section_id': d.section_id
+                },
+                'geometry': {
+                    'type': 'LineString',
+                    'coordinates': d.path
+                }
+            });
+
+        });
+
+        data_section = {
+            "type": "FeatureCollection",
+            "features": features_line
+        };
+
+        map.on("load", function () {
+
+            map.addSource("section_source", {
+                'type': 'geojson',
+                'data': data_section
+            });
+
+            map.addLayer({
+                'id': 'section',
+                'type': 'line',
+                'source': 'section_source',
+                'paint': {
+                    'line-width': 2,
+                    'line-color': ['get', 'color']
+                }
+            });
+        });
+
+        map.on('click', 'section', function (e) {
+
+            new mapboxgl.Popup()
+                .setLngLat(e.features[0].geometry.coordinates[2])
+                .setHTML(e.features[0].properties.section_id)
+                .addTo(map);
+        });
+
+        map.on('mouseenter', 'section', function () {
+            map.getCanvas().style.cursor = 'pointer';
+        });
+
+        // Change it back to a pointer when it leaves.
+        map.on('mouseleave', 'section', function () {
+            map.getCanvas().style.cursor = '';
+        });
+    }
+
+    Section_render(new Date(2016,0,1,7,0,0),new Date(2016,0,1,8,0,0));
 
     function  Section_render(start_time,end_time) {
 
+        data_section.features.forEach(function (d) {
+
+            var section_speed = Section_speed(d.properties.section_id,start_time,end_time);
+
+            if(section_speed) {
+                if (section_speed < 20)
+                    d.properties.color = "#ff2513";
+                else if (section_speed >= 20 && section_speed <= 35)
+                    d.properties.color = "#f2f73f";
+                else
+                    d.properties.color = "#51ff20";
+            }
+        });
+
+            map.on("load", function () {
+            map.getSource('section_source').setData(data_section);
+        });
+
+    }
+
+    function Section_speed(section_id,date_start,date_end) {
+
+        var speed=0;
+
         $.ajax({
-            url: "/section_info",    //请求的url地址
+            url: "/section_run_data",    //请求的url地址
+            data: {
+                "section_id":section_id.toLocaleString(),
+                "date_start": date_start,
+                "date_end": date_end
+            },
             dataType: "json",   //返回格式为json
-            async: true, //请求是否异步，默认为异步，这也是ajax重要特性
+            async: false,//true, //请求是否异步，默认为异步，这也是ajax重要特性
             type: "GET",   //请求方式
             contentType: "application/json",
             beforeSend: function () {//请求前的处理
             },
-            success: function (section_info, textStatus) {
-                DrawSection(section_info);
+            success: function (section_run_data, textStatus) {
+                speed = parseFloat(section_run_data[0].speed);
             },
             complete: function () {//请求完成的处理
             },
@@ -243,102 +337,5 @@ console.log(map.getCenter());*/
             }
         });
 
-        function DrawSection(section_info) {
-
-            var features_line = [];
-
-            section_info.forEach(function (d) {
-
-                d.path = eval(d.path);
-                d.path.forEach(function (s) {
-                    var tem = s[0];
-                    s[0] = s[1];
-                    s[1] = tem;
-                });
-
-                features_line.push({
-                    'type': 'Feature',
-                    'properties': {
-                        'color':  Section_speed(),
-                        'section_id': d.section_id
-                    },
-                    'geometry': {
-                        'type': 'LineString',
-                        'coordinates': d.path
-                    }
-                });
-
-            });
-
-            data_section = {
-                "type": "FeatureCollection",
-                "features": features_line
-            };
-
-            map.on("load", function () {
-
-                map.addSource("section_source", {
-                    'type': 'geojson',
-                    'data': data_section
-                });
-
-                map.addLayer({
-                    'id': 'section',
-                    'type': 'line',
-                    'source': 'section_source',
-                    'paint': {
-                        'line-width': 2,
-                        'line-color': ['get', 'color']
-                    }
-                });
-            });
-
-            map.on('click', 'section', function (e) {
-
-                new mapboxgl.Popup()
-                    .setLngLat(e.features[0].geometry.coordinates[2])
-                    .setHTML(e.features[0].properties.section_id)
-                    .addTo(map);
-            });
-
-            map.on('mouseenter', 'section', function () {
-                map.getCanvas().style.cursor = 'pointer';
-            });
-
-            // Change it back to a pointer when it leaves.
-            map.on('mouseleave', 'section', function () {
-                map.getCanvas().style.cursor = '';
-            });
-        }
-
-        Section_speed(1001,new Date(2016,0,1,7,0,0),new Date(2016,0,1,8,0,0));
-
-        function Section_speed(section_id,date_start,date_end) {
-            $.ajax({
-                url: "/section_run_data",    //请求的url地址
-                data: {
-                    "section_id":section_id.toLocaleString(),
-                    "date_start": date_start,
-                    "date_end": date_end
-                },
-                dataType: "json",   //返回格式为json
-                async: true, //请求是否异步，默认为异步，这也是ajax重要特性
-                type: "GET",   //请求方式
-                contentType: "application/json",
-                beforeSend: function () {//请求前的处理
-                },
-                success: function (section_run_data, textStatus) {
-                    console.log(section_run_data);
-                },
-                complete: function () {//请求完成的处理
-                },
-                error: function () {//请求出错处理
-                }
-            });
-        }
-
-            /*map.on("load", function () {
-            map.getSource('section_source').setData(data_section);
-        });*/
-
+        return speed;
     }
