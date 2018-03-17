@@ -42,7 +42,7 @@ console.log(map.getCenter());*/
 
     var data_section;
 
-    DrawSection(section_info);
+    //DrawSection(section_info);
 
     function DrawStation(station_info) {
 
@@ -287,7 +287,7 @@ console.log(map.getCenter());*/
         });
     }
 
-    Section_render(new Date(2016,0,1,7,0,0),new Date(2016,0,1,8,0,0));
+    //Section_render(new Date(2016,0,1,7,0,0),new Date(2016,0,1,8,0,0));
 
     function  Section_render(start_time,end_time) {
 

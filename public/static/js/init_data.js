@@ -15,7 +15,7 @@
             beforeSend: function () {//请求前的处理
             },
             success: function (station, textStatus) {
-               DrawStation(station);
+                DrawStation(station);
             },
             complete: function () {//请求完成的处理
             },
@@ -23,7 +23,7 @@
             }
         });
 
-        $.ajax({
+       /* $.ajax({
             url: "/section_info",    //请求的url地址
             dataType: "json",   //返回格式为json
             async: false,//true, //请求是否异步，默认为异步，这也是ajax重要特性
@@ -47,7 +47,7 @@
             },
             error: function () {//请求出错处理
             }
-        });
+        });*/
     }
 
     Init_data();

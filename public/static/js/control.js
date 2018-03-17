@@ -1,7 +1,6 @@
 function Control_Chart() {
 
         var obj_station = {
-            'Map Style': 'dark',
             'Size': 1,
             'Color': "#ff2513",
             'Opacity': 1
@@ -12,11 +11,6 @@ function Control_Chart() {
             'Opacity': 1
         };
         var gui = new dat.gui.GUI();
-        var layout_text = gui.add(obj_station, 'Map Style', ['dark','basic','bright','light','satellite']);
-
-        layout_text.onChange(function (value) {
-                    map.setStyle('mapbox://styles/mapbox/' +value+ '-v9');
-        });
 
         var f1 = gui.addFolder('Station Style');
         var station_size = f1.add(obj_station, 'Size').min(1).max(5).step(0.1).listen();
