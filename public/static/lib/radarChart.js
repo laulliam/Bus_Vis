@@ -1,6 +1,3 @@
-/**
- * Created by Liang Liu on 2018/1/27.
- */
 function RadarChart(id, data, options) {
     var cfg = {
         w: 600,				//Width of the circle
@@ -48,8 +45,8 @@ function RadarChart(id, data, options) {
 
     //Initiate the radar chart SVG
     var svg = d3.select(id).append("svg")
-        .attr("width",  cfg.w + cfg.margin.left + cfg.margin.right)
-        .attr("height", cfg.h + cfg.margin.top + cfg.margin.bottom)
+        .attr("width",  cfg.w + 2*cfg.margin.left + 2*cfg.margin.right)
+        .attr("height", cfg.h + 2*cfg.margin.top + 2*cfg.margin.bottom)
         .attr("class", "radar"+id);
     //Append a g element
     var g = svg.append("g")
@@ -86,6 +83,7 @@ function RadarChart(id, data, options) {
         .style("filter" , "url(#glow)");
 
     //Text indicating at what % each level is
+    /*
     axisGrid.selectAll(".axisLabel")
         .data(d3.range(1,(cfg.levels+1)).reverse())
         .enter().append("text")
@@ -96,7 +94,7 @@ function RadarChart(id, data, options) {
         .style("font-size", "10px")
         .attr("fill", "#737373")
         .text(function(d,i) { return Format(maxValue * d/cfg.levels); });
-
+*/
     /////////////////////////////////////////////////////////
     //////////////////// Draw the axes //////////////////////
     /////////////////////////////////////////////////////////
@@ -111,20 +109,20 @@ function RadarChart(id, data, options) {
     axis.append("line")
         .attr("x1", 0)
         .attr("y1", 0)
-        .attr("x2", function(d, i){ return rScale(maxValue*1.1) * Math.cos(angleSlice*i - Math.PI/2); })
-        .attr("y2", function(d, i){ return rScale(maxValue*1.1) * Math.sin(angleSlice*i - Math.PI/2); })
+        .attr("x2", function(d, i){ return rScale(maxValue) * Math.cos(angleSlice*i - Math.PI/2); })
+        .attr("y2", function(d, i){ return rScale(maxValue) * Math.sin(angleSlice*i - Math.PI/2); })
         .attr("class", "line")
         .style("stroke", "white")
-        .style("stroke-width", "2px");
+        .style("stroke-width", "1px");
 
     //Append the labels at each axis
     axis.append("text")
         .attr("class", "legend")
-        .style("font-size", "11px")
+        .style("font-size", "8px")
         .attr("text-anchor", "middle")
-        .attr("dy", "0.35em")
-        .attr("x", function(d, i){ return rScale(maxValue * cfg.labelFactor) * Math.cos(angleSlice*i - Math.PI/2); })
-        .attr("y", function(d, i){ return rScale(maxValue * cfg.labelFactor) * Math.sin(angleSlice*i - Math.PI/2); })
+        .attr("dy", "0.15em")
+        .attr("x", function(d, i){ return rScale(maxValue * 0.9*cfg.labelFactor) * Math.cos(angleSlice*i - Math.PI/2); })
+        .attr("y", function(d, i){ return rScale(maxValue * 0.9*cfg.labelFactor) * Math.sin(angleSlice*i - Math.PI/2); })
         .text(function(d){return d})
         .call(wrap, cfg.wrapWidth);
 
@@ -157,7 +155,7 @@ function RadarChart(id, data, options) {
         .style("fill-opacity", cfg.opacityArea)
         .on('mouseover', function (d,i){
             //Dim all blobs
-            d3.selectAll(".radarArea")
+            d3.select("this")
                 .transition().duration(200)
                 .style("fill-opacity", 0.1);
             //Bring back the hovered over blob
@@ -167,7 +165,7 @@ function RadarChart(id, data, options) {
         })
         .on('mouseout', function(){
             //Bring back all blobs
-            d3.selectAll(".radarArea")
+            d3.select(this)
                 .transition().duration(200)
                 .style("fill-opacity", cfg.opacityArea);
         });
@@ -186,7 +184,7 @@ function RadarChart(id, data, options) {
         .data(function(d,i) { return d; })
         .enter().append("circle")
         .attr("class", "radarCircle")
-        .attr("r", cfg.dotRadius)
+        .attr("r", 1)
         .attr("cx", function(d,i){ return rScale(d.value) * Math.cos(angleSlice*i - Math.PI/2); })
         .attr("cy", function(d,i){ return rScale(d.value) * Math.sin(angleSlice*i - Math.PI/2); })
         .style("fill", function(d,i,j) { return cfg.color(j); })

@@ -9,8 +9,6 @@ function Layout() {
     var calender = document.getElementById("calender");
     var main = document.getElementById("main");
     var information = document.getElementById("information");
-    var importance = document.getElementById("importance");
-    var test1 =document.getElementById("test1");
     var time_line = document.getElementById("time_line");
     var radar =document.getElementById("radar");
 
@@ -21,22 +19,19 @@ function Layout() {
     control.style.height = (body_height * 0.4 -  border) + "px";
 
     calender.style.width=(body_width * 0.15 -  border) + "px";
-    calender.style.height=(body_height * 0.6 -  3 * border) + "px";
+    calender.style.height=(body_height * 0.6) + "px";
 
     main.style.width = (body_width * 0.7 -  2 * border) + "px";
     main.style.height = (body_height * 0.7 -  border) + "px";
 
     information.style.width = (body_width * 0.15 - border) + "px";
-    information.style.height = (body_height * 0.35 -  2 * border) + "px";
+    information.style.height = (body_height * 0.55 -  border) + "px";
 
-    importance.style.width=(body_width * 0.15 - border) + "px";
-    importance.style.height=(body_height * 0.35 -  2 * border) + "px";
+    time_line.style.width = (body_width * 0.7 + 2*border)+ "px";
+    time_line.style.height = (body_height * 0.3) + "px";
 
-    time_line.style.width = (body_width * 0.7 -  border)+ "px";
-    time_line.style.height = (body_height * 0.3 - 3 * border) + "px";
-
-    radar.style.width = (body_width * 0.15 -  border) + "px";
-    radar.style.height = (body_height * 0.3 - 3 * border) + "px";
+    radar.style.width = (body_width * 0.15- border ) + "px";
+    radar.style.height = (body_height * 0.45 ) + "px";
 
     $(window).resize(function () {
         window.location.reload();

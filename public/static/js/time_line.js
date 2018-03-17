@@ -1,5 +1,8 @@
-chart("static/files/data.csv", "blue");
 
+
+
+
+chart("static/files/data.csv", "blue");
 var datearray = [];
 var colorrange = [];
 

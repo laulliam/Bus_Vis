@@ -40,10 +40,6 @@ console.log(map.getCenter());*/
         //maxBounds: bounds // Sets bounds as max
     });
 
-    var data_section;
-
-    //DrawSection(section_info);
-
     function DrawStation(station_info) {
 
         var features_point = [];
@@ -81,7 +77,7 @@ console.log(map.getCenter());*/
                 "source": "station_source",
                 "type": "circle",
                 "paint": {
-                    "circle-radius": 2,
+                    "circle-radius": 3,
                     "circle-color": ['get', 'color']//station_color
                 }
             });
@@ -93,6 +89,55 @@ console.log(map.getCenter());*/
                 .setLngLat(e.features[0].geometry.coordinates)
                 .setHTML(e.features[0].properties.description)
                 .addTo(map);
+
+            //update_stream(e.features[0].properties.station_id);
+            function update_stream(station_id) {
+                   $.ajax({
+                    url: "/sub_routes_numbers",    //请求的url地址
+                    data:{
+                        station_id:station_id
+                    },
+                    dataType: "json",   //返回格式为json
+                    async: true, //请求是否异步，默认为异步，这也是ajax重要特性
+                    type: "GET",   //请求方式
+                    contentType: "application/json",
+                    beforeSend: function () {//请求前的处理
+                    },
+                    success: function (routes_numbers, textStatus) {
+
+                        var routes_id = routes_numbers[0].sub_routes_id.split(",");
+
+                        routes_id.forEach(function (d) {
+                            $.ajax({
+                                url: "/sub_route_data",    //请求的url地址
+                                data:{
+                                    sub_route_id:d,
+                                    station_id:station_id
+                                },
+                                dataType: "json",   //返回格式为json
+                                async: true, //请求是否异步，默认为异步，这也是ajax重要特性
+                                type: "GET",   //请求方式
+                                contentType: "application/json",
+                                beforeSend: function () {//请求前的处理
+                                },
+                                success: function (sub_route_data, textStatus) {
+                                    console.log(sub_route_data);
+                                },
+                                complete: function () {//请求完成的处理
+                                },
+                                error: function () {//请求出错处理
+                                }
+                            });
+                        });
+                    },
+                    complete: function () {//请求完成的处理
+                    },
+                    error: function () {//请求出错处理
+                    }
+                });
+
+
+            }
 
             // Change the cursor to a pointer when the mouse is over the places layer.
             map.on('mouseenter', 'station_point', function () {

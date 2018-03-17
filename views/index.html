@@ -30,11 +30,15 @@
 
     <link rel="stylesheet" href="static/css/lib/dat.gui.css">
 
-    <script src="static/lib/Radar_Chart.js"></script>
+    <script src="static/lib/radarChart.js"></script>
 
     <script src="static/mapbox/mapbox.js"></script>
 
     <link rel="stylesheet" href="static/mapbox/mapbox.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
 
 </head>
 
@@ -56,24 +60,20 @@
 
     <div id="main"></div>
 
-    <div id="information&importance" style="float: right">
+    <div id="information" style="float: right"></div>
 
-        <div id="information"></div>
-
-        <div id="importance"></div>
-
+    <div id="radar" style="float: right">
+        <div class="radarChart" style="align-content: center" ></div>
     </div>
-
-    <div id="system-bottom" style="float: left">
 
     <div id="time_line">
         <div class="chart">
         </div>
     </div>
 
-    <div id="radar" class="radarChart"></div>
 
-    </div>
+
+
 
 </div>
 
