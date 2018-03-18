@@ -1,5 +1,5 @@
 #time_line {
-
+    position: relative;
     float: left;
     border: dashed gray;
     border-width: 1px 0px 1px 0px;

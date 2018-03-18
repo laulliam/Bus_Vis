@@ -40,6 +40,48 @@ console.log(map.getCenter());*/
         //maxBounds: bounds // Sets bounds as max
     });
 
+    Init_tools();
+    function Init_tools() {
+        var mainChart_tool = d3.select("#main")
+            .append("div")
+            .attr("width",100)
+            .attr("height",30)
+            .attr("class", "btn-group btn-group-xs")
+            .style({
+                "position": "absolute",
+                "z-index": "999",
+                "top": "1%",
+                "left": "10%"
+            })
+            .selectAll("btn btn-default")
+            .data(["play", "user", "unchecked"])
+            .enter()
+            .append("button")
+            .attr({
+                "type": "button",
+                "class": "btn btn-default"
+            })
+            .attr("title", function (d) {
+                switch (d) {
+                    case "play":
+                        return "zz";
+                    case "user":
+                        return "xx";
+                    case "unchecked":
+                        return "cc";
+                }
+            });
+
+        mainChart_tool.append("span")
+            .attr("class", function (d) {
+                console.log(d);
+                return "glyphicon glyphicon-"+ d;
+            })
+            .attr("aria-hidden",true);
+    }
+
+    DrawSection(section_info);
+
     function DrawStation(station_info) {
 
         var features_point = [];
