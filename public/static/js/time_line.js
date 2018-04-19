@@ -1,12 +1,7 @@
-
-
-
-
-chart("static/files/data.csv", "blue");
 var datearray = [];
 var colorrange = [];
 
-function chart(csvpath, color) {
+function chart(dataset) {
 
     colorrange = [d3.rgb(79, 107, 218), d3.rgb(165, 241, 88), d3.rgb(38, 232, 145),d3.rgb(27, 191, 202), d3.rgb(32, 227, 155),d3.rgb(100, 80, 195)];
 
@@ -35,8 +30,7 @@ function chart(csvpath, color) {
 
     var xAxis = d3.svg.axis()
         .scale(x)
-        .orient("bottom")
-        .ticks(d3.time.weeks);
+        .orient("bottom");
 
     var yAxis = d3.svg.axis()
         .scale(y);
@@ -44,14 +38,12 @@ function chart(csvpath, color) {
     var yAxisr = d3.svg.axis()
         .scale(y);
 
+
     var stack = d3.layout.stack()
         .offset("silhouette")
         .values(function(d) { return d.values; })
         .x(function(d) { return d.date; })
         .y(function(d) { return d.value; });
-
-    var nest = d3.nest()
-        .key(function(d) { return d.key; });
 
     var area = d3.svg.area()
         .interpolate("cardinal")
@@ -59,68 +51,102 @@ function chart(csvpath, color) {
         .y0(function(d) { return y(d.y0); })
         .y1(function(d) { return y(d.y0 + d.y); });
 
-    var svg = d3.select(".chart").append("svg")
+    var svg = d3.select("#time_line")
+        .append("svg")
+        .attr("id","time_svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-        //.call();
+    //.call();
 
-    var zoom = d3.behavior.zoom()
-        .x(x)
-        .scaleExtent([5,10])
-        .on("zoom",zoomed);
 
-    function zoomed() {
-        svg.selectAll("path").call(x);
+    var extent_date = d3.extent(dataset,function (d) {
+        return d.start_date_time;
+    });
+
+    var nest = d3.nest().key(function(d) { return d.route_id});
+
+    var routes = nest.entries(dataset);
+
+    routes.forEach(function (d) {
+        d.values = data_process(d.values);
+    });
+
+    function data_process(route_data) {
+
+        var data= [];
+        var date1 = extent_date[0];
+        var date2 = extent_date[1];
+        var minmis= 60*1000;
+        var now=date1;
+        while(now<=date2){
+            var flag = false;
+            route_data.forEach(function (d) {
+
+                flag == false;
+                if(now.getHours() == d.start_date_time.getHours()&&now.getMinutes() == d.start_date_time.getMinutes())
+                {
+                    data.push({date:d.start_date_time,value:d.stay_time});
+                    flag = true;
+                }
+            });
+
+            if(flag !=true)
+                data.push({date:now,value:Math.round(Math.random()*100)});
+
+            now=new Date(now.getTime()+minmis);
+
+        }
+
+
+
+        return data;
+
     }
 
-    d3.csv(csvpath, function(data) {
-        data.forEach(function(d) {
-            d.date = format.parse(d.date);
-            d.value = +d.value;
-        });
+    var layers = stack(routes);
 
-        var layers = stack(nest.entries(data));
+    console.log(layers);
 
-        x.domain(d3.extent(data, function(d) { return d.date; }));
-        y.domain([0, d3.max(data, function(d) { return d.y0 + d.y; })]);
+    x.domain(d3.extent(dataset, function(d) { return d.start_date_time; }));
+    y.domain([0, d3.max(dataset, function(d) { return d.stay_time+d.stay_time/2; })]);
 
-        svg.selectAll(".layer")
-            .data(layers)
-            .enter()
-            .append("path")
-            .attr("class", "layer")
-            .attr("d", function(d) { return area(d.values); })
-            .style("fill", function(d, i) { return z(i); });
+    svg.selectAll(".layer")
+        .data(layers)
+        .enter()
+        .append("path")
+        .attr("class", "layer")
+        .attr("d", function(d) {
+            return area(d.values); })
+        .style("fill", function(d, i) { return z(i); });
 
 
-        svg.append("g")
-            .attr("class", "x axis")
-            .attr("transform", "translate(0," + height + ")")
-            .call(xAxis);
+    svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis);
 
-        svg.selectAll(".layer")
-            .attr("opacity", 1)
-            .on("mouseover", function(d, i) {
-                svg.selectAll(".layer").transition()
-                    .duration(250)
-                    .attr("opacity", function(d, j) {
-                        return j != i ? 0.6 : 1;
-                    })})
+    svg.selectAll(".layer")
+        .attr("opacity", 1)
+        .on("mouseover", function(d, i) {
+            svg.selectAll(".layer").transition()
+                .duration(250)
+                .attr("opacity", function(d, j) {
+                    return j != i ? 0.6 : 1;
+                })})
 
-            .on("mousemove", function(d, i) {
-                var selected = (d.values);
-                for (var k = 0; k < selected.length; k++) {
-                    datearray[k] = selected[k].date
-                    datearray[k] = datearray[k].getMonth() + datearray[k].getDate();
-                }
-            })
-            .on("mouseout", function(d, i) {
-                svg.selectAll(".layer")
-                    .transition()
-                    .duration(250)
-                    .attr("opacity", "1");
-            })
-    });
+        .on("mousemove", function(d, i) {
+            var selected = (d.values);
+            for (var k = 0; k < selected.length; k++) {
+                datearray[k] = selected[k].date;
+                datearray[k] = datearray[k].getMonth() + datearray[k].getDate();
+            }
+        })
+        .on("mouseout", function(d, i) {
+            svg.selectAll(".layer")
+                .transition()
+                .duration(250)
+                .attr("opacity", "1");
+        })
 }

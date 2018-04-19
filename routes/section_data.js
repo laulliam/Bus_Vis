@@ -1,22 +1,27 @@
-/**
- * Created by Liang Liu on 2018/2/2.
- */
-/**
- * Created by Liang Liu on 2018/1/20.
- */
+
 var express = require('express');
 var router = express.Router();
 
 var MongoClient = require('mongodb').MongoClient;
 var DB_CONN_STR = 'mongodb://localhost:27017/traffic_data';
 
-router.get('/all_routes', function(req, res, next) {
+router.get('/section_route_data', function(req, res, next) {
+
     var selectData = function(db, callback) {
         //连接到表
-        var collection = db.collection('all_routes');
+        var collection = db.collection('section_run_data');
         //查询数据
         var whereStr = {}
-        collection.find({}).toArray(function(err, result) {
+        collection.find({"sub_route_id" : "38001","start_date_time":{$gte:new Date(req.query.year,req.query.mouth,req.query.day,0,0),$lte:new Date(req.query.years,req.query.mouths,req.query.days,0,0)}},
+            {
+                "from_station_id":0,
+                "id":0,
+                "stay_time":0,
+                "section_id":0,
+                "from_station_name":0,
+                "_id":0
+            })
+            .toArray(function(err, result) {
             if(err)
             {
                 console.log('Error:'+ err);
@@ -37,15 +42,14 @@ router.get('/all_routes', function(req, res, next) {
 
 router.get('/route_search', function(req, res, next) {
 
-    var sub_route_id = req.query.sub_route_id;
-    console.log(typeof (sub_route_id),sub_route_id);
+    var route_id = req.query.route_id;
+    console.log(typeof (route_id),route_id);
     var selectData = function(db, callback) {
         //连接到表
         var collection = db.collection('all_routes');
         //查询数据
-        var whereStr = sub_route_id;
-        console.log(whereStr);
-        collection.find({sub_route_id:{$regex:whereStr}}).toArray(function(err, result) {
+        var whereStr = {}
+        collection.find({sub_route_id:{$regex:route_id}}).toArray(function(err, result) {
             if(err)
             {
                 console.log('Error:'+ err);
@@ -63,7 +67,6 @@ router.get('/route_search', function(req, res, next) {
     });
 
 });
-
 
 /* GET home page. */
 router.get('/', function(req, res, next) {

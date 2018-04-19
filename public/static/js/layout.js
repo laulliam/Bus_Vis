@@ -16,18 +16,18 @@ function Layout() {
     header.style.height = 20 + "px";
 
     control.style.width=(body_width * 0.15 - border) + "px";
-    control.style.height = (body_height * 0.4 -  4*border) + "px";
+    control.style.height = 300 + "px";
 
     calender.style.width=(body_width * 0.15 -  border) + "px";
-    calender.style.height=(body_height * 0.6  -  border) + "px";
+    calender.style.height=(body_height - 300  -  border) + "px";
 
-    main.style.width = (body_width * 0.7 -  2 * border) + "px";
-    main.style.height = (body_height * 0.7 -  4*border) + "px";
+    main.style.width = (body_width * 0.7) + "px";
+    main.style.height = (body_height * 0.7 -  border) + "px";
 
     information.style.width = (body_width * 0.15 - border) + "px";
-    information.style.height = (body_height * 0.55 -  4*border) + "px";
+    information.style.height = (body_height * 0.55 - border) + "px";
 
-    time_line.style.width = (body_width * 0.7 -  2 * border)+ "px";
+    time_line.style.width = (body_width * 0.7)+ "px";
     time_line.style.height = (body_height * 0.3) + "px";
 
     radar.style.width = (body_width * 0.15- border ) + "px";

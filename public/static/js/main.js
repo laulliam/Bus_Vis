@@ -44,13 +44,11 @@ console.log(map.getCenter());*/
     function Init_tools() {
         var mainChart_tool = d3.select("#main")
             .append("div")
-            .attr("width",100)
-            .attr("height",30)
-            .attr("class", "btn-group btn-group-xs")
+            .attr("class", "btn-group btn-group-sm")
             .style({
                 "position": "absolute",
                 "z-index": "999",
-                "top": "1%",
+                "top": "-6px",
                 "left": "10%"
             })
             .selectAll("btn btn-default")
@@ -74,10 +72,106 @@ console.log(map.getCenter());*/
 
         mainChart_tool.append("span")
             .attr("class", function (d) {
-                console.log(d);
                 return "glyphicon glyphicon-"+ d;
             })
             .attr("aria-hidden",true);
+
+        mainChart_tool.on("click", function (d) {
+            switch (d) {
+                case "zz":
+                    console.log("ss");
+                    hide_show_layer();
+                    break;
+                case "resize-full":
+                    break;
+                case "unchecked":
+                    break;
+            }
+        });
+
+        var mainChart_search = d3.select("#main")
+            .append("div")
+            .attr("height",20)
+            .attr("class","input-group input-group-sm")
+            .style({
+                "position": "absolute",
+                "z-index": "999",
+                "top": "1%",
+                "left": "71%",
+                "width":"25%"
+            });
+
+        mainChart_search.append("span")
+            .attr("class","input-group-addon")
+            .append("span")
+            .attr("class", "glyphicon glyphicon-search");
+
+        mainChart_search.append("input")
+            .attr("id","input_search")
+            .attr("class","form-control")
+            .attr("placeholder","请输入公交路线");
+
+        var p =d3.select("#input_search").append("p");
+
+            p.append("span")
+            .attr("id","search-result");
+    }
+
+$(document).ready(function(){
+    $("#input_search").keyup(function(){
+        var q = $("#input_search").val(); // #获取搜索框输入的值
+            input_search(q);
+        $('#input_search').keydown(function(){
+            $('#search-result').empty();
+        });
+        $('#input_search').blur(function(){
+            $('#search-result').empty();
+        })
+    });
+
+});
+
+
+function input_search(q) {
+
+    console.log(q);
+    $.ajax({
+        url: "/route_search",    //请求的url地址
+        data:{
+            sub_route_id: q
+        },
+        dataType: "json",   //返回格式为json
+        async: true, //请求是否异步，默认为异步，这也是ajax重要特性
+        type: "GET",   //请求方式
+        contentType: "application/json",
+        beforeSend: function () {//请求前的处理
+        },
+        success: function (route, textStatus) {
+            console.log(route);
+            for (var i = 5; i >= 0; i--) {
+                $('#search-result').append(route[i]+'<br/>')      //#加入到search-result部分显示
+            };
+
+        },
+        complete: function () {//请求完成的处理
+        },
+        error: function () {//请求出错处理
+        }
+    });
+}
+
+
+function hide_show_layer() {
+
+        var visibility = map.getLayoutProperty("station_point", 'visibility');
+
+        if (visibility === 'visible') {
+            map.setLayoutProperty("station_point", 'visibility', 'none');
+            this.className = '';
+        } else {
+            this.className = 'active';
+            map.setLayoutProperty("station_point", 'visibility', 'visible');
+        }
     }
 
     DrawSection(section_info);
@@ -118,6 +212,9 @@ console.log(map.getCenter());*/
                 "id": "station_point",
                 "source": "station_source",
                 "type": "circle",
+                'layout': {
+                    'visibility': 'visible'
+                },
                 "paint": {
                     "circle-radius": 3,
                     "circle-color": ['get', 'color']//station_color
@@ -132,8 +229,8 @@ console.log(map.getCenter());*/
                 .setHTML(e.features[0].properties.description)
                 .addTo(map);
 
-            //update_stream(e.features[0].properties.station_id);
-            function update_stream(station_id) {
+            //update_radar(e.features[0].properties.station_id);
+            function update_radar(station_id) {
                    $.ajax({
                     url: "/sub_routes_numbers",    //请求的url地址
                     data:{
@@ -333,7 +430,7 @@ console.log(map.getCenter());*/
 
         });
 
-        data_section = {
+        var data_section = {
             "type": "FeatureCollection",
             "features": features_line
         };
@@ -358,10 +455,41 @@ console.log(map.getCenter());*/
 
         map.on('click', 'section', function (e) {
 
-            new mapboxgl.Popup()
-                .setLngLat(e.features[0].geometry.coordinates[2])
-                .setHTML(e.features[0].properties.section_id)
-                .addTo(map);
+            updata_stream(e.features[0].properties.section_id);
+
+            function updata_stream(section_id) {
+
+                console.log(section_id);
+
+                $.ajax({
+                    url: "/section_id_data",    //请求的url地址
+                    data:{
+                        section_id:section_id.toLocaleString()
+                        //date_extent:date_extent
+                    },
+                    dataType: "json",   //返回格式为json
+                    async: true, //请求是否异步，默认为异步，这也是ajax重要特性
+                    type: "GET",   //请求方式
+                    contentType: "application/json",
+                    beforeSend: function () {//请求前的处理
+                    },
+                    success: function (section_data, textStatus) {
+
+                        section_data.forEach(function (d) {
+                            d.start_date_time = new Date(d.start_date_time);
+                            d.start_date_time.setSeconds(0,0);
+                            d.stay_time = +d.stay_time;
+                        });
+
+                        d3.select("#time_svg").remove("*");
+                        chart(section_data);
+                    },
+                    complete: function () {//请求完成的处理
+                    },
+                    error: function () {//请求出错处理
+                    }
+                });
+            }
         });
 
         map.on('mouseenter', 'section', function () {

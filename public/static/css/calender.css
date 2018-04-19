@@ -5,8 +5,8 @@
 }
 
 rect.bordered {
-    stroke: #E6E6E6;
-    stroke-width:2px;
+    stroke: rgba(85, 85, 85, 0.95);
+    stroke-width:1px;
 }
 
 text.mono {
