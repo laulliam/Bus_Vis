@@ -1,0 +1,20 @@
+#message_cloud{
+    border: dashed gray;
+    border-width: 1px 1px 0 1px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 300;
+    fill: #242424;
+    text-align: center;
+    cursor: default;
+    align-content: center;
+}
+
+.legend {
+    font-family: 'Raleway', sans-serif;
+    fill: #333333;
+}
+
+.tooltip {
+    fill: #333333;
+}

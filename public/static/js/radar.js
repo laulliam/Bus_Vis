@@ -1,7 +1,7 @@
 /**
  * Created by Liang Liu on 2018/1/27.
  */
-var margin = {top: 15, right: 10, bottom: 0, left: 10};
+var margin = {top: 20, right: 20, bottom: 0, left: 20};
 
 var border = 1;
 var all_view = $("#all_view");
@@ -9,11 +9,7 @@ var body_width = all_view.width();
 var body_height = all_view.height()-20;
 
 var width = (body_width * 0.15 -  border);
-var height = (body_height * 0.3 - 3 * border);
-
-//////////////////////////////////////////////////////////////
-////////////////////////// Data //////////////////////////////
-//////////////////////////////////////////////////////////////
+var height = (body_height * 0.25 );
 
 var data = [
     [//iPhone

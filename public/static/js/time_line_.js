@@ -21,7 +21,7 @@ function charts(csvpath, color) {
      var body_height = all_view.height()-20;
 
      var width = (body_width * 0.7 - 2 * border)-margin.left-margin.right;
-     var height = (body_height * 0.3 - 3 * border)-margin.top-margin.bottom;
+     var height = (body_height * 0.25 - 3 * border)-margin.top-margin.bottom;
 
      var x = d3.time.scale()
          .range([0, width]);

@@ -9,6 +9,7 @@ function Layout() {
     var calender = document.getElementById("calender");
     var main = document.getElementById("main");
     var information = document.getElementById("information");
+    var message_cloud=document.getElementById("message_cloud");
     var time_line = document.getElementById("time_line");
     var radar =document.getElementById("radar");
 
@@ -22,16 +23,19 @@ function Layout() {
     calender.style.height=(body_height - 300  -  border) + "px";
 
     main.style.width = (body_width * 0.7) + "px";
-    main.style.height = (body_height * 0.7 -  border) + "px";
+    main.style.height = (body_height * 0.75 -  border) + "px";
 
     information.style.width = (body_width * 0.15 - border) + "px";
-    information.style.height = (body_height * 0.55 - border) + "px";
+    information.style.height = (body_height * 0.3 - border) + "px";
+
+    message_cloud.style.width = (body_width * 0.15 - border) + "px";
+    message_cloud.style.height = (body_height * 0.45 ) + "px";
 
     time_line.style.width = (body_width * 0.7)+ "px";
-    time_line.style.height = (body_height * 0.3) + "px";
+    time_line.style.height = (body_height * 0.25) + "px";
 
     radar.style.width = (body_width * 0.15- border ) + "px";
-    radar.style.height = (body_height * 0.45 ) + "px";
+    radar.style.height = (body_height * 0.25 ) + "px";
 
     $(window).resize(function () {
         window.location.reload();

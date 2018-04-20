@@ -117,7 +117,7 @@ console.log(map.getCenter());*/
             .attr("id","search-result");
     }
 
-$(document).ready(function(){
+    $(document).ready(function(){
     $("#input_search").keyup(function(){
         var q = $("#input_search").val(); // #获取搜索框输入的值
             input_search(q);
@@ -132,7 +132,7 @@ $(document).ready(function(){
 });
 
 
-function input_search(q) {
+    function input_search(q) {
 
     console.log(q);
     $.ajax({
@@ -161,7 +161,7 @@ function input_search(q) {
 }
 
 
-function hide_show_layer() {
+    function hide_show_layer() {
 
         var visibility = map.getLayoutProperty("station_point", 'visibility');
 
@@ -229,7 +229,8 @@ function hide_show_layer() {
                 .setHTML(e.features[0].properties.description)
                 .addTo(map);
 
-            //update_radar(e.features[0].properties.station_id);
+            update_radar(e.features[0].properties.station_id);
+
             function update_radar(station_id) {
                    $.ajax({
                     url: "/sub_routes_numbers",    //请求的url地址
