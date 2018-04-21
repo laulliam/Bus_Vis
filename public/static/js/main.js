@@ -1,29 +1,27 @@
 /**
  * Created by Liang Liu on 2018/1/20.
  */
-
 /*var southWest = L.latLng(31.32255387, 104.57336425),
     northEast = L.latLng(31.59725256, 104.91016387),
-    mybounds = L.latLngBounds(southWest, northEast);
+    my_bounds = L.latLngBounds(southWest, northEast);
 
 var osmUrl = 'http://localhost:8888/tiles/{z}/{x}/{y}.png',
-    osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    osm_Attr = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     osm = L.tileLayer(osmUrl, {
-        //maxBounds:mybounds,
+        //maxBounds:my_bounds,
         minZoom: 12,
         maxZoom: 18,
-        attribution: osmAttrib
+        attribution: osm_Attr
     });
 
 var map = L.map('main')
     .setView([31.46,104.7416], 12)
     .addLayer(osm);
 
-map.setMaxBounds(mybounds);
+map.setMaxBounds(my_bounds);
 
 console.log(map.getBounds());
 console.log(map.getCenter());*/
-    //mapbox
 
     var bounds = [
         [104.57336425, 31.32255387], // Southwest coordinates
@@ -247,28 +245,48 @@ console.log(map.getCenter());*/
 
                         var routes_id = routes_numbers[0].sub_routes_id.split(",");
 
-                        routes_id.forEach(function (d) {
-                            $.ajax({
-                                url: "/sub_route_data",    //请求的url地址
-                                data:{
-                                    sub_route_id:d,
-                                    station_id:station_id
-                                },
-                                dataType: "json",   //返回格式为json
-                                async: true, //请求是否异步，默认为异步，这也是ajax重要特性
-                                type: "GET",   //请求方式
-                                contentType: "application/json",
-                                beforeSend: function () {//请求前的处理
-                                },
-                                success: function (sub_route_data, textStatus) {
-                                    console.log(sub_route_data);
-                                },
-                                complete: function () {//请求完成的处理
-                                },
-                                error: function () {//请求出错处理
+                        console.log(routes_id);
+
+                        var temp = [];
+
+                        routes_id.forEach(function (route_id) {
+
+                            var hours_data =[];
+                            var hours_temp = [24];
+
+                            for(var i =0;i<24;i++) hours_temp[i] =0;
+
+                            var route_data = route_query(station_id,route_id,new Date(2016,0,1,7,0,0),new Date(2016,0,2,7,0,0));
+
+                            route_data.forEach(function (d) {
+
+                                if(d.start_date_time.getMinutes()>=30)
+                                {
+                                    d.start_date_time.setHours(d.start_date_time.getHours()+1);
+                                    d.start_date_time.setMinutes(0,0);
                                 }
+                                else
+                                    d.start_date_time.setMinutes(0,0);
+
+                                hours_temp[d.start_date_time.getHours()]+=d.stay_time;
+
                             });
+
+                            for(var i =0;i<24;i++)
+                            {
+                                if(i<10)
+                                    hours_data.push({axis:"0"+i,value:hours_temp[i]});
+                                else
+                                    hours_data.push({axis:""+i,value:hours_temp[i]});
+                            }
+
+                            temp.push(hours_data);
                         });
+
+                        console.log(temp);
+
+                        routes_radar(temp);
+
                     },
                     complete: function () {//请求完成的处理
                     },
@@ -277,6 +295,42 @@ console.log(map.getCenter());*/
                 });
 
 
+            }
+
+            function route_query(station_id,route_id,start_time,end_time) {
+
+                var route_data;
+
+                $.ajax({
+                    url: "/sub_route_data",    //请求的url地址
+                    data:{
+                        sub_route_id:route_id,
+                        station_id:station_id,
+                        start_time:start_time,
+                        end_time:end_time
+                    },
+                    dataType: "json",   //返回格式为json
+                    async: false, //请求是否异步，默认为异步，这也是ajax重要特性
+                    type: "GET",   //请求方式
+                    contentType: "application/json",
+                    beforeSend: function () {//请求前的处理
+                    },
+                    success: function (sub_route_data, textStatus) {
+
+                        sub_route_data.forEach(function (d) {
+                            d.start_date_time=new Date(d.start_date_time);
+                            d.end_date_time = new Date(d.end_date_time);
+                        });
+
+                        route_data = sub_route_data;
+                    },
+                    complete: function () {//请求完成的处理
+                    },
+                    error: function () {//请求出错处理
+                    }
+                });
+
+                return route_data;
             }
 
             // Change the cursor to a pointer when the mouse is over the places layer.
@@ -483,7 +537,7 @@ console.log(map.getCenter());*/
                         });
 
                         d3.select("#time_svg").remove("*");
-                        chart(section_data);
+                        //chart(section_data);
                     },
                     complete: function () {//请求完成的处理
                     },
