@@ -10,7 +10,7 @@ var station = require('./routes/station');
 var section = require('./routes/section');
 var section_run_data = require('./routes/section_run_data');
 var all_routes = require('./routes/all_routes');
-var sub_route_data = require('./routes/sub_route_data');
+var sub_route_data = require('./routes/station_run_data');
 var section_data = require('./routes/section_data');
 
 var app = express();

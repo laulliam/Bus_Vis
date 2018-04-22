@@ -11,12 +11,14 @@ var MongoClient = require('mongodb').MongoClient;
 var DB_CONN_STR = 'mongodb://localhost:27017/traffic_data';
 
 router.get('/all_routes', function(req, res, next) {
+
+    var route_id = req.query.route_id;
     var selectData = function(db, callback) {
         //连接到表
         var collection = db.collection('all_routes');
         //查询数据
         var whereStr = {}
-        collection.find({}).toArray(function(err, result) {
+        collection.find({"sub_route_id":route_id}).toArray(function(err, result) {
             if(err)
             {
                 console.log('Error:'+ err);
@@ -44,7 +46,6 @@ router.get('/route_search', function(req, res, next) {
         var collection = db.collection('all_routes');
         //查询数据
         var whereStr = sub_route_id;
-        console.log(whereStr);
         collection.find({sub_route_id:{$regex:whereStr}}).toArray(function(err, result) {
             if(err)
             {

@@ -15,7 +15,7 @@ function routes_radar(route_data) {
     var height = (body_height * 0.25 );
 
     var color = d3.scale.ordinal()
-        .range(["#EDC951","#CC333F","#00A0B0"]);
+        .range(["#EDC951","#CC333F","#00A0B0","#ff5a29","#2f71b0","#ff9b15","#570eb0","#883378"]);
 
     var radarChartOptions = {
         w: width*0.85,

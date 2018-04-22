@@ -15,9 +15,7 @@
             beforeSend: function () {//请求前的处理
             },
             success: function (station, textStatus) {
-                console.log(d3.max(station,function (d) {
-                    return d.routes_number;
-                }));
+
                 DrawStation(station);
             },
             complete: function () {//请求完成的处理

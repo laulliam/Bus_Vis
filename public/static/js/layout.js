@@ -22,7 +22,7 @@ function Layout() {
     calender.style.width=(body_width * 0.15 -  border) + "px";
     calender.style.height=(body_height - 300  -  border) + "px";
 
-    main.style.width = (body_width * 0.7) + "px";
+    main.style.width = (body_width * 0.7+2*border) + "px";
     main.style.height = (body_height * 0.75 -  border) + "px";
 
     information.style.width = (body_width * 0.15 - border) + "px";
