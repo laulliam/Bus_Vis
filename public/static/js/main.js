@@ -38,9 +38,15 @@ var map = new mapboxgl.Map({
     //maxBounds: bounds // Sets bounds as max
 });
 
-d3.select("#main").style({"z-index":80});
+//d3.select("#main").style({"z-index":80});
+
+var data_section;
 
 Init_tools();
+
+//DrawSection(section_info);
+
+//Section_render(new Date(2016,0,1,7,0,0),new Date(2016,0,1,8,0,0));
 
 function Init_tools() {
 
@@ -81,8 +87,6 @@ function Init_tools() {
     mainChart_tool.on("click", function (d) {
         switch (d) {
             case "zz":
-                console.log("ss");
-                hide_show_layer();
                 break;
             case "resize-full":
                 break;
@@ -105,8 +109,6 @@ function Init_tools() {
             "width":"15%"
         });
 
-    var input_span =  mainChart_search.append("span");
-
     mainChart_search.append("input")
         .attr("id","input_search")
         .attr("class","form-control input-sm")
@@ -116,8 +118,6 @@ function Init_tools() {
         .attr("class","input-group-addon")
         .append("span")
         .attr("class", "glyphicon glyphicon-search");
-
-
 
     var suggest_div = d3.select("#main")
         .append("span")
@@ -142,87 +142,185 @@ function Init_tools() {
             "left":"-13%",
             "min-width": $("#input_search").width()
         });
+}
 
-    $(document).ready(function(){
+$(document).ready(function(){
 
-        $("#input_search").keyup(function(){
+    $("#input_search").keyup(function(){
 
-            var val = $("#input_search").val(); // #获取搜索框输入的值
+        console.log(1);
 
-            input_search(val);
+        Draw_route(27001);
 
-            $('#input_search').keydown(function(){
-                d3.select('.dropdown-menu').selectAll("li").remove();
-            });
-            $('#input_search').blur(function(){
-                //d3.select('.dropdown-menu').selectAll("li").remove();
-            })
+        DrawSection(section_info);
+
+        var val = $("#input_search").val(); // #获取搜索框输入的值
+
+        input_search(val,d3.select(".dropdown-menu"));
+
+        $('#input_search').keydown(function(){
+            d3.select('.dropdown-menu').selectAll("li").remove();
         });
+        $('#input_search').blur(function(){
+            //d3.select('.dropdown-menu').selectAll("li").remove();
+        })
+    });
+});
 
-        $("ul li").click(function () {
-                console.log(d.sub_route_id);
-                $("#input_search").val(d.sub_route_id);
-                Draw_route(38001);
-            })
+function input_search(val,obj) {
 
+    $.ajax({
+        url: "/route_search",    //请求的url地址
+        data:{
+            sub_route_id: val
+        },
+        dataType: "json",   //返回格式为json
+        async: false, //请求是否异步，默认为异步，这也是ajax重要特性
+        type: "GET",   //请求方式
+        contentType: "application/json",
+        beforeSend: function () {//请求前的处理
+        },
+        success: function (route, textStatus) {
+
+            route.forEach(function (d) {
+
+
+                obj.append("li")
+                    .attr("class","suggest_li")
+                    .attr("role","presentation")
+                    .attr("id","li_"+d.sub_route_id+"");
+
+                d3.select("#li_"+d.sub_route_id+"")
+                    .append("a")
+                    .attr("class","route_id_li")
+                    .attr("role","menuitem")
+                    .attr("tabindex","-1")
+                    .attr("href","javascript:void(0)")
+                    .text(d.sub_route_id)
+                    .on("click",function () {
+                        console.log( d3.select(this));
+
+                    });
+
+            });
+
+        },
+        complete: function () {//请求完成的处理
+
+        },
+        error: function () {//请求出错处理
+        }
+    });
+}
+
+function Draw_route(route_id) {
+
+    $.ajax({
+        url: "/all_routes",    //请求的url地址
+        data:{
+            route_id:route_id
+        },
+        dataType: "json",   //返回格式为json
+        async: false, //请求是否异步，默认为异步，这也是ajax重要特性
+        type: "GET",   //请求方式
+        contentType: "application/json",
+        beforeSend: function () {//请求前的处理
+        },
+        success: function (routes, textStatus) {
+
+            var section_arr = routes[0].path.split(',');
+
+            var route_path = [];
+
+            section_arr.forEach(function (section_id) {
+
+                $.ajax({
+                    url: "/section_",    //请求的url地址
+                    data:{
+                        section_id: section_id
+                    },
+                    dataType: "json",   //返回格式为json
+                    async: false, //请求是否异步，默认为异步，这也是ajax重要特性
+                    type: "GET",   //请求方式
+                    contentType: "application/json",
+                    beforeSend: function () {//请求前的处理
+                    },
+                    success: function (section, textStatus) {
+
+                        section.forEach(function (d) {
+                            d.path = eval(d.path);
+                            d.path.forEach(function (s) {
+                                var tem = s[0];
+                                s[0] = s[1];
+                                s[1] = tem;
+                            });
+                        });
+
+                        section.forEach(function (d) {
+                            route_path.push(d.path);
+                        });
+                    },
+                    complete: function () {//请求完成的处理
+                    },
+                    error: function () {//请求出错处理
+                    }
+                });
+            });
+
+            draw_section(route_path,route_id);
+
+        },
+        complete: function () {//请求完成的处理
+        },
+        error: function () {//请求出错处理
+        }
     });
 
-    function input_search(val) {
+}
 
-        $.ajax({
-            url: "/route_search",    //请求的url地址
-            data:{
-                sub_route_id: val
+function draw_section(route_data,route_id) {
+
+    console.log(route_data);
+
+    route_data.forEach(function (d,i) {
+
+        var features_line = [];
+
+        features_line.push({
+            'type': 'Feature',
+            'properties':{
+                'color':"#c8c6c4",
             },
-            dataType: "json",   //返回格式为json
-            async: true, //请求是否异步，默认为异步，这也是ajax重要特性
-            type: "GET",   //请求方式
-            contentType: "application/json",
-            beforeSend: function () {//请求前的处理
-            },
-            success: function (route, textStatus) {
-
-                route.forEach(function (d) {
-
-                    //console.log(d.sub_route_id);
-
-                    suggest_ul.append("li")
-                        .attr("class","suggest_li")
-                        .attr("role","presentation")
-                        .attr("id","li_"+d.sub_route_id+"");
-
-                    d3.select("#li_"+d.sub_route_id+"")
-                        .append("a")
-                        .attr("role","menuitem")
-                        .attr("tabindex","-1")
-                        .attr("href","javascript:void(0)")
-                        .text(d.sub_route_id);
-
-                });
-
-            },
-            complete: function () {//请求完成的处理
-            },
-            error: function () {//请求出错处理
+            'geometry': {
+                'type': 'LineString',
+                'coordinates': d
             }
         });
-    }
+
+        var data_section = {
+            "type": "FeatureCollection",
+            "features": features_line
+        };
+
+        map.on("load", function () {
+
+            map.addSource("route_source_"+route_id+i, {
+                'type': 'geojson',
+                'data': data_section
+            });
+
+            map.addLayer({
+                'id': 'route_'+route_id+i,
+                'type': 'line',
+                'source': 'route_source_'+route_id+i,
+                'paint': {
+                    'line-width': 2,
+                    'line-color': ['get', 'color']
+                }
+            });
+        });
+    });
 }
-
-function hide_show_layer() {
-
-    var visibility = map.getLayoutProperty("station_point", 'visibility');
-
-    if (visibility === 'visible') {
-        map.setLayoutProperty("station_point", 'visibility', 'none');
-        this.className = '';
-    } else {
-        this.className = 'active';
-        map.setLayoutProperty("station_point", 'visibility', 'visible');
-    }
-}
-
-//DrawSection(section_info);
 
 function DrawStation(station_info) {
 
@@ -294,8 +392,6 @@ function DrawStation(station_info) {
                 success: function (routes_numbers, textStatus) {
 
                     var routes_id = routes_numbers[0].sub_routes_id.split(",");
-
-                    console.log(routes_id);
 
                     var temp = [];
 
@@ -515,126 +611,6 @@ function DrawStation(station_info) {
 
 }
 
-
-function Draw_route(route_id) {
-
-    $.ajax({
-        url: "/all_routes",    //请求的url地址
-        data:{
-            route_id:route_id
-        },
-        dataType: "json",   //返回格式为json
-        async: false, //请求是否异步，默认为异步，这也是ajax重要特性
-        type: "GET",   //请求方式
-        contentType: "application/json",
-        beforeSend: function () {//请求前的处理
-        },
-        success: function (routes, textStatus) {
-
-            var section_arr = routes[0].path.split(',');
-
-            var route_path = [];
-
-            section_arr.forEach(function (section_id) {
-
-                $.ajax({
-                    url: "/section_",    //请求的url地址
-                    data:{
-                        section_id: section_id
-                    },
-                    dataType: "json",   //返回格式为json
-                    async: false, //请求是否异步，默认为异步，这也是ajax重要特性
-                    type: "GET",   //请求方式
-                    contentType: "application/json",
-                    beforeSend: function () {//请求前的处理
-                    },
-                    success: function (section, textStatus) {
-
-                        section.forEach(function (d) {
-                            d.path = eval(d.path);
-                            d.path.forEach(function (s) {
-                                var tem = s[0];
-                                s[0] = s[1];
-                                s[1] = tem;
-                            });
-                        });
-
-                        section.forEach(function (d) {
-                            route_path.push(d.path);
-                        });
-                    },
-                    complete: function () {//请求完成的处理
-                    },
-                    error: function () {//请求出错处理
-                    }
-                });
-            });
-
-            draw_section(route_path);
-
-        },
-        complete: function () {//请求完成的处理
-        },
-        error: function () {//请求出错处理
-        }
-    });
-
-    function draw_section(route_data) {
-
-        console.log(route_data);
-
-        route_data.forEach(function (d,i) {
-
-            var features_line = [];
-
-            features_line.push({
-                'type': 'Feature',
-                'properties':{
-                    'color':"#c8c6c4",
-                },
-                'geometry': {
-                    'type': 'LineString',
-                    'coordinates': d
-                }
-            });
-
-            var data_section = {
-                "type": "FeatureCollection",
-                "features": features_line
-            };
-
-            map.on("load", function () {
-
-                map.addSource("route_source"+i, {
-                    'type': 'geojson',
-                    'data': data_section
-                });
-
-                map.addLayer({
-                    'id': 'route'+i,
-                    'type': 'line',
-                    'source': 'route_source'+i,
-                    'paint': {
-                        'line-width': 2,
-                        'line-color': ['get', 'color']
-                    }
-                });
-            });
-
-            map.on('mouseenter', 'route_source'+i, function () {
-                map.getCanvas().style.cursor = 'pointer';
-            });
-
-            // Change it back to a pointer when it leaves.
-            map.on('mouseleave', 'route_source'+i, function () {
-                map.getCanvas().style.cursor = '';
-            });
-
-        });
-    }
-
-}
-
 function DrawSection(section_info) {
 
     var features_line = [];
@@ -655,7 +631,7 @@ function DrawSection(section_info) {
 
     });
 
-    var data_section = {
+    data_section = {
         "type": "FeatureCollection",
         "features": features_line
     };
@@ -727,9 +703,7 @@ function DrawSection(section_info) {
     });
 }
 
-//Section_render(new Date(2016,0,1,7,0,0),new Date(2016,0,1,8,0,0));
-
-function  Section_render(start_time,end_time) {
+function Section_render(start_time,end_time) {
 
     data_section.features.forEach(function (d) {
 
