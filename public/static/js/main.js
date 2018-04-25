@@ -30,7 +30,7 @@ var bounds = [
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoic2lsZW50bGwiLCJhIjoiY2o4NGEycGN2MDZ4ZDMza2Exemg4YmtkaCJ9.LaSV_2wU1XbulGlrDiUgTw';
 
-var map = new mapboxgl.Map({
+var map =new mapboxgl.Map({
     container: 'main',
     style: 'mapbox://styles/silentll/cjckbaggi8de22sp5g6cblhnx',
     zoom: 12,
@@ -38,7 +38,7 @@ var map = new mapboxgl.Map({
     //maxBounds: bounds // Sets bounds as max
 });
 
-//d3.select("#main").style({"z-index":80});
+d3.select("#main").style({"z-index":80});
 
 var data_section;
 
@@ -50,6 +50,8 @@ Init_tools();
 
 function Init_tools() {
 
+    DrawStation(station_info);
+
     var mainChart_tool = d3.select("#main")
         .append("div")
         .attr("class", "btn-group btn-group-sm")
@@ -60,7 +62,7 @@ function Init_tools() {
             "left": "10%"
         })
         .selectAll("btn btn-default")
-        .data(["play", "user", "unchecked"])
+        .data(["play", "user", "refresh"])
         .enter()
         .append("button")
         .attr({
@@ -73,7 +75,7 @@ function Init_tools() {
                     return "zz";
                 case "user":
                     return "xx";
-                case "unchecked":
+                case "refresh":
                     return "cc";
             }
         });
@@ -90,7 +92,7 @@ function Init_tools() {
                 break;
             case "resize-full":
                 break;
-            case "unchecked":
+            case "refresh":
                 break;
         }
     });
@@ -137,6 +139,7 @@ function Init_tools() {
         .attr("role","menu")
         .attr("aria-labelledby","dropdownMenu1")
         .style({
+            "border":"0",
             "display":"block",
             "padding":"0 0",
             "left":"-13%",
@@ -147,12 +150,6 @@ function Init_tools() {
 $(document).ready(function(){
 
     $("#input_search").keyup(function(){
-
-        console.log(1);
-
-        Draw_route(27001);
-
-        DrawSection(section_info);
 
         var val = $("#input_search").val(); // #获取搜索框输入的值
 
@@ -198,8 +195,17 @@ function input_search(val,obj) {
                     .attr("href","javascript:void(0)")
                     .text(d.sub_route_id)
                     .on("click",function () {
-                        console.log( d3.select(this));
+                        $("#input_search").val(d.sub_route_id);
 
+                        map = new mapboxgl.Map({
+                            container: 'main',
+                            style: 'mapbox://styles/silentll/cjckbaggi8de22sp5g6cblhnx',
+                            zoom: 12,
+                            center: [104.78, 31.437]
+                            //maxBounds: bounds // Sets bounds as max
+                        });
+
+                        Draw_route(d.sub_route_id);
                     });
 
             });
