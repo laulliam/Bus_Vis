@@ -41,5 +41,7 @@ function Layout() {
         window.location.reload();
     })
 }
-window.onload= Layout;
+window.onload= function (ev) {
+    Layout();
+}
 

@@ -44,10 +44,10 @@ var data_section;
 
 Init_tools();
 
+Draw_route_Init();
+
 //DrawSection(section_info);
-
 //Section_render(new Date(2016,0,1,7,0,0),new Date(2016,0,1,8,0,0));
-
 function Init_tools() {
 
     DrawStation(station_info);
@@ -93,6 +93,7 @@ function Init_tools() {
             case "resize-full":
                 break;
             case "refresh":
+                map.setLayoutProperty('route_layer', 'visibility', 'none');
                 break;
         }
     });
@@ -147,21 +148,18 @@ function Init_tools() {
         });
 }
 
-$(document).ready(function(){
+$("#input_search").keyup(function(){
 
-    $("#input_search").keyup(function(){
+    var val = $("#input_search").val(); // #获取搜索框输入的值
 
-        var val = $("#input_search").val(); // #获取搜索框输入的值
+    input_search(val,d3.select(".dropdown-menu"));
 
-        input_search(val,d3.select(".dropdown-menu"));
-
-        $('#input_search').keydown(function(){
-            d3.select('.dropdown-menu').selectAll("li").remove();
-        });
-        $('#input_search').blur(function(){
-            //d3.select('.dropdown-menu').selectAll("li").remove();
-        })
+    $('#input_search').keydown(function(){
+        d3.select('.dropdown-menu').selectAll("li").remove();
     });
+    $('#input_search').blur(function(){
+        //d3.select('.dropdown-menu').selectAll("li").remove();
+    })
 });
 
 function input_search(val,obj) {
@@ -196,15 +194,7 @@ function input_search(val,obj) {
                     .text(d.sub_route_id)
                     .on("click",function () {
                         $("#input_search").val(d.sub_route_id);
-
-                        map = new mapboxgl.Map({
-                            container: 'main',
-                            style: 'mapbox://styles/silentll/cjckbaggi8de22sp5g6cblhnx',
-                            zoom: 12,
-                            center: [104.78, 31.437]
-                            //maxBounds: bounds // Sets bounds as max
-                        });
-
+                        //map.setLayoutProperty('station', 'visibility', 'none');
                         Draw_route(d.sub_route_id);
                     });
 
@@ -221,6 +211,8 @@ function input_search(val,obj) {
 
 function Draw_route(route_id) {
 
+    var new_route_path = [];
+
     $.ajax({
         url: "/all_routes",    //请求的url地址
         data:{
@@ -235,8 +227,6 @@ function Draw_route(route_id) {
         success: function (routes, textStatus) {
 
             var section_arr = routes[0].path.split(',');
-
-            var route_path = [];
 
             section_arr.forEach(function (section_id) {
 
@@ -260,9 +250,86 @@ function Draw_route(route_id) {
                                 s[0] = s[1];
                                 s[1] = tem;
                             });
+                            new_route_path.push(d.path);
                         });
 
+                    },
+                    complete: function () {//请求完成的处理
+                    },
+                    error: function () {//请求出错处理
+                    }
+                });
+            });
+
+        },
+        complete: function () {//请求完成的处理
+        },
+        error: function () {//请求出错处理
+        }
+    });
+
+    var features_line = [];
+
+    new_route_path.forEach(function (d) {
+    features_line.push({
+        'type': 'Feature',
+        'properties':{
+            'color':"#c8c6c4",
+            'opacity':1
+        },
+        'geometry': {
+            'type': 'LineString',
+            'coordinates': d
+        }
+    });
+    });
+
+    var section_source = {
+        "type": "FeatureCollection",
+        "features": features_line
+    };
+
+    map.setLayoutProperty('route_layer', 'visibility', 'visible');
+
+    map.getSource('route_source').setData(section_source);
+
+}
+
+function Draw_route_Init() {
+    var route_path = [];
+    $.ajax({
+        url: "/all_routes",    //请求的url地址
+        data:{
+            route_id:27001
+        },
+        dataType: "json",   //返回格式为json
+        async: false, //请求是否异步，默认为异步，这也是ajax重要特性
+        type: "GET",   //请求方式
+        contentType: "application/json",
+        beforeSend: function () {//请求前的处理
+        },
+        success: function (routes, textStatus) {
+            var section_arr = routes[0].path.split(',');
+            section_arr.forEach(function (section_id) {
+                $.ajax({
+                    url: "/section_",    //请求的url地址
+                    data:{
+                        section_id: section_id
+                    },
+                    dataType: "json",   //返回格式为json
+                    async: false, //请求是否异步，默认为异步，这也是ajax重要特性
+                    type: "GET",   //请求方式
+                    contentType: "application/json",
+                    beforeSend: function () {//请求前的处理
+                    },
+                    success: function (section, textStatus) {
                         section.forEach(function (d) {
+                            d.path = eval(d.path);
+                            d.path.forEach(function (s) {
+                                var tem = s[0];
+                                s[0] = s[1];
+                                s[1] = tem;
+                            });
                             route_path.push(d.path);
                         });
                     },
@@ -272,8 +339,40 @@ function Draw_route(route_id) {
                     }
                 });
             });
-
-            draw_section(route_path,route_id);
+            var features_line = [];
+            route_path.forEach(function (d) {
+                features_line.push({
+                    'type': 'Feature',
+                    'properties':{
+                        'color':"#c8c6c4",
+                        'opacity':0
+                    },
+                    'geometry': {
+                        'type': 'LineString',
+                        'coordinates': d
+                    }
+                });
+            });
+            var section_source = {
+                "type": "FeatureCollection",
+                "features": features_line
+            };
+            map.on("load", function () {
+                map.addSource("route_source", {
+                    'type': 'geojson',
+                    'data': section_source
+                });
+                map.addLayer({
+                    'id': 'route_layer',
+                    'type': 'line',
+                    'source': 'route_source',
+                    'paint': {
+                        'line-width': 2,
+                        'line-color': ['get', 'color'],
+                        'line-opacity':['get', 'opacity']
+                    }
+                });
+            });
 
         },
         complete: function () {//请求完成的处理
@@ -282,50 +381,6 @@ function Draw_route(route_id) {
         }
     });
 
-}
-
-function draw_section(route_data,route_id) {
-
-    console.log(route_data);
-
-    route_data.forEach(function (d,i) {
-
-        var features_line = [];
-
-        features_line.push({
-            'type': 'Feature',
-            'properties':{
-                'color':"#c8c6c4",
-            },
-            'geometry': {
-                'type': 'LineString',
-                'coordinates': d
-            }
-        });
-
-        var data_section = {
-            "type": "FeatureCollection",
-            "features": features_line
-        };
-
-        map.on("load", function () {
-
-            map.addSource("route_source_"+route_id+i, {
-                'type': 'geojson',
-                'data': data_section
-            });
-
-            map.addLayer({
-                'id': 'route_'+route_id+i,
-                'type': 'line',
-                'source': 'route_source_'+route_id+i,
-                'paint': {
-                    'line-width': 2,
-                    'line-color': ['get', 'color']
-                }
-            });
-        });
-    });
 }
 
 function DrawStation(station_info) {
@@ -361,7 +416,7 @@ function DrawStation(station_info) {
         });
 
         map.addLayer({
-            "id": "station_point",
+            "id": "station",
             "source": "station_source",
             "type": "circle",
             'layout': {
@@ -374,7 +429,7 @@ function DrawStation(station_info) {
         });
     });
 
-    map.on('click', 'station_point', function (e) {
+    map.on('click', 'station', function (e) {
 
         new mapboxgl.Popup()
             .setLngLat(e.features[0].geometry.coordinates)
@@ -486,12 +541,12 @@ function DrawStation(station_info) {
         }
 
         // Change the cursor to a pointer when the mouse is over the places layer.
-        map.on('mouseenter', 'station_point', function () {
+        map.on('mouseenter', 'station', function () {
             map.getCanvas().style.cursor = 'pointer';
         });
 
         // Change it back to a pointer when it leaves.
-        map.on('mouseleave', 'station_point', function () {
+        map.on('mouseleave', 'station', function () {
             map.getCanvas().style.cursor = '';
         });
 
