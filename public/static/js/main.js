@@ -157,8 +157,8 @@ $("#input_search").keyup(function(){
     $('#input_search').keydown(function(){
         d3.select('.dropdown-menu').selectAll("li").remove();
     });
-    $('#input_search').blur(function(){
-        //d3.select('.dropdown-menu').selectAll("li").remove();
+    $('#input_search').click(function(){
+        $("#input_search").val('');
     })
 });
 
@@ -177,9 +177,10 @@ function input_search(val,obj) {
         },
         success: function (route, textStatus) {
 
+            var i =0;
             route.forEach(function (d) {
-
-
+                i++;
+                if(i<8){
                 obj.append("li")
                     .attr("class","suggest_li")
                     .attr("role","presentation")
@@ -193,11 +194,12 @@ function input_search(val,obj) {
                     .attr("href","javascript:void(0)")
                     .text(d.sub_route_id)
                     .on("click",function () {
+
+                        d3.select('.dropdown-menu').selectAll("li").remove();
                         $("#input_search").val(d.sub_route_id);
-                        //map.setLayoutProperty('station', 'visibility', 'none');
                         Draw_route(d.sub_route_id);
                     });
-
+                }
             });
 
         },
@@ -271,17 +273,17 @@ function Draw_route(route_id) {
     var features_line = [];
 
     new_route_path.forEach(function (d) {
-    features_line.push({
-        'type': 'Feature',
-        'properties':{
-            'color':"#c8c6c4",
-            'opacity':1
-        },
-        'geometry': {
-            'type': 'LineString',
-            'coordinates': d
-        }
-    });
+        features_line.push({
+            'type': 'Feature',
+            'properties':{
+                'color':"#c8c6c4",
+                'opacity':1
+            },
+            'geometry': {
+                'type': 'LineString',
+                'coordinates': d
+            }
+        });
     });
 
     var section_source = {
