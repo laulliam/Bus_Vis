@@ -45,17 +45,18 @@ router.get('/section_run_data', function(req, res, next) {
 router.get('/section_id_data', function(req, res, next) {
 
     var section_id = parseInt(req.query.section_id);
+    var date_extent = req.query.date_extent;
 
-    console.log(typeof(section_id));
+    //console.log(typeof(section_id),date_extent);
 
     var selectData = function(db, callback) {
         //连接到表
         var collection = db.collection('section_run_data');
         //查询数据
-        collection.find({section_id:section_id,start_date_time:{$gte:new Date(2016,0,1,7,0,0),$lte:new Date(2016,0,2,8,0,0)}},{
+        collection.find({section_id:section_id,start_date_time:{$gte:new Date(date_extent[0]),$lte:new Date(date_extent[1])}},{
             _id:0,id:0,product_id:0,
             from_station_id:0,from_station_name:0,target_station_id:0,target_station_name:0,
-            section_id:0,speed:0,type:0
+            section_id:0,speed:0,type:0,end_date_time:0
         }).toArray(function(err, result) {
             if(err)
             {

@@ -69,45 +69,55 @@ function chart(dataset) {
 
     var routes = nest.entries(dataset);
 
-    routes.forEach(function (d) {
-        d.values = data_process(d.values);
-    });
-
-    function data_process(route_data) {
-
-        var data= [];
-        var date1 = extent_date[0];
-        var date2 = extent_date[1];
-        var minmis= 60*1000;
-        var now=date1;
-        while(now<=date2){
-            var flag = false;
-            route_data.forEach(function (d) {
-
-                flag == false;
-                if(now.getHours() == d.start_date_time.getHours()&&now.getMinutes() == d.start_date_time.getMinutes())
-                {
-                    data.push({date:d.start_date_time,value:d.stay_time});
-                    flag = true;
-                }
-            });
-
-            if(flag !=true)
-                data.push({date:now,value:Math.round(Math.random()*100)});
-
-            now=new Date(now.getTime()+minmis);
-
+    var compare = function (obj1, obj2) {
+        var val1 = obj1.start_date_time;
+        var val2 = obj2.start_date_time;
+        if (val1 < val2) {
+            return -1;
+        } else if (val1 > val2) {
+            return 1;
+        } else {
+            return 0;
         }
+    };
+     routes.forEach(function (d) {
+         d.values.sort(compare);
+     });
+/*
+     function data_process(route_data) {
 
+         var data= [];
+         var date1 = extent_date[0];
+         var date2 = extent_date[1];
+         var minmis= 60*1000;
+         var now=date1;
+         while(now<=date2){
+             var flag = false;
+             route_data.forEach(function (d) {
 
+                 flag == false;
+                 if(now.getHours() == d.start_date_time.getHours()&&now.getMinutes() == d.start_date_time.getMinutes())
+                 {
+                     data.push({date:d.start_date_time,value:d.stay_time});
+                     flag = true;
 
-        return data;
+                 }
+             });
 
-    }
+             if(flag !=true)
+                 data.push({date:now,value:0});
 
-    var layers = stack(routes);
+             now=new Date(now.getTime()+minmis);
 
-    console.log(layers);
+         }
+
+         return data;
+
+     }
+ */
+    //var layers = stack(routes);
+
+    console.log(routes);
 
     x.domain(d3.extent(dataset, function(d) { return d.start_date_time; }));
     y.domain([0, d3.max(dataset, function(d) { return d.stay_time+d.stay_time/2; })]);
@@ -149,4 +159,41 @@ function chart(dataset) {
                 .duration(250)
                 .attr("opacity", "1");
         })
+}
+
+updata_stream(1385);
+
+function updata_stream(section_id) {
+
+    //new Date(2016,0,1,7,0,0),new Date(2016,0,2,7,0,0) day
+    //new Date(2016,0,1,7,0,0),new Date(2016,1,1,7,0,0) month
+
+    $.ajax({
+        url: "/section_id_data",    //请求的url地址
+        data:{
+            section_id:section_id.toLocaleString(),
+            date_extent:[new Date(2016,0,1,7,0,0),new Date(2016,0,2,7,0,0)]
+        },
+        dataType: "json",   //返回格式为json
+        async: true, //请求是否异步，默认为异步，这也是ajax重要特性
+        type: "GET",   //请求方式
+        contentType: "application/json",
+        beforeSend: function () {//请求前的处理
+        },
+        success: function (section_data, textStatus) {
+
+            section_data.forEach(function (d) {
+                d.start_date_time = new Date(d.start_date_time);
+                d.start_date_time.setSeconds(0,0);
+                d.stay_time = +d.stay_time;
+            });
+
+            d3.select("#time_svg").remove("*");
+            chart(section_data);
+        },
+        complete: function () {//请求完成的处理
+        },
+        error: function () {//请求出错处理
+        }
+    });
 }

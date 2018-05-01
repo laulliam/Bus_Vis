@@ -51,8 +51,9 @@ Draw_route_Init();
 //DrawSection(section_info);
 //Section_render(new Date(2016,0,1,7,0,0),new Date(2016,0,1,8,0,0));
 function Init_tools() {
-
+    DrawSection(section_info);
     DrawStation(station_info);
+
 
     var mainChart_tool = d3.select("#main")
         .append("div")
@@ -843,7 +844,7 @@ function DrawSection(section_info) {
         features_line.push({
             'type': 'Feature',
             'properties':{
-                'color':"#c8c6c4",
+                'color': (Math.round(Math.random()*50)>2.5)?"#fff95d":"#80ff29",
                 'section_id': d.section_id
             },
             'geometry': {
@@ -883,13 +884,16 @@ function DrawSection(section_info) {
 
         function updata_stream(section_id) {
 
+            //new Date(2016,0,1,7,0,0),new Date(2016,0,2,7,0,0) day
+            //new Date(2016,0,1,7,0,0),new Date(2016,1,1,7,0,0) month
+
             console.log(section_id);
 
             $.ajax({
                 url: "/section_id_data",    //请求的url地址
                 data:{
-                    section_id:section_id.toLocaleString()
-                    //date_extent:date_extent
+                    section_id:section_id.toLocaleString(),
+                    date_extent:[new Date(2016,0,1,7,0,0),new Date(2016,0,2,7,0,0)]
                 },
                 dataType: "json",   //返回格式为json
                 async: true, //请求是否异步，默认为异步，这也是ajax重要特性
@@ -899,6 +903,8 @@ function DrawSection(section_info) {
                 },
                 success: function (section_data, textStatus) {
 
+                    console.log(section_data);
+
                     section_data.forEach(function (d) {
                         d.start_date_time = new Date(d.start_date_time);
                         d.start_date_time.setSeconds(0,0);
@@ -906,7 +912,7 @@ function DrawSection(section_info) {
                     });
 
                     d3.select("#time_svg").remove("*");
-                    //chart(section_data);
+                    chart(section_data);
                 },
                 complete: function () {//请求完成的处理
                 },
