@@ -7,6 +7,7 @@
     <list default="true" id="c7571ffe-9a61-46b8-bc7d-a0883f3a2cea" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/public/static/js/main.js" afterPath="$PROJECT_DIR$/public/static/js/main.js" />
+      <change beforePath="$PROJECT_DIR$/routes/all_routes.js" afterPath="$PROJECT_DIR$/routes/all_routes.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -23,23 +24,36 @@
       <file leaf-file-name="main.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/static/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="218">
-              <caret line="45" column="0" lean-forward="true" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+            <state relative-caret-position="285">
+              <caret line="372" column="1" lean-forward="true" selection-start-line="372" selection-start-column="1" selection-end-line="372" selection-end-column="1" />
               <folding>
                 <element signature="e#46#685#0" expanded="false" />
                 <element signature="n#!!block;n#Init_tools#0" expanded="false" />
-                <element signature="e#4082#4390#0" expanded="false" />
+                <element signature="n#!!block;n#Animation_route#0" expanded="false" />
+                <element signature="e#5307#5475#0" expanded="false" />
+                <element signature="e#9107#9415#0" expanded="false" />
                 <element signature="n#!!block;n#input_search#0" expanded="false" />
                 <element signature="n#!!block;n#Draw_route#0" expanded="false" />
                 <element signature="n#!!block;n#Draw_route_Init#0" expanded="false" />
-                <element signature="e#9485#9653#0" expanded="false" />
+                <element signature="e#14574#14742#0" expanded="false" />
+                <element signature="e#15112#15503#0" expanded="false" />
                 <element signature="n#!!block;n#DrawStation#0" expanded="false" />
-                <element signature="e#12763#14940#0" expanded="false" />
-                <element signature="e#15012#16134#0" expanded="false" />
+                <element signature="e#17851#20028#0" expanded="false" />
+                <element signature="e#20100#21222#0" expanded="false" />
                 <element signature="n#!!block;n#DrawSection#0" expanded="false" />
                 <element signature="n#!!block;n#Section_render#0" expanded="false" />
                 <element signature="n#!!block;n#Section_speed#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="all_routes.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/routes/all_routes.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="247">
+              <caret line="15" column="17" lean-forward="true" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -159,11 +173,11 @@
   <component name="NodeModulesDirectoryManager">
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="167" />
-    <option name="y" value="188" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="249" />
+    <option name="y" value="76" />
     <option name="width" value="1270" />
-    <option name="height" value="1100" />
+    <option name="height" value="1098" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="false" id="Update" />
@@ -183,8 +197,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -224,6 +236,8 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -389,7 +403,9 @@
       <workItem from="1524634205399" duration="7416000" />
       <workItem from="1524749960068" duration="4790000" />
       <workItem from="1524796770439" duration="23955000" />
-      <workItem from="1524895768362" duration="398000" />
+      <workItem from="1524895768362" duration="12893000" />
+      <workItem from="1525000355875" duration="610000" />
+      <workItem from="1525139571912" duration="597000" />
     </task>
     <task id="LOCAL-00001" summary="station data ajax   --Liang Liu">
       <created>1516453352020</created>
@@ -587,22 +603,29 @@
       <option name="project" value="LOCAL" />
       <updated>1524822971028</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="路线搜索完成90%--Liang Liu">
+      <created>1524896181438</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1524896181438</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="363446000" />
+    <option name="totallyTimeSpent" value="377148000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
+    <frame x="249" y="76" width="1270" height="1098" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20364584" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31180224" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3197556" sideWeight="0.575" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31910568" sideWeight="0.57894737" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32956383" sideWeight="0.49420443" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3197556" sideWeight="0.425" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31910568" sideWeight="0.42105263" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -649,7 +672,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="28" />
+      <option name="time" value="30" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -914,13 +937,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/static/bootstrap/fonts/glyphicons-halflings-regular.svg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
       <provider editor-type-id="text-editor">
         <state relative-caret-position="-1995">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
+      </provider>
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/static/js/layout.js">
@@ -930,27 +953,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/static/js/init_data.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="114" column="0" lean-forward="false" selection-start-line="114" selection-start-column="0" selection-end-line="114" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!block;n#Init_data#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/routes/section.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-99">
           <caret line="38" column="0" lean-forward="true" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/all_routes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="33">
-          <caret line="19" column="25" lean-forward="true" selection-start-line="19" selection-start-column="25" selection-end-line="19" selection-end-column="25" />
         </state>
       </provider>
     </entry>
@@ -968,21 +974,39 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/public/static/js/init_data.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="380">
+          <caret line="125" column="0" lean-forward="false" selection-start-line="125" selection-start-column="0" selection-end-line="125" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/all_routes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="15" column="17" lean-forward="true" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/public/static/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="218">
-          <caret line="45" column="0" lean-forward="true" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+        <state relative-caret-position="285">
+          <caret line="372" column="1" lean-forward="true" selection-start-line="372" selection-start-column="1" selection-end-line="372" selection-end-column="1" />
           <folding>
             <element signature="e#46#685#0" expanded="false" />
             <element signature="n#!!block;n#Init_tools#0" expanded="false" />
-            <element signature="e#4082#4390#0" expanded="false" />
+            <element signature="n#!!block;n#Animation_route#0" expanded="false" />
+            <element signature="e#5307#5475#0" expanded="false" />
+            <element signature="e#9107#9415#0" expanded="false" />
             <element signature="n#!!block;n#input_search#0" expanded="false" />
             <element signature="n#!!block;n#Draw_route#0" expanded="false" />
             <element signature="n#!!block;n#Draw_route_Init#0" expanded="false" />
-            <element signature="e#9485#9653#0" expanded="false" />
+            <element signature="e#14574#14742#0" expanded="false" />
+            <element signature="e#15112#15503#0" expanded="false" />
             <element signature="n#!!block;n#DrawStation#0" expanded="false" />
-            <element signature="e#12763#14940#0" expanded="false" />
-            <element signature="e#15012#16134#0" expanded="false" />
+            <element signature="e#17851#20028#0" expanded="false" />
+            <element signature="e#20100#21222#0" expanded="false" />
             <element signature="n#!!block;n#DrawSection#0" expanded="false" />
             <element signature="n#!!block;n#Section_render#0" expanded="false" />
             <element signature="n#!!block;n#Section_speed#0" expanded="false" />

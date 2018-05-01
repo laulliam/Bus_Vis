@@ -46,6 +46,8 @@ Init_tools();
 
 Draw_route_Init();
 
+//Animation_route();
+
 //DrawSection(section_info);
 //Section_render(new Date(2016,0,1,7,0,0),new Date(2016,0,1,8,0,0));
 function Init_tools() {
@@ -148,6 +150,165 @@ function Init_tools() {
         });
 }
 
+function Animation_route() {
+
+    var route_path = [];
+    var t = [];
+
+    $.ajax({
+        url: "/all_routes",    //请求的url地址
+        data:{
+            route_id:27001
+        },
+        dataType: "json",   //返回格式为json
+        async: false, //请求是否异步，默认为异步，这也是ajax重要特性
+        type: "GET",   //请求方式
+        contentType: "application/json",
+        beforeSend: function () {//请求前的处理
+        },
+        success: function (routes, textStatus) {
+            var section_arr = routes[0].path.split(',');
+            section_arr.forEach(function (section_id) {
+                $.ajax({
+                    url: "/section_",    //请求的url地址
+                    data:{
+                        section_id: section_id
+                    },
+                    dataType: "json",   //返回格式为json
+                    async: false, //请求是否异步，默认为异步，这也是ajax重要特性
+                    type: "GET",   //请求方式
+                    contentType: "application/json",
+                    beforeSend: function () {//请求前的处理
+                    },
+                    success: function (section, textStatus) {
+                        section.forEach(function (d) {
+                            d.path = eval(d.path);
+                            d.path.forEach(function (s) {
+                                var tem = s[0];
+                                s[0] = s[1];
+                                s[1] = tem;
+                            });
+                            route_path.push(d);
+                        });
+                    },
+                    complete: function () {//请求完成的处理
+                    },
+                    error: function () {//请求出错处理
+                    }
+                });
+            });
+        },
+        complete: function () {//请求完成的处理
+        },
+        error: function () {//请求出错处理
+        }
+    });
+
+   route_path.forEach(function (d,i) {
+
+            map.on('load', function() {
+
+                //console.log(d.from_name,d.target_name);
+                var geojson ={
+                    "type": "FeatureCollection",
+                    "features": [{
+                        "type": "Feature",
+                        "geometry": {
+                            "type": "LineString",
+                            "coordinates": [
+                                d.path[0]
+                            ]
+                        }
+                    }]
+                };
+
+                map.addLayer({
+                    'id': 'line-animation'+i,
+                    'type': 'line',
+                    'source': {
+                        'type': 'geojson',
+                        'data': geojson
+                    },
+                    'layout': {
+                        'line-cap': 'round',
+                        'line-join': 'round'
+                    },
+                    'paint': {
+                        'line-color': '#ed6498',
+                        'line-width': 5,
+                        'line-opacity': .8
+                    }
+                });
+            });
+
+            function animate_line(id,geojson,data) {
+
+                var index = 0;
+                var interval = setInterval(function(){
+
+                    if(index>=d.path.length-1){
+
+                        clearInterval(interval);
+                        return 1;
+                    }
+                    geojson.features[0].geometry.coordinates.push(data.path[index]);
+                    map.getSource('line-animation'+i).setData(geojson);
+                    index++;
+                },1000);
+
+            }
+    });
+
+/*    for(var t=0;t<route_path.length;t++){
+
+        map.on('load', function() {
+            var geojson ={
+                "type": "FeatureCollection",
+                "features": [{
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "LineString",
+                        "coordinates": [
+                            route_path[i].path[0]
+                        ]
+                    }
+                }]
+            };
+
+            map.addLayer({
+                'id': 'line-animation'+i,
+                'type': 'line',
+                'source': {
+                    'type': 'geojson',
+                    'data': geojson
+                },
+                'layout': {
+                    'line-cap': 'round',
+                    'line-join': 'round'
+                },
+                'paint': {
+                    'line-color': '#ed6498',
+                    'line-width': 5,
+                    'line-opacity': .8
+                }
+            });
+            var index = 0;
+            var interval = setInterval(function(){
+                if(index>=d.path.length-1)clearInterval(interval);
+                geojson.features[0].geometry.coordinates.push(route_path[i].path[index]);
+                map.getSource('line-animation'+i).setData(geojson);
+                index++;
+            },1000);
+
+            while(interval)
+            {
+                console.log(1);
+            }
+        });
+    }*/
+
+}
+
 $("#input_search").keyup(function(){
 
     var val = $("#input_search").val(); // #获取搜索框输入的值
@@ -181,24 +342,24 @@ function input_search(val,obj) {
             route.forEach(function (d) {
                 i++;
                 if(i<8){
-                obj.append("li")
-                    .attr("class","suggest_li")
-                    .attr("role","presentation")
-                    .attr("id","li_"+d.sub_route_id+"");
+                    obj.append("li")
+                        .attr("class","suggest_li")
+                        .attr("role","presentation")
+                        .attr("id","li_"+d.sub_route_id+"");
 
-                d3.select("#li_"+d.sub_route_id+"")
-                    .append("a")
-                    .attr("class","route_id_li")
-                    .attr("role","menuitem")
-                    .attr("tabindex","-1")
-                    .attr("href","javascript:void(0)")
-                    .text(d.sub_route_id)
-                    .on("click",function () {
+                    d3.select("#li_"+d.sub_route_id+"")
+                        .append("a")
+                        .attr("class","route_id_li")
+                        .attr("role","menuitem")
+                        .attr("tabindex","-1")
+                        .attr("href","javascript:void(0)")
+                        .text(d.sub_route_id)
+                        .on("click",function () {
 
-                        d3.select('.dropdown-menu').selectAll("li").remove();
-                        $("#input_search").val(d.sub_route_id);
-                        Draw_route(d.sub_route_id);
-                    });
+                            d3.select('.dropdown-menu').selectAll("li").remove();
+                            $("#input_search").val(d.sub_route_id);
+                            Draw_route(d.sub_route_id);
+                        });
                 }
             });
 
@@ -382,7 +543,6 @@ function Draw_route_Init() {
         error: function () {//请求出错处理
         }
     });
-
 }
 
 function DrawStation(station_info) {

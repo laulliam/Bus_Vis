@@ -18,7 +18,9 @@ router.get('/all_routes', function(req, res, next) {
         var collection = db.collection('all_routes');
         //查询数据
         var whereStr = {}
-        collection.find({"sub_route_id":route_id}).toArray(function(err, result) {
+        collection.find({"sub_route_id":route_id},{
+            "_id":0
+        }).toArray(function(err, result) {
             if(err)
             {
                 console.log('Error:'+ err);
