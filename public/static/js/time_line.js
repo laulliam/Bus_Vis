@@ -1,7 +1,7 @@
 var datearray = [];
 var colorrange = [];
 
-function chart(dataset) {
+function chart(data) {
 
     colorrange = [d3.rgb(79, 107, 218), d3.rgb(165, 241, 88), d3.rgb(38, 232, 145),d3.rgb(27, 191, 202), d3.rgb(32, 227, 155),d3.rgb(100, 80, 195)];
 
@@ -17,7 +17,7 @@ function chart(dataset) {
     var body_height = all_view.height()-20;
 
     var width = (body_width * 0.7 - 2 * border)-margin.left-margin.right;
-    var height = (body_height * 0.3 - 3 * border)-margin.top-margin.bottom;
+    var height = (body_height * 0.25 - 3 * border)-margin.top-margin.bottom;
 
     var x = d3.time.scale()
         .range([0, width]);
@@ -30,7 +30,8 @@ function chart(dataset) {
 
     var xAxis = d3.svg.axis()
         .scale(x)
-        .orient("bottom");
+        .orient("bottom")
+        .ticks(d3.time.weeks);
 
     var yAxis = d3.svg.axis()
         .scale(y);
@@ -38,6 +39,18 @@ function chart(dataset) {
     var yAxisr = d3.svg.axis()
         .scale(y);
 
+    var zoom = d3.behavior.zoom()
+        .scaleExtent([1, 10])
+        .trans
+        .on("zoom", zoomed);
+
+    function zoomed() {
+        g.attr("transform",
+            "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+
+        g.attr("transform",
+            "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+    }
 
     var stack = d3.layout.stack()
         .offset("silhouette")
@@ -45,94 +58,96 @@ function chart(dataset) {
         .x(function(d) { return d.date; })
         .y(function(d) { return d.value; });
 
+    var nest = d3.nest()
+        .key(function(d) { return d.sub_route_id; });
+
     var area = d3.svg.area()
-        .interpolate("cardinal")
-        .x(function(d) { return x(d.date); })
-        .y0(function(d) { return y(d.y0); })
+        .interpolate("basis")
+        .x(function(d) {return x(d.date); })
+        .y0(function(d) {return y(d.y0); })
         .y1(function(d) { return y(d.y0 + d.y); });
 
-    var svg = d3.select("#time_line")
-        .append("svg")
-        .attr("id","time_svg")
+    var svg = d3.select("#time_line").append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-    //.call();
+        .call(zoom);
 
-
-    var extent_date = d3.extent(dataset,function (d) {
+    var date_extent = d3.extent(data,function (d) {
         return d.start_date_time;
+    })
+
+    var routes_data = nest.entries(data);
+
+    console.log(routes_data);
+
+    routes_data.forEach(function (d) {
+        d.values = ret(d.values);
+        d.values = data_process(d.values);
     });
 
-    var nest = d3.nest().key(function(d) { return d.route_id});
-
-    var routes = nest.entries(dataset);
-
-    var compare = function (obj1, obj2) {
-        var val1 = obj1.start_date_time;
-        var val2 = obj2.start_date_time;
-        if (val1 < val2) {
-            return -1;
-        } else if (val1 > val2) {
-            return 1;
-        } else {
-            return 0;
+    function ret(arr){
+        var res=[arr[0]];
+        for(var j=1;j<arr.length;j++){
+            var repeat= false;
+            for(var i=0;i<res.length;i++){
+                if(arr[j].start_date_time.getTime()==res[i].start_date_time.getTime()){
+                    repeat=true;
+                    break;
+                }
+            }
+            if(!repeat){
+                res.push(arr[j]);
+            }
         }
+        return res;
     };
-     routes.forEach(function (d) {
-         d.values.sort(compare);
-     });
-/*
-     function data_process(route_data) {
 
-         var data= [];
-         var date1 = extent_date[0];
-         var date2 = extent_date[1];
-         var minmis= 60*1000;
-         var now=date1;
-         while(now<=date2){
-             var flag = false;
-             route_data.forEach(function (d) {
+    function data_process(route_data) {
 
-                 flag == false;
-                 if(now.getHours() == d.start_date_time.getHours()&&now.getMinutes() == d.start_date_time.getMinutes())
-                 {
-                     data.push({date:d.start_date_time,value:d.stay_time});
-                     flag = true;
+        var data= [];
+        var date1 = date_extent[0];
+        var date2 = date_extent[1];
+        var minmis= 60*1000;
+        var now=date1;
+        while(now<=date2){
+            var flag = false;
+            route_data.forEach(function (d) {
 
-                 }
-             });
+                flag == false;
 
-             if(flag !=true)
-                 data.push({date:now,value:0});
+                if(now.getHours() == d.start_date_time.getHours()&&now.getMinutes() == d.start_date_time.getMinutes())
+                {
+                    data.push({date:d.start_date_time,value:d.stay_time});
+                    flag = true;
 
-             now=new Date(now.getTime()+minmis);
+                }
+            });
 
-         }
+            if(flag !=true)
+                data.push({date:now,value:0});
 
-         return data;
+            now=new Date(now.getTime()+minmis);
 
-     }
- */
-    //var layers = stack(routes);
+        }
+        return data;
+    }
 
-    console.log(routes);
+    var layers = stack(routes_data);
 
-    x.domain(d3.extent(dataset, function(d) { return d.start_date_time; }));
-    y.domain([0, d3.max(dataset, function(d) { return d.stay_time+d.stay_time/2; })]);
+    x.domain(d3.extent(data, function(d) { return d.start_date_time; }));
+    y.domain([0, d3.max(data, function(d) { return d.stay_time; })]);
 
-    svg.selectAll(".layer")
+    var g1 = svg.selectAll(".layer")
         .data(layers)
         .enter()
         .append("path")
         .attr("class", "layer")
-        .attr("d", function(d) {
-            return area(d.values); })
+        .attr("d", function(d) { return area(d.values); })
         .style("fill", function(d, i) { return z(i); });
 
-
-    svg.append("g")
+    var g = svg.append("g")
         .attr("class", "x axis")
         .attr("transform", "translate(0," + height + ")")
         .call(xAxis);

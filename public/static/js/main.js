@@ -51,8 +51,9 @@ Draw_route_Init();
 //DrawSection(section_info);
 //Section_render(new Date(2016,0,1,7,0,0),new Date(2016,0,1,8,0,0));
 function Init_tools() {
+
     DrawSection(section_info);
-    DrawStation(station_info);
+    //DrawStation(station_info);
 
 
     var mainChart_tool = d3.select("#main")
@@ -455,6 +456,10 @@ function Draw_route(route_id) {
 
     map.setLayoutProperty('route_layer', 'visibility', 'visible');
 
+    //map.setLayoutProperty('section', 'opacity', '0.3');
+
+    map.setPaintProperty('section', 'line-opacity',0.1);
+
     map.getSource('route_source').setData(section_source);
 
 }
@@ -586,7 +591,7 @@ function DrawStation(station_info) {
                 'visibility': 'visible'
             },
             "paint": {
-                "circle-radius": 3,
+                "circle-radius": 4,
                 "circle-color": ['get', 'color']//station_color
             }
         });
@@ -845,7 +850,8 @@ function DrawSection(section_info) {
             'type': 'Feature',
             'properties':{
                 'color': (Math.round(Math.random()*50)>2.5)?"#fff95d":"#80ff29",
-                'section_id': d.section_id
+                'section_id': d.section_id,
+                "mag":d.speed
             },
             'geometry': {
                 'type': 'LineString',
@@ -876,6 +882,7 @@ function DrawSection(section_info) {
                 'line-color': ['get', 'color']
             }
         });
+
     });
 
     map.on('click', 'section', function (e) {
