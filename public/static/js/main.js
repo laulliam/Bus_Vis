@@ -46,13 +46,15 @@ Init_tools();
 
 Draw_route_Init();
 
+heat_Map(station_info);
+
 //Animation_route();
 
 //DrawSection(section_info);
 //Section_render(new Date(2016,0,1,7,0,0),new Date(2016,0,1,8,0,0));
 function Init_tools() {
 
-    DrawSection(section_info);
+    //DrawSection(section_info);
     //DrawStation(station_info);
 
 
@@ -309,6 +311,148 @@ function Animation_route() {
         });
     }*/
 
+}
+
+function heat_Map(station_info) {
+
+    var features_point = [];
+    station_info.forEach(function (d) {
+        features_point.push({
+            "type": "Feature",
+            "properties": {
+                "station_id": d.station_id,
+                "description": d.station_name + d.station_id,
+                "color": "#8fa9ff",
+                "mag":d.stay_time
+                // "icon": "music"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [d.longitude, d.latitude]
+            }
+        });
+    });
+
+    var data_point = {
+        "type": "FeatureCollection",
+        "features": features_point
+    };
+
+    map.on('load', function() {
+        // Add a geojson point source.
+        // Heatmap layers also work with a vector tile source.
+        map.addSource('earthquakes', {
+            "type": "geojson",
+            "data": data_point
+        });
+
+        map.addLayer({
+            "id": "earthquakes-heat",
+            "type": "heatmap",
+            "source": "earthquakes",
+            "maxzoom": 12,
+            "paint": {
+                // Increase the heatmap weight based on frequency and property magnitude
+                "heatmap-weight": [
+                    "interpolate",
+                    ["linear"],
+                    ["get", "mag"],
+                    0, 0,
+                    6, 1
+                ],
+                // Increase the heatmap color weight weight by zoom level
+                // heatmap-intensity is a multiplier on top of heatmap-weight
+                "heatmap-intensity": [
+                    "interpolate",
+                    ["linear"],
+                    ["zoom"],
+                    0, 1,
+                    12, 3
+                ],
+                // Color ramp for heatmap.  Domain is 0 (low) to 1 (high).
+                // Begin color ramp at 0-stop with a 0-transparancy color
+                // to create a blur-like effect.
+                "heatmap-color": [
+                    "interpolate",
+                    ["linear"],
+                    ["heatmap-density"],
+                    0, "rgba(167,194,172,0)",
+                    0.2, "rgb(149,255,86)",
+                    0.4, "rgb(233,255,47)",
+                    0.6, "rgb(255,255,38)",
+                    0.8, "rgb(239,138,98)",
+                    1, "rgb(178,24,43)"
+                ],
+                // Adjust the heatmap radius by zoom level
+                "heatmap-radius": [
+                    "interpolate",
+                    ["linear"],
+                    ["zoom"],
+                    0, 2,
+                    12, 20
+                ],
+                // Transition from heatmap to circle layer by zoom level
+                "heatmap-opacity": [
+                    "interpolate",
+                    ["linear"],
+                    ["zoom"],
+                    7, 1,
+                    12, 0
+                ]
+            }
+        }, 'waterway-label');
+
+        map.addLayer({
+            "id": "earthquakes-point",
+            "type": "circle",
+            "source": "earthquakes",
+            "minzoom": 7,
+            "paint": {
+                // Size circle radius by earthquake magnitude and zoom level
+                "circle-radius": [
+                    "interpolate",
+                    ["linear"],
+                    ["zoom"],
+                    7, [
+                        "interpolate",
+                        ["linear"],
+                        ["get", "mag"],
+                        1, 1,
+                        6, 4
+                    ],
+                    16, [
+                        "interpolate",
+                        ["linear"],
+                        ["get", "mag"],
+                        1, 5,
+                        6, 50
+                    ]
+                ],
+                // Color circle by earthquake magnitude
+                "circle-color": [
+                    "interpolate",
+                    ["linear"],
+                    ["get", "mag"],
+                    1, "rgba(167,194,172,0)",
+                    2, "rgb(149,255,86)",
+                    3, "rgb(233,255,47)",
+                    4, "rgb(255,255,38)",
+                    5, "rgb(239,138,98)",
+                    6, "rgb(178,24,43)"
+                ],
+                // "circle-stroke-color": "white",
+                // "circle-stroke-width": 1,
+                // Transition from heatmap to circle layer by zoom level
+                "circle-opacity": [
+                    "interpolate",
+                    ["linear"],
+                    ["zoom"],
+                    7, 0,
+                    12, 1
+                ]
+            }
+        }, 'waterway-label');
+    });
 }
 
 $("#input_search").keyup(function(){
