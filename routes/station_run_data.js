@@ -50,16 +50,16 @@ router.get('/sub_route_data', function(req, res, next) {
 
 });
 
-router.get('/rank_station_data', function(req, res, next) {
+router.get('/route_station_data', function(req, res, next) {
 
-    var date= req.query.date;
+    var route_id= req.query.sub_route_id;
 
     var selectData = function(db, callback) {
         //连接到表
         var collection = db.collection('station_run_data');
         //查询数据
         var whereStr = {}
-        collection.find({"start_date_time":{$gte:new Date(2016,0,1,7,0,0),$lte:new Date(2016,0,1,8,0,0)}
+        collection.find({"sub_route_id":route_id,"start_date_time":{$gte:new Date(2016,0,1,7,0,0),$lte:new Date(2016,0,2,7,0,0)}
         },{
             "_id":0,
             "id":0,

@@ -187,7 +187,7 @@ function time_line_(dataset) {
         .y0(function(d) { return lineheight; })
         .y1(function(d) { return yScaleMultiples(d.value); });
 
-    var svg = d3.select("#main").append("svg")
+    var svg = d3.select("#time_line").append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
@@ -339,7 +339,7 @@ function updata_stream(section_id) {
                 d.start_date_time.setSeconds(0,0);
             });
             time_line();
-            time_line_(section_data);
+            //time_line_(section_data);
         },
         complete: function () {//请求完成的处理
         },
