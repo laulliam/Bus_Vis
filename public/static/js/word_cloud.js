@@ -1,13 +1,11 @@
-
-
-/*$.ajax({
-    url: "/rank_station_data",    //请求的url地址
+$.ajax({
+    url: "/route_station_data",    //请求的url地址
     dataType: "json",   //返回格式为json
     async: true, //请求是否异步，默认为异步，这也是ajax重要特性
     type: "GET",   //请求方式
     contentType: "application/json",
     data:{
-        date:new Date(2016,0,1,7,0,0)
+        sub_route_id:27001
     },
     beforeSend: function () {//请求前的处理
     },
@@ -15,14 +13,32 @@
 
         console.log(rank_data);
 
+        var nest = d3.nest().key(function (d) {
+            return d.station_name
+        })
+
+        var s=nest.entries(rank_data);
+
+        s.forEach(function (d) {
+            var val = 0;
+            d.values.forEach(function (s) {
+                val += s.stay_time
+            });
+
+            d.values = val;
+        });
+
+        console.log(s);
+
+        word_cloud(s);
     },
     complete: function () {//请求完成的处理
     },
     error: function () {//请求出错处理
     }
-});*/
+});
 
-function word_cloud() {
+function word_cloud(dataset) {
     var border = 1;
     var all_view = $("#all_view");
     var body_width = all_view.width();
@@ -218,80 +234,106 @@ function word_cloud() {
         sc = Math.sin(c * dtr);
         cc = Math.cos(c * dtr);
     }
+    var oTag=null;
 
-    $(document).ready(function(){
+    var data=[];
 
-        var oTag=null;
-
-        var data=[{key:"建国门",val:29.153}, {key:"青义",val:29.546},{key:"圣水寺",val:40},{key:"西南科技大学北门",val:10},
-            {key:"市肿瘤医院",val:29.153}, {key:"交警大队",val:29.546},{key:"高水",val:40},{key:"平政",val:10}];
-
-        var cloud_div = d3.select("#message_cloud")
-            .append("div")
-            .attr("id","div1")
-            .style({
-                "position":"relative",
-                "top":"55%"
-                //"margin": "20px auto 0"
-            })
-            .attr("width",width)
-            .attr("height",height);
-
-         cloud_div.selectAll(".css")
-            .data(data)
-            .enter()
-            .append("a")
-            .style({
-                "font-size":function(d){
-                    return d.val + "px";},
-                "fill":"#40b1ff",
-                "position":"absolute",
-                "font-family": "Microsoft YaHei",
-                "color":"#0b85ff",
-                "font-weight":"bold",
-                "text-decoration":"none"
-            })
-            .text(function(d){return d.key});
-
-
-        oDiv=document.getElementById('div1');
-        aA=oDiv.getElementsByTagName('a');
-
-        for(var i=0;i<aA.length;i++)
-        {
-            oTag={};
-            oTag.offsetWidth=aA[i].offsetWidth;
-            oTag.offsetHeight=aA[i].offsetHeight;
-            mcList.push(oTag);
-        }
-
-        sineCosine( 0,0,0 );
-
-        positionAll();
-
-        oDiv.onmouseover=function ()
-        {
-            active=true;
-        };
-
-        oDiv.onmouseout=function ()
-        {
-            active=false;
-        };
-
-        oDiv.onmousemove=function (ev)
-        {
-            var oEvent=window.event || ev;
-
-            mouseX=oEvent.clientX-(oDiv.offsetLeft+oDiv.offsetWidth/2);
-            mouseY=oEvent.clientY-(oDiv.offsetTop+oDiv.offsetHeight/2);
-
-            mouseX/=5;
-            mouseY/=5;
-        };
-
-        setInterval(update, 30);
+    dataset.forEach(function (d) {
+        data.push({key:d.key,val:parseInt(d.values/160)})
     });
-}
 
-word_cloud();
+    var max_data = d3.max(data,function (d) {
+        return d.val;
+    });
+
+    var min_data = d3.min(data,function (d) {
+        return d.val;
+    });
+
+
+
+    console.log(data);
+
+    var cloud_div = d3.select("#message_cloud")
+        .append("div")
+        .attr("id","div1")
+        .style({
+            "position":"relative",
+            "top":"55%"
+            //"margin": "20px auto 0"
+        })
+        .attr("width",width)
+        .attr("height",height);
+
+    console.log(max_data,min_data);
+
+    var a = d3.rgb(0,255,0);
+    var b = d3.rgb(255,0,0);
+
+    var linear = d3.scale.linear()
+        .domain([min_data,max_data])
+        .range([0,1]);
+
+    var compute = d3.interpolate(a,b);
+
+    console.log(compute(linear(95)).toString());
+
+    cloud_div.selectAll(".css")
+        .data(data)
+        .enter()
+        .append("a")
+        .style({
+            "font-size":function(d){
+                return d.val + "px";},
+            "fill":function(d){
+                return compute(linear(d.val)).toString();
+            },
+            "position":"absolute",
+            "font-family": "Microsoft YaHei",
+            "color":function(d){
+                return compute(linear(d.val)).toString();
+            },
+            "font-weight":"bold",
+            "text-decoration":"none"
+        })
+        .text(function(d){return d.key});
+
+
+    oDiv=document.getElementById('div1');
+    aA=oDiv.getElementsByTagName('a');
+
+    for(var i=0;i<aA.length;i++)
+    {
+        oTag={};
+        oTag.offsetWidth=aA[i].offsetWidth;
+        oTag.offsetHeight=aA[i].offsetHeight;
+        mcList.push(oTag);
+    }
+
+    sineCosine( 0,0,0 );
+
+    positionAll();
+
+    oDiv.onmouseover=function ()
+    {
+        active=true;
+    };
+
+    oDiv.onmouseout=function ()
+    {
+        active=false;
+    };
+
+    oDiv.onmousemove=function (ev)
+    {
+        var oEvent=window.event || ev;
+
+        mouseX=oEvent.clientX-(oDiv.offsetLeft+oDiv.offsetWidth/2);
+        mouseY=oEvent.clientY-(oDiv.offsetTop+oDiv.offsetHeight/2);
+
+        mouseX/=5;
+        mouseY/=5;
+    };
+    setInterval(update, 30);
+
+}
