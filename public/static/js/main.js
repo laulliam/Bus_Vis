@@ -323,7 +323,8 @@ function heat_Map(station_info) {
                 "station_id": d.station_id,
                 "description": d.station_name + d.station_id,
                 "color": "#8fa9ff",
-                "mag":d.stay_time
+                //"mag":Math.round(Math.random())
+                "mag":0.5
                 // "icon": "music"
             },
             "geometry": {
@@ -350,7 +351,7 @@ function heat_Map(station_info) {
             "id": "earthquakes-heat",
             "type": "heatmap",
             "source": "earthquakes",
-            "maxzoom": 12,
+            "maxzoom": 15,
             "paint": {
                 // Increase the heatmap weight based on frequency and property magnitude
                 "heatmap-weight": [
@@ -367,7 +368,7 @@ function heat_Map(station_info) {
                     ["linear"],
                     ["zoom"],
                     0, 1,
-                    12, 3
+                    15, 3
                 ],
                 // Color ramp for heatmap.  Domain is 0 (low) to 1 (high).
                 // Begin color ramp at 0-stop with a 0-transparancy color
@@ -376,10 +377,10 @@ function heat_Map(station_info) {
                     "interpolate",
                     ["linear"],
                     ["heatmap-density"],
-                    0, "rgba(167,194,172,0)",
-                    0.2, "rgb(149,255,86)",
-                    0.4, "rgb(233,255,47)",
-                    0.6, "rgb(255,255,38)",
+                    0, "rgba(33,102,172,0)",
+                    0.2, "rgb(103,169,207)",
+                    0.4, "rgb(209,229,240)",
+                    0.6, "rgb(253,219,199)",
                     0.8, "rgb(239,138,98)",
                     1, "rgb(178,24,43)"
                 ],
@@ -389,7 +390,7 @@ function heat_Map(station_info) {
                     ["linear"],
                     ["zoom"],
                     0, 2,
-                    12, 20
+                    15, 20
                 ],
                 // Transition from heatmap to circle layer by zoom level
                 "heatmap-opacity": [
@@ -397,7 +398,7 @@ function heat_Map(station_info) {
                     ["linear"],
                     ["zoom"],
                     7, 1,
-                    12, 0
+                    15, 0
                 ]
             }
         }, 'waterway-label');
@@ -433,10 +434,10 @@ function heat_Map(station_info) {
                     "interpolate",
                     ["linear"],
                     ["get", "mag"],
-                    1, "rgba(167,194,172,0)",
-                    2, "rgb(149,255,86)",
-                    3, "rgb(233,255,47)",
-                    4, "rgb(255,255,38)",
+                    1, "rgba(33,102,172,0)",
+                    2, "rgb(103,169,207)",
+                    3, "rgb(209,229,240)",
+                    4, "rgb(253,219,199)",
                     5, "rgb(239,138,98)",
                     6, "rgb(178,24,43)"
                 ],
@@ -448,10 +449,10 @@ function heat_Map(station_info) {
                     ["linear"],
                     ["zoom"],
                     7, 0,
-                    12, 1
+                    8, 1
                 ]
             }
-        }, 'waterway-label');
+        });
     });
 }
 
