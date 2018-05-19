@@ -11,8 +11,6 @@ $.ajax({
     },
     success: function (rank_data, textStatus) {
 
-        console.log(rank_data);
-
         var nest = d3.nest().key(function (d) {
             return d.station_name
         })
@@ -24,11 +22,8 @@ $.ajax({
             d.values.forEach(function (s) {
                 val += s.stay_time
             });
-
-            d.values = val;
+            d.values = val/d.values.length;
         });
-
-        console.log(s);
 
         word_cloud(s);
     },
@@ -239,7 +234,7 @@ function word_cloud(dataset) {
     var data=[];
 
     dataset.forEach(function (d) {
-        data.push({key:d.key,val:parseInt(d.values/160)})
+        data.push({key:d.key,val:parseInt(d.values)})
     });
 
     var max_data = d3.max(data,function (d) {
@@ -249,10 +244,6 @@ function word_cloud(dataset) {
     var min_data = d3.min(data,function (d) {
         return d.val;
     });
-
-
-
-    console.log(data);
 
     var cloud_div = d3.select("#message_cloud")
         .append("div")

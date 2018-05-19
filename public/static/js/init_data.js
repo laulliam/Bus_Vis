@@ -53,18 +53,18 @@ function Init_data() {
         }
     });
 
-/*    $.ajax({
+   $.ajax({
         url: "/section_route_data",    //请求的url地址
         dataType: "json",   //返回格式为json
         async: true, //请求是否异步，默认为异步，这也是ajax重要特性
         type: "GET",   //请求方式
         contentType: "application/json",
-        data:{year:2016,years:2016,mouth:0,mouths:0,day:7,days:13},
         beforeSend: function () {//请求前的处理
         },
         success: function (station, textStatus) {
 
-            Draw_calender(station)
+            //Draw_calender(station)
+            Draw_calender_(station);
 
         },
         complete: function () {//请求完成的处理
@@ -72,7 +72,7 @@ function Init_data() {
         error: function () {//请求出错处理
         }
     });
-
+/*
     $('.ranges_1 ul').remove();
     $('#daterange-btn').daterangepicker({
 

@@ -44,7 +44,7 @@ router.get('/section_run_data', function(req, res, next) {
 
 router.get('/section_id_data', function(req, res, next) {
 
-    var section_id = parseInt(req.query.section_id);
+    var section_id =parseInt(req.query.section_id);
     var date_extent = req.query.date_extent;
 
     //console.log(typeof(section_id),date_extent);

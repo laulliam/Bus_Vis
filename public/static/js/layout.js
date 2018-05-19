@@ -7,6 +7,7 @@ function Layout() {
     var header = document.getElementById("header");
     var control= document.getElementById("control");
     var calender = document.getElementById("calender");
+    var area_line = document.getElementById("area_line");
     var main = document.getElementById("main");
     var information = document.getElementById("information");
     var message_cloud=document.getElementById("message_cloud");
@@ -17,10 +18,13 @@ function Layout() {
     header.style.height = 20 + "px";
 
     control.style.width=(body_width * 0.15 - border) + "px";
-    control.style.height = 300 + "px";
+    control.style.height = 200 + "px";
 
     calender.style.width=(body_width * 0.15 -  border) + "px";
-    calender.style.height=(body_height - 300  -  border) + "px";
+    calender.style.height=((body_height - 200)*0.8  -  border) + "px";
+
+    area_line.style.width=(body_width * 0.15 -  border) + "px";
+    area_line.style.height=((body_height - 200)*0.2) + "px";
 
     main.style.width = (body_width * 0.7+2*border) + "px";
     main.style.height = (body_height * 0.75 -  border) + "px";

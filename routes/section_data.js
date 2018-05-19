@@ -12,7 +12,7 @@ router.get('/section_route_data', function(req, res, next) {
         var collection = db.collection('section_run_data');
         //查询数据
         var whereStr = {}
-        collection.find({"sub_route_id" : "38001","start_date_time":{$gte:new Date(req.query.year,req.query.mouth,req.query.day,0,0),$lte:new Date(req.query.years,req.query.mouths,req.query.days,0,0)}},
+        collection.find({"sub_route_id" : "38001"},
             {
                 "from_station_id":0,
                 "id":0,
