@@ -37,7 +37,13 @@ var map =new mapboxgl.Map({
     center: [104.78, 31.437]
     //maxBounds: bounds // Sets bounds as max
 });
+
+d3.select("#main").style({"z-index":80});
+
 var data_section;
+var data_point;
+
+var click_pop;
 
 Init_tools();
 
@@ -51,10 +57,8 @@ heat_Map(station_info);
 //Section_render(new Date(2016,0,1,7,0,0),new Date(2016,0,1,8,0,0));
 function Init_tools() {
 
-    update_radar(20040134);
     DrawSection(section_info);
     DrawStation(station_info);
-
 
     var mainChart_tool = d3.select("#main")
         .append("div")
@@ -97,6 +101,8 @@ function Init_tools() {
             case "resize-full":
                 break;
             case "refresh":
+                map.flyTo({
+                    center: [104.78, 31.437]});
                 map.setLayoutProperty('route_layer', 'visibility', 'none');
                 break;
         }
@@ -713,7 +719,7 @@ function DrawStation(station_info) {
         });
     });
 
-    var data_point = {
+    data_point = {
         "type": "FeatureCollection",
         "features": features_point
     };
@@ -742,12 +748,15 @@ function DrawStation(station_info) {
 
     map.on('click', 'station', function (e) {
 
-        new mapboxgl.Popup()
+        if(click_pop)
+            click_pop.remove();
+
+        click_pop = new mapboxgl.Popup()
             .setLngLat(e.features[0].geometry.coordinates)
             .setHTML(e.features[0].properties.description)
             .addTo(map);
 
-         update_radar(e.features[0].properties.station_id);
+        update_radar(e.features[0].properties.station_id);
         // Change the cursor to a pointer when the mouse is over the places layer.
         map.on('mouseenter', 'station', function () {
             map.getCanvas().style.cursor = 'pointer';
@@ -877,101 +886,7 @@ function DrawStation(station_info) {
          }
          }, 'waterway-label');*/
     });
-}
 
-function update_radar(station_id) {
-    $.ajax({
-        url: "/sub_routes_numbers",    //请求的url地址
-        data:{
-            station_id:station_id
-        },
-        dataType: "json",   //返回格式为json
-        async: true, //请求是否异步，默认为异步，这也是ajax重要特性
-        type: "GET",   //请求方式
-        contentType: "application/json",
-        beforeSend: function () {//请求前的处理
-        },
-        success: function (routes_numbers, textStatus) {
-
-            var routes_id = routes_numbers[0].sub_routes_id.split(",");
-
-            var temp = [];
-
-            routes_id.forEach(function (route_id) {
-
-                var hours_data =[];
-                var hours_temp = [24];
-
-                for(var i =0;i<24;i++) hours_temp[i] =0;
-
-                var route_data = route_query(station_id,route_id,new Date(2016,0,1,7,0,0),new Date(2016,0,2,7,0,0));
-
-                route_data.forEach(function (d) {
-
-                    if(d.start_date_time.getMinutes()>=30)
-                    {
-                        d.start_date_time.setHours(d.start_date_time.getHours()+1);
-                        d.start_date_time.setMinutes(0,0);
-                    }
-                    else
-                        d.start_date_time.setMinutes(0,0);
-
-                    hours_temp[d.start_date_time.getHours()]+=d.stay_time;
-
-                });
-                for(var i =0;i<24;i++)
-                {
-                    if(i<10)
-                        hours_data.push({axis:"0"+i,value:hours_temp[i],route_id:route_id});
-                    else
-                        hours_data.push({axis:""+i,value:hours_temp[i],route_id:route_id});
-                }
-                temp.push(hours_data);
-            });
-
-            console.log(temp);
-            routes_radar(temp);
-        },
-        complete: function () {//请求完成的处理
-        },
-        error: function () {//请求出错处理
-        }
-    });
-    function route_query(station_id,route_id,start_time,end_time) {
-
-        var route_data;
-
-        $.ajax({
-            url: "/sub_route_data",    //请求的url地址
-            data:{
-                sub_route_id:route_id,
-                station_id:station_id,
-                start_time:start_time,
-                end_time:end_time
-            },
-            dataType: "json",   //返回格式为json
-            async: false, //请求是否异步，默认为异步，这也是ajax重要特性
-            type: "GET",   //请求方式
-            contentType: "application/json",
-            beforeSend: function () {//请求前的处理
-            },
-            success: function (sub_route_data, textStatus) {
-
-                sub_route_data.forEach(function (d) {
-                    d.start_date_time=new Date(d.start_date_time);
-                    d.end_date_time = new Date(d.end_date_time);
-                });
-
-                route_data = sub_route_data;
-            },
-            complete: function () {//请求完成的处理
-            },
-            error: function () {//请求出错处理
-            }
-        });
-
-        return route_data;
-    }
 }
 
 function DrawSection(section_info) {

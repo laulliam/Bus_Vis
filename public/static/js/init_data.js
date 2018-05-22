@@ -111,7 +111,6 @@ function Init_data() {
             }
         });*/
 }
-
 Init_data();
 
 $(window).resize(function () {

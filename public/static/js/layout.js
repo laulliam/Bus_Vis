@@ -14,7 +14,7 @@ function Layout() {
     var time_line = document.getElementById("time_line");
     var radar =document.getElementById("radar");
 
-    header.style.width=(body_width - 2 * border) + "px";
+    header.style.width=(body_width ) + "px";
     header.style.height = 20 + "px";
 
     control.style.width=(body_width * 0.15 - border) + "px";
@@ -33,13 +33,13 @@ function Layout() {
     information.style.height = (body_height * 0.3 - border) + "px";
 
     message_cloud.style.width = (body_width * 0.15 - border) + "px";
-    message_cloud.style.height = (body_height * 0.45 ) + "px";
+    message_cloud.style.height = (body_height * 0.4 ) + "px";
 
     time_line.style.width = (body_width * 0.7 + 2*border)+ "px";
     time_line.style.height = (body_height * 0.25) + "px";
 
     radar.style.width = (body_width * 0.15- border ) + "px";
-    radar.style.height = (body_height * 0.25 ) + "px";
+    radar.style.height = (body_height * 0.3 ) + "px";
 
     $(window).resize(function () {
         window.location.reload();

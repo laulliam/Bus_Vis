@@ -1,40 +1,144 @@
 /**
  * Created by Liang Liu on 2018/1/27.
  */
+update_radar(20040063);
 
-function routes_radar(route_data) {
+function update_radar(station_id) {
 
-    var margin = {top: 20, right: 20, bottom: 0, left: 20};
+    $.ajax({
+        url: "/sub_routes_numbers",    //请求的url地址
+        data:{
+            station_id:station_id
+        },
+        dataType: "json",   //返回格式为json
+        async: true, //请求是否异步，默认为异步，这也是ajax重要特性
+        type: "GET",   //请求方式
+        contentType: "application/json",
+        beforeSend: function () {//请求前的处理
+        },
+        success: function (routes_numbers, textStatus) {
+
+            var routes_id = routes_numbers[0].sub_routes_id.split(",");
+
+            var temp = [];
+
+            routes_id.forEach(function (route_id) {
+
+                var hours_data =[];
+                var hours_temp = [24];
+
+                for(var i =0;i<24;i++) hours_temp[i] =0;
+
+                var route_data = route_query(station_id,route_id,new Date(2016,0,1,7,0,0),new Date(2016,0,2,7,0,0));
+
+                route_data.forEach(function (d) {
+
+                    if(d.start_date_time.getMinutes()>=30)
+                    {
+                        d.start_date_time.setHours(d.start_date_time.getHours()+1);
+                        d.start_date_time.setMinutes(0,0);
+                    }
+                    else
+                        d.start_date_time.setMinutes(0,0);
+
+                    hours_temp[d.start_date_time.getHours()]+=d.stay_time;
+
+                });
+
+                for(var i =0;i<24;i++)
+                {
+                    if(i<10)
+                        hours_data.push({axis:"0"+i,value:hours_temp[i],route_id:route_id});
+                    else
+                        hours_data.push({axis:""+i,value:hours_temp[i],route_id:route_id});
+                }
+
+                temp.push(hours_data);
+            });
+
+            routes_radar(temp,routes_id);
+
+        },
+        complete: function () {//请求完成的处理
+        },
+        error: function () {//请求出错处理
+        }
+    });
+
+    function route_query(station_id,route_id,start_time,end_time) {
+
+        var route_data;
+
+        $.ajax({
+            url: "/sub_route_data",    //请求的url地址
+            data:{
+                sub_route_id:route_id,
+                station_id:station_id,
+                start_time:start_time,
+                end_time:end_time
+            },
+            dataType: "json",   //返回格式为json
+            async: false, //请求是否异步，默认为异步，这也是ajax重要特性
+            type: "GET",   //请求方式
+            contentType: "application/json",
+            beforeSend: function () {//请求前的处理
+            },
+            success: function (sub_route_data, textStatus) {
+
+                sub_route_data.forEach(function (d) {
+                    d.start_date_time=new Date(d.start_date_time);
+                    d.end_date_time = new Date(d.end_date_time);
+                });
+
+                route_data = sub_route_data;
+            },
+            complete: function () {//请求完成的处理
+            },
+            error: function () {//请求出错处理
+            }
+        });
+
+        return route_data;
+    }
+
+}
+
+function routes_radar(route_data,routes_id) {
 
     var border = 1;
     var all_view = $("#all_view");
     var body_width = all_view.width();
     var body_height = all_view.height()-20;
 
-    var width = (body_width * 0.15 -  border);
-    var height = (body_height * 0.25 );
+    // var width = radar.width();
+    // var height = radar.height();
 
-    var color = d3.scale.ordinal()
-        .range(["#EDC951","#CC333F","#00A0B0","#ff5a29","#2f71b0","#55ff30","#570eb0","#883378"]);
+    var margin ={top: 10, right: 10, bottom: 10, left: 10};
+
+    var width = (body_width * 0.15 -  border) ;
+    var height = (body_height * 0.3 - 3 * border );
+
+
+    var color = ["#EDC951","#CC333F","#00A0B0","#ff5a29","#2f71b0","#55ff30","#570eb0","#883378"];
 
     var radarChartOptions = {
-        w: width*0.85,
-        h: height*0.85,
-        margin: margin,
-        maxValue: 0.5,
+        w: width,
+        h: height,
         levels: 5,
         roundStrokes: true,
-        color: color
+        color: color,
+        routes_id:routes_id
     };
 //Call function to draw the Radar chart
-    RadarChart(".radarChart", route_data, radarChartOptions);
+    RadarChart("#radar", route_data, radarChartOptions);
 }
 
 function RadarChart(id, data, options) {
+
     var cfg = {
         w: 600,				//Width of the circle
         h: 600,				//Height of the circle
-        margin: {top: 20, right: 20, bottom: 20, left: 20}, //The margins of the SVG
+        margin: {top: 10, right: 10, bottom: 10, left: 10}, //The margins of the SVG
         levels: 3,				//How many levels or inner circles should there be drawn
         maxValue: 0, 			//What is the value that the biggest circle will represent
         labelFactor: 1.25, 	//How much farther than the radius of the outer circle should the labels be placed
@@ -59,7 +163,7 @@ function RadarChart(id, data, options) {
 
     var allAxis = (data[0].map(function(i, j){return i.axis})),	//Names of each axis
         total = allAxis.length,					//The number of different axes
-        radius = Math.min(cfg.w/2, cfg.h/2), 	//Radius of the outermost circle
+        radius = Math.min((cfg.w - 2*(cfg.margin.right + cfg.margin.left))/2, (cfg.h - 2*(cfg.margin.top + cfg.margin.bottom))/2), 	//Radius of the outermost circle
         angleSlice = Math.PI * 2 / total;		//The width in radians of each "slice"
 
     //Scale for the radius
@@ -76,12 +180,11 @@ function RadarChart(id, data, options) {
 
     //Initiate the radar chart SVG
     var svg = d3.select(id).append("svg")
-        .attr("width",  cfg.w + 2*cfg.margin.left + 2*cfg.margin.right)
-        .attr("height", cfg.h + 2*cfg.margin.top + 2*cfg.margin.bottom)
+        .attr("width",  cfg.w)
+        .attr("height", cfg.h)
         .attr("class", "radar"+id);
     //Append a g element
-    var g = svg.append("g")
-        .attr("transform", "translate(" + (cfg.w/2 + cfg.margin.left) + "," + (cfg.h/2 + cfg.margin.top) + ")");
+    var g = svg.append("g").attr("transform", "translate(" + (cfg.w/2 ) + "," + (cfg.h/2 - cfg.margin.top/2 ) + ")");
 
     /////////////////////////////////////////////////////////
     ////////// Glow filter for some extra pizzazz ///////////
@@ -97,6 +200,41 @@ function RadarChart(id, data, options) {
     /////////////////////////////////////////////////////////
     /////////////// Draw the Circular grid //////////////////
     /////////////////////////////////////////////////////////
+    var legend_g = svg.append("g");
+
+    var legendElementWidth = 15;
+    var gridSize = 10;
+
+
+    var drag = d3.behavior.drag()
+        .on("drag",drag_move)
+
+    function drag_move(){
+        var  _legend = d3.selectAll('._legend');
+    }
+
+    var legend = legend_g.selectAll("._legend")
+        .data(options.routes_id)
+        .enter()
+        .append("rect")
+        .attr("class","_legend")
+        .attr("x",function(d, i) {return legendElementWidth * i + i*10; })
+        .attr("y", function(d,i){
+            return cfg.h - cfg.margin .bottom;
+        } )
+        .attr("rx", 3)
+        .attr("ry", 3)
+        .attr("width",  legendElementWidth )
+        .attr("height",gridSize)
+        .style("fill", function(d, i) { return options.color[i%10]; })
+        .on("mouseover",function (d) {
+            d3.selectAll("._legend").attr("opacity",0.2);
+            d3.select(this).attr("opacity",1);
+        })
+        .on("mouseout",function (d) {
+            d3.selectAll("._legend").attr("opacity",1);
+        });
+
 
     //Wrapper for the grid & axes
     var axisGrid = g.append("g").attr("class", "axisWrapper");
@@ -108,10 +246,13 @@ function RadarChart(id, data, options) {
         .append("circle")
         .attr("class", "gridCircle")
         .attr("r", function(d, i){return radius/cfg.levels*d;})
-        .style("fill", "none")
-        .style("stroke", "#ffffff")
-        .style("fill-opacity", cfg.opacityCircles)
-        .style("filter" , "url(#glow)");
+        .style({
+            "fill":"none"  ,
+            "stroke":"#ffffff",
+            "stroke-opacity":0.5,
+            "fill-opacity":cfg.opacityCircles,
+            "filter":"url(#glow)"
+        });
 
 
     /////////////////////////////////////////////////////////
@@ -131,9 +272,12 @@ function RadarChart(id, data, options) {
         .attr("x2", function(d, i){ return rScale(maxValue) * Math.cos(angleSlice*i - Math.PI/2); })
         .attr("y2", function(d, i){ return rScale(maxValue) * Math.sin(angleSlice*i - Math.PI/2); })
         .attr("class", "line")
-        .style("stroke", "white")
-        .style("stroke-width", "1px");
-        //.style("filter" , "url(#glow)");
+        .style({
+            "stroke":"#ffffff",
+            "stroke-width":"1px",
+            "stroke-opacity":0.5
+        })
+    //.style("filter" , "url(#glow)");
 
     //Append the labels at each axis
     axis.append("text")
@@ -141,8 +285,8 @@ function RadarChart(id, data, options) {
         .style("font-size", "8px")
         .attr("text-anchor", "middle")
         .attr("dy", "0.15em")
-        .attr("x", function(d, i){ return rScale(maxValue * 0.87*cfg.labelFactor) * Math.cos(angleSlice*i - Math.PI/2); })
-        .attr("y", function(d, i){ return rScale(maxValue * 0.87*cfg.labelFactor) * Math.sin(angleSlice*i - Math.PI/2); })
+        .attr("x", function(d, i){ return rScale(maxValue * 0.89*cfg.labelFactor) * Math.cos(angleSlice*i - Math.PI/2); })
+        .attr("y", function(d, i){ return rScale(maxValue * 0.89*cfg.labelFactor) * Math.sin(angleSlice*i - Math.PI/2); })
         .text(function(d){return d})
         .call(wrap, cfg.wrapWidth);
 
@@ -152,12 +296,12 @@ function RadarChart(id, data, options) {
 
     //The radial line function
     var radarLine = d3.svg.line.radial()
-        .interpolate("linear-closed")
+        .interpolate("basis-closed")
         .radius(function(d) { return rScale(d.value); })
         .angle(function(d,i) {	return i*angleSlice; });
 
     if(cfg.roundStrokes) {
-        radarLine.interpolate("cardinal-closed");
+        radarLine.interpolate("basis-closed");
     }
 
     //Create a wrapper for the blobs
@@ -165,14 +309,16 @@ function RadarChart(id, data, options) {
         .data(data)
         .enter()
         .append("g")
-        .attr("class", "radarWrapper");
+        .attr("class", function (d,i) {
+            return "radarWrapper_"+ d[0].route_id;
+        });
 
     //Append the backgrounds
     blobWrapper
         .append("path")
         .attr("class", "radarArea")
         .attr("d", function(d,i) { return radarLine(d); })
-        .style("fill", function(d,i) { return cfg.color(i); })
+        .style("fill", function(d,i) { return cfg.color[i]; })
         .style("fill-opacity", cfg.opacityArea)
         .on('mouseover', function (d,i){
             //Dim all blobs
@@ -183,12 +329,8 @@ function RadarChart(id, data, options) {
             d3.select(this)
                 .transition().duration(200)
                 .style("fill-opacity", 0.7);
-
             newX =  d3.select(this).attr("x");
             newY =  d3.select(this).attr("y");
-
-            console.log(d[i].route_id);
-
             tooltip
                 .attr('x', newX)
                 .attr('y', newY)
@@ -213,48 +355,18 @@ function RadarChart(id, data, options) {
         .attr("class", "radarStroke")
         .attr("d", function(d,i) { return radarLine(d); })
         .style("stroke-width", cfg.strokeWidth + "px")
-        .style("stroke", function(d,i) { return cfg.color(i); })
+        .style("stroke", function(d,i) { return options.color[i]; })
         .style("fill", "none")
         .style("filter" , "url(#glow)");
-/*
-    //Append the circles
-    blobWrapper.selectAll(".radarCircle")
-        .data(function(d,i) { return d; })
-        .enter()
-        .append("circle")
-        .attr("class", "radarCircle")
-        .attr("r", 1)
-        .attr("cx", function(d,i){ return rScale(d.value) * Math.cos(angleSlice*i - Math.PI/2); })
-        .attr("cy", function(d,i){ return rScale(d.value) * Math.sin(angleSlice*i - Math.PI/2); })
-        .style("fill", function(d,i,j) { return cfg.color(j); })
-        .style("fill-opacity", 0.8);*/
 
     /////////////////////////////////////////////////////////
     //////// Append invisible circles for tooltip ///////////
     /////////////////////////////////////////////////////////
 
-    //Wrapper for the invisible circles on top
-    var blobCircleWrapper = g.selectAll(".radarCircleWrapper")
-        .data(data)
-        .enter()
-        .append("g")
-        .attr("class", "radarCircleWrapper");
+
+    //d3.select(".radarWrapper_35001").attr("opacity",0.3);
 
     //Append a set of invisible circles on top for the mouseover pop-up
-    blobCircleWrapper.selectAll(".radarInvisibleCircle")
-        .data(function(d,i) { return d; })
-        .enter()
-        .append("circle")
-        .attr("class", "radarInvisibleCircle")
-        .attr("r", cfg.dotRadius*1.5)
-        .attr("cx", function(d,i){ return rScale(d.value) * Math.cos(angleSlice*i - Math.PI/2); })
-        .attr("cy", function(d,i){ return rScale(d.value) * Math.sin(angleSlice*i - Math.PI/2); })
-        .style("fill", "none")
-        .style("pointer-events", "all")
-        .on("mouseover", function(d,i) {
-        })
-        .on("mouseout", function(){
-        });
 
     //Set up the small tooltip for when you hover over a circle
     var tooltip = g.append("text")
