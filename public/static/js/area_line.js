@@ -92,6 +92,5 @@ function AreaChart(init_data_line) {
     }
 }
 
-var AREA_COLOR = '#C4C9CF';
 var AREA_STROKE = "#FFFAFA";
 var AREA_OPACITY = 0.9;

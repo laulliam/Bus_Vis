@@ -11,11 +11,10 @@
     align-content: center;
 }
 
-.legend {
+.radar_legend {
     font-family: 'Raleway', sans-serif;
-    fill: #333333;
+    fill: #ffffff;
 }
 
 .tooltip {
-    fill: #333333;
 }

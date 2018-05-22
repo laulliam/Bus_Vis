@@ -18,13 +18,13 @@ function Layout() {
     header.style.height = 20 + "px";
 
     control.style.width=(body_width * 0.15 - border) + "px";
-    control.style.height = 200 + "px";
+    control.style.height = 190 + "px";
 
     calender.style.width=(body_width * 0.15 -  border) + "px";
-    calender.style.height=((body_height - 200)*0.8  -  border) + "px";
+    calender.style.height=((body_height - 190) - body_height * 0.25 ) + "px";
 
     area_line.style.width=(body_width * 0.15 -  border) + "px";
-    area_line.style.height=((body_height - 200)*0.2) + "px";
+    area_line.style.height=(body_height * 0.25 - border) + "px";
 
     main.style.width = (body_width * 0.7+2*border) + "px";
     main.style.height = (body_height * 0.75 -  border) + "px";
@@ -35,7 +35,7 @@ function Layout() {
     message_cloud.style.width = (body_width * 0.15 - border) + "px";
     message_cloud.style.height = (body_height * 0.45 ) + "px";
 
-    time_line.style.width = (body_width * 0.7)+ "px";
+    time_line.style.width = (body_width * 0.7 + 2*border)+ "px";
     time_line.style.height = (body_height * 0.25) + "px";
 
     radar.style.width = (body_width * 0.15- border ) + "px";

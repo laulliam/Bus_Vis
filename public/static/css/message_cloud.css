@@ -1,4 +1,6 @@
 #message_cloud{
+    position: relative;
+    float: right;
     border: dashed gray;
     border-width: 1px 1px 0 1px;
     font-family: 'Open Sans', sans-serif;
@@ -6,6 +8,7 @@
     text-align: center;
     cursor: default;
     align-content: center;
+    overflow:hidden;
 }
 
 

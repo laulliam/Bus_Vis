@@ -51,7 +51,7 @@ function word_cloud(dataset) {
     var lasta = 1;
     var lastb = 1;
     var distr = true;
-    var tspeed=20;//文字移动速度
+    var tspeed=5;//文字移动速度
     var size=140;
 
     var mouseX=0;
@@ -250,13 +250,13 @@ function word_cloud(dataset) {
         .attr("id","div1")
         .style({
             "position":"relative",
-            "top":"55%"
+            "top":"55%",
+            "word-break":"keep-all",
+            "white-space":"nowrap"
             //"margin": "20px auto 0"
         })
         .attr("width",width)
         .attr("height",height);
-
-    console.log(max_data,min_data);
 
     var a = d3.rgb(0,255,0);
     var b = d3.rgb(255,0,0);
@@ -266,8 +266,6 @@ function word_cloud(dataset) {
         .range([0,1]);
 
     var compute = d3.interpolate(a,b);
-
-    console.log(compute(linear(95)).toString());
 
     cloud_div.selectAll(".css")
         .data(data)
