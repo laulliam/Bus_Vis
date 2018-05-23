@@ -163,14 +163,13 @@ function RadarChart(id, data, options) {
 
     var allAxis = (data[0].map(function(i, j){return i.axis})),	//Names of each axis
         total = allAxis.length,					//The number of different axes
-        radius = Math.min((cfg.w - 2*(cfg.margin.right + cfg.margin.left))/2, (cfg.h - 2*(cfg.margin.top + cfg.margin.bottom))/2), 	//Radius of the outermost circle
+        radius = Math.min((cfg.w - 2.5*(cfg.margin.right + cfg.margin.left))/2, (cfg.h - 2.5*(cfg.margin.top + cfg.margin.bottom))/2), 	//Radius of the outermost circle
         angleSlice = Math.PI * 2 / total;		//The width in radians of each "slice"
 
     //Scale for the radius
     var rScale = d3.scale.linear()
         .range([0, radius])
         .domain([0, maxValue]);
-
     /////////////////////////////////////////////////////////
     //////////// Create the container SVG and g /////////////
     /////////////////////////////////////////////////////////
@@ -200,18 +199,13 @@ function RadarChart(id, data, options) {
     /////////////////////////////////////////////////////////
     /////////////// Draw the Circular grid //////////////////
     /////////////////////////////////////////////////////////
-    var legend_g = svg.append("g");
 
     var legendElementWidth = 15;
     var gridSize = 10;
+    var legend_g = svg.append("g");
 
-
-    var drag = d3.behavior.drag()
-        .on("drag",drag_move)
-
-    function drag_move(){
-        var  _legend = d3.selectAll('._legend');
-    }
+    //添加一个提示框
+    var tooltip=legend_g.append("text");
 
     var legend = legend_g.selectAll("._legend")
         .data(options.routes_id)
@@ -226,15 +220,39 @@ function RadarChart(id, data, options) {
         .attr("ry", 3)
         .attr("width",  legendElementWidth )
         .attr("height",gridSize)
-        .style("fill", function(d, i) { return options.color[i%10]; })
-        .on("mouseover",function (d) {
+        .style("fill", function(d, i) { return options.color[i]; })
+        .on("mouseover",function (d,i) {
+            options.routes_id.forEach(function (route) {
+                if(route != d)
+                    d3.select(".radar_"+route).attr("opacity",0.2);
+            });
             d3.selectAll("._legend").attr("opacity",0.2);
             d3.select(this).attr("opacity",1);
         })
         .on("mouseout",function (d) {
+            tooltip.style({"opacity":0});
+            options.routes_id.forEach(function (route) {
+                d3.select(".radar_"+route).attr("opacity",1);
+            });
             d3.selectAll("._legend").attr("opacity",1);
         });
-
+    legend_g.on("mouseover",function (d,i) {
+        tooltip
+            .attr("x", legendElementWidth * i + i*20)
+            .attr("y", cfg.h - 2*cfg.margin .bottom)
+            .attr("font-size",10)
+            .attr("text-anchor", "middle")
+            .attr("dy", "0.15em")
+            .attr("fill","#FFF")
+            .attr("opacity",1)
+            .style({
+                "z-index":99
+            })
+            .text(d);
+    })
+        .on("mouseout",function (d) {
+            //tooltip.style({"opacity":0})
+        });
 
     //Wrapper for the grid & axes
     var axisGrid = g.append("g").attr("class", "axisWrapper");
@@ -285,8 +303,8 @@ function RadarChart(id, data, options) {
         .style("font-size", "8px")
         .attr("text-anchor", "middle")
         .attr("dy", "0.15em")
-        .attr("x", function(d, i){ return rScale(maxValue * 0.89*cfg.labelFactor) * Math.cos(angleSlice*i - Math.PI/2); })
-        .attr("y", function(d, i){ return rScale(maxValue * 0.89*cfg.labelFactor) * Math.sin(angleSlice*i - Math.PI/2); })
+        .attr("x", function(d, i){ return rScale(maxValue * 0.88*cfg.labelFactor) * Math.cos(angleSlice*i - Math.PI/2); })
+        .attr("y", function(d, i){ return rScale(maxValue * 0.88*cfg.labelFactor) * Math.sin(angleSlice*i - Math.PI/2); })
         .text(function(d){return d})
         .call(wrap, cfg.wrapWidth);
 
@@ -305,12 +323,12 @@ function RadarChart(id, data, options) {
     }
 
     //Create a wrapper for the blobs
-    var blobWrapper = g.selectAll(".radarWrapper")
+    var blobWrapper = g.selectAll(".radar")
         .data(data)
         .enter()
         .append("g")
         .attr("class", function (d,i) {
-            return "radarWrapper_"+ d[0].route_id;
+            return "radar_"+ d[0].route_id;
         });
 
     //Append the backgrounds
@@ -321,33 +339,16 @@ function RadarChart(id, data, options) {
         .style("fill", function(d,i) { return cfg.color[i]; })
         .style("fill-opacity", cfg.opacityArea)
         .on('mouseover', function (d,i){
-            //Dim all blobs
-            d3.select("this")
-                .transition().duration(200)
-                .style("fill-opacity", 0.1);
             //Bring back the hovered over blob
             d3.select(this)
                 .transition().duration(200)
                 .style("fill-opacity", 0.7);
-            newX =  d3.select(this).attr("x");
-            newY =  d3.select(this).attr("y");
-            tooltip
-                .attr('x', newX)
-                .attr('y', newY)
-                .text(d[i].route_id)
-                .attr("fill","#FFFFFF")
-                .transition()
-                .duration(200)
-                .style('opacity', 1);
         })
         .on('mouseout', function(){
             //Bring back all blobs
             d3.select(this)
                 .transition().duration(200)
                 .style("fill-opacity", cfg.opacityArea);
-
-            tooltip.transition().duration(200)
-                .style("opacity", 1);
         });
 
     //Create the outlines
@@ -358,24 +359,6 @@ function RadarChart(id, data, options) {
         .style("stroke", function(d,i) { return options.color[i]; })
         .style("fill", "none")
         .style("filter" , "url(#glow)");
-
-    /////////////////////////////////////////////////////////
-    //////// Append invisible circles for tooltip ///////////
-    /////////////////////////////////////////////////////////
-
-
-    //d3.select(".radarWrapper_35001").attr("opacity",0.3);
-
-    //Append a set of invisible circles on top for the mouseover pop-up
-
-    //Set up the small tooltip for when you hover over a circle
-    var tooltip = g.append("text")
-        .attr("class", "tooltip")
-        .style("opacity", 0);
-
-    /////////////////////////////////////////////////////////
-    /////////////////// Helper Function /////////////////////
-    /////////////////////////////////////////////////////////
 
     //Taken from http://bl.ocks.org/mbostock/7555321
     //Wraps SVG text

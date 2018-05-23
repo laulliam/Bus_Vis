@@ -64,7 +64,7 @@ function Init_data() {
         success: function (station, textStatus) {
 
             //Draw_calender(station)
-            Draw_calender_(station);
+            //Draw_calender_(station);
 
         },
         complete: function () {//请求完成的处理
