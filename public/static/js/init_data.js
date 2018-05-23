@@ -53,7 +53,7 @@ function Init_data() {
         }
     });
 
-   $.ajax({
+/*   $.ajax({
         url: "/section_route_data",    //请求的url地址
         dataType: "json",   //返回格式为json
         async: true, //请求是否异步，默认为异步，这也是ajax重要特性
@@ -63,53 +63,14 @@ function Init_data() {
         },
         success: function (station, textStatus) {
 
-            //Draw_calender(station)
-            //Draw_calender_(station);
+            Draw_calender_(station);
 
         },
         complete: function () {//请求完成的处理
         },
         error: function () {//请求出错处理
         }
-    });
-/*
-    $('.ranges_1 ul').remove();
-    $('#daterange-btn').daterangepicker({
-
-            startDate: moment(),
-            endDate: moment()
-        },
-        function(start, end,label) {
-            function transcanshu(starts, ends) {
-                $.ajax({
-                    url: "/section_route_data",    //请求的url地址
-                    dataType: "json",   //返回格式为json
-                    async: true, //请求是否异步，默认为异步，这也是ajax重要特性
-                    type: "GET",   //请求方式
-                    contentType: "application/json",
-                    data: {
-                        year: new Date(starts).getFullYear(),
-                        years: new Date(ends).getFullYear(),
-                        mouth: new Date(starts).getMonth(),
-                        mouths: new Date(ends).getMonth(),
-                        day: new Date(starts).getDate(),
-                        days: new Date(ends).getDate()
-                    },
-                    beforeSend: function () {//请求前的处理
-                    },
-                    success: function (station, textStatus) {
-
-                        d3.select("#calender").selectAll("*").remove();
-                        Draw_calender(station)
-
-                    },
-                    complete: function () {//请求完成的处理
-                    },
-                    error: function () {//请求出错处理
-                    }
-                });
-            }
-        });*/
+    });*/
 }
 Init_data();
 

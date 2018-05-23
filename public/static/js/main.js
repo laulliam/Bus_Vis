@@ -968,7 +968,7 @@ function DrawSection(section_info) {
                     });
 
                     d3.select("#time_svg").remove("*");
-                    chart(section_data);
+                  //  chart(section_data);
                 },
                 complete: function () {//请求完成的处理
                 },

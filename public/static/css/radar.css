@@ -4,10 +4,8 @@
     border: dashed gray;
     border-width: 1px 1px 1px 1px;
     font-family: 'Open Sans', sans-serif;
-    font-size: 11px;
     font-weight: 300;
     fill: #242424;
-    cursor: default;
     -webkit-user-select:none;
     -khtml-user-select:none;;
     -moz-user-select:none;
@@ -18,9 +16,6 @@
 .radar_legend {
     font-family: 'Raleway', sans-serif;
     fill: #ffffff;
-}
-
-.tooltip {
 }
 
 .line{

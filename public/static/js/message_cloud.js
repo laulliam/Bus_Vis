@@ -321,7 +321,7 @@ function message_cloud(route_id) {
                             .setHTML(s.properties.description)
                             .addTo(map);
 
-                        update_radar(d.station_id);
+                        ///update_radar(d.station_id);
                     }
                 });
             });

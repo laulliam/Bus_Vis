@@ -11,12 +11,14 @@ function update_radar(station_id) {
             station_id:station_id
         },
         dataType: "json",   //返回格式为json
-        async: true, //请求是否异步，默认为异步，这也是ajax重要特性
+        async: false, //请求是否异步，默认为异步，这也是ajax重要特性
         type: "GET",   //请求方式
         contentType: "application/json",
         beforeSend: function () {//请求前的处理
         },
         success: function (routes_numbers, textStatus) {
+
+            var station_name = routes_numbers[0].station_name;
 
             var routes_id = routes_numbers[0].sub_routes_id.split(",");
 
@@ -56,7 +58,7 @@ function update_radar(station_id) {
                 temp.push(hours_data);
             });
 
-            routes_radar(temp,routes_id);
+            routes_radar(temp,routes_id,station_name);
 
         },
         complete: function () {//请求完成的处理
@@ -103,7 +105,7 @@ function update_radar(station_id) {
 
 }
 
-function routes_radar(route_data,routes_id) {
+function routes_radar(route_data,routes_id,station_name) {
 
     var border = 1;
     var all_view = $("#all_view");
@@ -129,6 +131,27 @@ function routes_radar(route_data,routes_id) {
         color: color,
         routes_id:routes_id
     };
+    if(d3.select("#station_name_div"))
+        d3.select("#station_name_div").remove();
+
+    var tooltip=d3.select("#radar").append("div")
+        .attr("id","station_name_div")
+        .style({
+            "position": "absolute",
+            "float":"left",
+            "z-index": "999",
+            "left": "1%",
+            "top":"2%"
+        });
+    tooltip.append("p")
+        .attr("id","tooltip_area")
+        .style({
+            "font-size":5,
+            "color":"#FFF",
+            "text-anchor":"middle"
+        })
+        .text(station_name);
+
 //Call function to draw the Radar chart
     RadarChart("#radar", route_data, radarChartOptions);
 }
@@ -143,9 +166,9 @@ function RadarChart(id, data, options) {
         maxValue: 0, 			//What is the value that the biggest circle will represent
         labelFactor: 1.25, 	//How much farther than the radius of the outer circle should the labels be placed
         wrapWidth: 60, 		//The number of pixels after which a label needs to be given a new line
-        opacityArea: 0.35, 	//The opacity of the area of the blob
+        opacityArea: 0.15, 	//The opacity of the area of the blob
         dotRadius: 4, 			//The size of the colored circles of each blog
-        opacityCircles: 0.1, 	//The opacity of the circles of each blob
+        opacityCircles: 0.2, 	//The opacity of the circles of each blob
         strokeWidth: 2, 		//The width of the stroke around each blob
         roundStrokes: false,	//If true the area and stroke will follow a round path (cardinal-closed)
         color: d3.scale.category10()	//Color function
@@ -183,7 +206,7 @@ function RadarChart(id, data, options) {
         .attr("height", cfg.h)
         .attr("class", "radar"+id);
     //Append a g element
-    var g = svg.append("g").attr("transform", "translate(" + (cfg.w/2 ) + "," + (cfg.h/2 - cfg.margin.top/2 ) + ")");
+    var g = svg.append("g").attr("transform", "translate(" + (cfg.w/2 ) + "," + (cfg.h/2 ) + ")");
 
     /////////////////////////////////////////////////////////
     ////////// Glow filter for some extra pizzazz ///////////
@@ -199,60 +222,6 @@ function RadarChart(id, data, options) {
     /////////////////////////////////////////////////////////
     /////////////// Draw the Circular grid //////////////////
     /////////////////////////////////////////////////////////
-
-    var legendElementWidth = 15;
-    var gridSize = 10;
-    var legend_g = svg.append("g");
-
-    //添加一个提示框
-    var tooltip=legend_g.append("text");
-
-    var legend = legend_g.selectAll("._legend")
-        .data(options.routes_id)
-        .enter()
-        .append("rect")
-        .attr("class","_legend")
-        .attr("x",function(d, i) {return legendElementWidth * i + i*10; })
-        .attr("y", function(d,i){
-            return cfg.h - cfg.margin .bottom;
-        } )
-        .attr("rx", 3)
-        .attr("ry", 3)
-        .attr("width",  legendElementWidth )
-        .attr("height",gridSize)
-        .style("fill", function(d, i) { return options.color[i]; })
-        .on("mouseover",function (d,i) {
-            options.routes_id.forEach(function (route) {
-                if(route != d)
-                    d3.select(".radar_"+route).attr("opacity",0.2);
-            });
-            d3.selectAll("._legend").attr("opacity",0.2);
-            d3.select(this).attr("opacity",1);
-        })
-        .on("mouseout",function (d) {
-            tooltip.style({"opacity":0});
-            options.routes_id.forEach(function (route) {
-                d3.select(".radar_"+route).attr("opacity",1);
-            });
-            d3.selectAll("._legend").attr("opacity",1);
-        });
-    legend_g.on("mouseover",function (d,i) {
-        tooltip
-            .attr("x", legendElementWidth * i + i*20)
-            .attr("y", cfg.h - 2*cfg.margin .bottom)
-            .attr("font-size",10)
-            .attr("text-anchor", "middle")
-            .attr("dy", "0.15em")
-            .attr("fill","#FFF")
-            .attr("opacity",1)
-            .style({
-                "z-index":99
-            })
-            .text(d);
-    })
-        .on("mouseout",function (d) {
-            //tooltip.style({"opacity":0})
-        });
 
     //Wrapper for the grid & axes
     var axisGrid = g.append("g").attr("class", "axisWrapper");
@@ -299,7 +268,7 @@ function RadarChart(id, data, options) {
 
     //Append the labels at each axis
     axis.append("text")
-        .attr("class", "radar_legend")
+        .attr("class", "axis_legend")
         .style("font-size", "8px")
         .attr("text-anchor", "middle")
         .attr("dy", "0.15em")
@@ -343,8 +312,27 @@ function RadarChart(id, data, options) {
             d3.select(this)
                 .transition().duration(200)
                 .style("fill-opacity", 0.7);
+
+            var tooltip=d3.select("#radar").append("div")
+                .attr("id","tooltip_div")
+                .style({
+                    "position": "absolute",
+                    "float":"left",
+                    "z-index": "999",
+                    "left": "10%",
+                    "bottom":"10%"
+                });
+            tooltip.append("p")
+                .attr("id","tooltip_area")
+                .style({
+                    "font-size":5,
+                    "color":"#FFF",
+                    "text-anchor":"middle"
+                })
+                .text(d[0].route_id);
         })
         .on('mouseout', function(){
+            d3.select("#tooltip_div").remove();
             //Bring back all blobs
             d3.select(this)
                 .transition().duration(200)
@@ -359,6 +347,62 @@ function RadarChart(id, data, options) {
         .style("stroke", function(d,i) { return options.color[i]; })
         .style("fill", "none")
         .style("filter" , "url(#glow)");
+
+    var legendElementWidth = 15;
+    var gridSize = 10;
+    var legend_g = svg.append("g");
+
+    var test =[1,2,3,4,5,6,7,8,9,10];
+
+
+    var legend = legend_g.selectAll(".radar_legend")
+        .data(options.routes_id)
+        .enter()
+        .append("rect")
+        .attr("class","radar_legend")
+        .attr("x",function(d, i) {
+                return cfg.w/options.routes_id.length + i*20 ;
+        })
+        .attr("y", function(d,i){
+            return cfg.h - cfg.margin .bottom;
+        } )
+        .attr("rx", 3)
+        .attr("ry", 3)
+        .attr("width",  legendElementWidth )
+        .attr("height",gridSize)
+        .style("fill", function(d, i) { return options.color[i]; })
+        .on("mouseover",function (d,i) {
+            var this_x = d3.select(this).attr("x");
+            var tooltip=legend_g.append("text")
+                .attr("id","tooltip")
+                .attr("x", function (d) {
+                    //return cfg.w/options.routes_id.length + i*20 ;
+                    console.log(this_x);
+                    return this_x;
+                })
+                .attr("y", cfg.h - 1.5*cfg.margin .bottom)
+                .attr("font-size",0)
+                .attr("text-anchor", "middle")
+               // .attr("dy", "0.15em")
+                .attr("fill","#FFF")
+                .text(d);
+
+            options.routes_id.forEach(function (route) {
+                if(route != d)
+                    d3.select(".radar_"+route).attr("opacity",0.2);
+            });
+            d3.selectAll(".radar_legend").attr("opacity",0.2);
+            d3.select(this).attr("opacity",1);
+        })
+        .on("mouseout",function (d) {
+            d3.select("#tooltip").remove();
+            options.routes_id.forEach(function (route) {
+                d3.select(".radar_"+route).attr("opacity",1);
+            });
+            d3.selectAll(".radar_legend").attr("opacity",1);
+        });
+
+    //d3.selectAll(".radar_legend").attr("opacity",0.2);
 
     //Taken from http://bl.ocks.org/mbostock/7555321
     //Wraps SVG text

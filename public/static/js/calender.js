@@ -202,7 +202,7 @@ function Draw_calender_(datas) {
         return a.key - b.key;
     });
 
-    AreaChart(data_line);
+    //AreaChart(data_line);
 
     function heatmapChart(data,widths,heights) {
 
