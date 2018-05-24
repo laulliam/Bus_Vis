@@ -1,184 +1,118 @@
-var datearray = [];
-var colorrange = [];
+
 
 function chart(data) {
 
-    colorrange = [d3.rgb(79, 107, 218), d3.rgb(165, 241, 88), d3.rgb(38, 232, 145),d3.rgb(27, 191, 202), d3.rgb(32, 227, 155),d3.rgb(100, 80, 195)];
-
-    var strokecolor = colorrange[0];
-
-    var format = d3.time.format("%m/%d/%y");
-
     var margin = {top: 10, right: 5, bottom: 20, left: 5};
-
     var border = 1;
     var all_view = $("#all_view");
     var body_width = all_view.width();
     var body_height = all_view.height()-20;
 
-    var width = (body_width * 0.7 - 2 * border)-margin.left-margin.right;
-    var height = (body_height * 0.25 - 3 * border)-margin.top-margin.bottom;
+    var width = (body_width * 0.7 - 2 * border);
+    var height = (body_height * 0.25 - 3 * border);
 
-    var x = d3.time.scale()
-        .range([0, width]);
-
-    var y = d3.scale.linear()
-        .range([height-10, 0]);
-
-    var z = d3.scale.ordinal()
-        .range(colorrange);
-
-    var xAxis = d3.svg.axis()
-        .scale(x)
-        .orient("bottom")
-        .ticks(d3.time.weeks);
-
-    var yAxis = d3.svg.axis()
-        .scale(y);
-
-    var yAxisr = d3.svg.axis()
-        .scale(y);
-
-    var zoom = d3.behavior.zoom()
-        .scaleExtent([1, 10])
-        .trans
-        .on("zoom", zoomed);
-
-    function zoomed() {
-        g.attr("transform",
-            "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
-
-        g.attr("transform",
-            "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
-    }
-
-    var stack = d3.layout.stack()
-        .offset("silhouette")
-        .values(function(d) { return d.values; })
-        .x(function(d) { return d.date; })
-        .y(function(d) { return d.value; });
+    var data_extent = d3.extent(data,function (d) {
+        return d.start_date_time;
+    });
 
     var nest = d3.nest()
         .key(function(d) { return d.sub_route_id; });
 
-    var area = d3.svg.area()
-        .interpolate("basis")
-        .x(function(d) {return x(d.date); })
-        .y0(function(d) {return y(d.y0); })
-        .y1(function(d) { return y(d.y0 + d.y); });
+    var nest_data = nest.entries(data);
 
-    var svg = d3.select("#time_line").append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-        .call(zoom);
-
-    var date_extent = d3.extent(data,function (d) {
-        return d.start_date_time;
-    })
-
-    var routes_data = nest.entries(data);
-
-    console.log(routes_data);
-
-    routes_data.forEach(function (d) {
-        d.values = ret(d.values);
-        d.values = data_process(d.values);
+    nest_data.forEach(function (d) {
+        d.values.sort(function (a,b) {
+            return a.start_date_time - b.start_date_time;
+        });
     });
 
-    function ret(arr){
-        var res=[arr[0]];
-        for(var j=1;j<arr.length;j++){
-            var repeat= false;
-            for(var i=0;i<res.length;i++){
-                if(arr[j].start_date_time.getTime()==res[i].start_date_time.getTime()){
-                    repeat=true;
-                    break;
-                }
-            }
-            if(!repeat){
-                res.push(arr[j]);
-            }
-        }
-        return res;
-    };
+    var line_height = (height - margin.bottom)/nest_data.length;
 
-    function data_process(route_data) {
+    var xScale = d3.time.scale().range([0, width]);
 
-        var data= [];
-        var date1 = date_extent[0];
-        var date2 = date_extent[1];
-        var minmis= 60*1000;
-        var now=date1;
-        while(now<=date2){
-            var flag = false;
-            route_data.forEach(function (d) {
+    var yScale = d3.scale.linear().range([line_height, 0]);
 
-                flag == false;
+    xScale.domain(data_extent);
 
-                if(now.getHours() == d.start_date_time.getHours()&&now.getMinutes() == d.start_date_time.getMinutes())
-                {
-                    data.push({date:d.start_date_time,value:d.stay_time});
-                    flag = true;
+    yScale.domain([0,d3.max(data,function (d) {
+        return d.stay_time;
+    })]);
 
-                }
-            });
+    var xAxis = d3.svg.axis()
+        .scale(xScale)
+        .orient("bottom");
 
-            if(flag !=true)
-                data.push({date:now,value:0});
+    var zoom = d3.behavior.zoom()
+        .x(xScale)
+        // .scaleExtent(SCALE_EXTENT)
+        .on("zoom", zoomed);
 
-            now=new Date(now.getTime()+minmis);
+    var svg = d3.select("#time_line").append("svg")
+        .attr("id","time_svg")
+        .attr("width",width)
+        .attr("height",height)
+        .style("position", "absolute")
+        .call(zoom);
 
-        }
-        return data;
-    }
+    var line = d3.svg.line()//d3中绘制曲线的函数
+        .x(function(d, i){
+            return xScale(d.start_date_time);
+        })//曲线中x的值
+        .y(function(d){
+            return yScale(d.stay_time);
+        })//曲线中y的值
+        .interpolate("basis")//把曲线设置光滑
 
-    var layers = stack(routes_data);
-
-    x.domain(d3.extent(data, function(d) { return d.start_date_time; }));
-    y.domain([0, d3.max(data, function(d) { return d.stay_time; })]);
-
-    var g1 = svg.selectAll(".layer")
-        .data(layers)
-        .enter()
-        .append("path")
-        .attr("class", "layer")
-        .attr("d", function(d) { return area(d.values); })
-        .style("fill", function(d, i) { return z(i); });
-
-    var g = svg.append("g")
+    svg.append("g")
         .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
+        .attr("transform", "translate(" + margin.left + "," + (height - margin.bottom) + ")")
         .call(xAxis);
 
-    svg.selectAll(".layer")
-        .attr("opacity", 1)
-        .on("mouseover", function(d, i) {
-            svg.selectAll(".layer").transition()
-                .duration(250)
-                .attr("opacity", function(d, j) {
-                    return j != i ? 0.6 : 1;
-                })})
+    var routes_g = svg.selectAll(".route_line")
+        .data(nest_data)
+        .enter()
+        .append("g")
+        .attr("class","routes_line")
+        .attr("id", function(d){ return d.key})
+        .attr('transform', function(d, i){ return "translate(0," + (height - (i+1) * line_height) +")"; });
 
-        .on("mousemove", function(d, i) {
-            var selected = (d.values);
-            for (var k = 0; k < selected.length; k++) {
-                datearray[k] = selected[k].date;
-                datearray[k] = datearray[k].getMonth() + datearray[k].getDate();
-            }
+    routes_g.append("path")
+        .attr('fill', "none")
+        .attr('opacity', 0.8)
+        .attr('stroke', function (d,i) {
+            return COLOR[i];
         })
-        .on("mouseout", function(d, i) {
-            svg.selectAll(".layer")
-                .transition()
-                .duration(250)
-                .attr("opacity", "1");
+        .attr("d", function (d) {
+            return line(d.values)
         })
+        .attr("clip-path", "url(#clip_path)");
+
+    var line_g = svg.append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    line_g.append("clipPath")
+        .attr("id", "clip_path")
+        .append("rect")
+        .attr({
+            x: 0,
+            y: 0,
+            width: width,
+            height: height
+        });
+
+
+    function zoomed() {
+        svg.select(".x.axis").call(xAxis);
+        routes_g.select("path").attr("d", function (d) {
+            return line(d.values);
+        });
+    }
+
 }
 
-updata_stream(1385);
+update_stream(1385);
 
-function updata_stream(section_id) {
+function update_stream(section_id) {
 
     //new Date(2016,0,1,7,0,0),new Date(2016,0,2,7,0,0) day
     //new Date(2016,0,1,7,0,0),new Date(2016,1,1,7,0,0) month

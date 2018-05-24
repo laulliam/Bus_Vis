@@ -936,46 +936,8 @@ function DrawSection(section_info) {
 
     map.on('click', 'section', function (e) {
 
-        updata_stream(e.features[0].properties.section_id);
+        update_stream(e.features[0].properties.section_id);
 
-        function updata_stream(section_id) {
-
-            //new Date(2016,0,1,7,0,0),new Date(2016,0,2,7,0,0) day
-            //new Date(2016,0,1,7,0,0),new Date(2016,1,1,7,0,0) month
-
-            console.log(section_id);
-
-            $.ajax({
-                url: "/section_id_data",    //请求的url地址
-                data:{
-                    section_id:section_id.toLocaleString(),
-                    date_extent:[new Date(2016,0,1,7,0,0),new Date(2016,0,2,7,0,0)]
-                },
-                dataType: "json",   //返回格式为json
-                async: true, //请求是否异步，默认为异步，这也是ajax重要特性
-                type: "GET",   //请求方式
-                contentType: "application/json",
-                beforeSend: function () {//请求前的处理
-                },
-                success: function (section_data, textStatus) {
-
-                    console.log(section_data);
-
-                    section_data.forEach(function (d) {
-                        d.start_date_time = new Date(d.start_date_time);
-                        d.start_date_time.setSeconds(0,0);
-                        d.stay_time = +d.stay_time;
-                    });
-
-                    d3.select("#time_svg").remove("*");
-                  //  chart(section_data);
-                },
-                complete: function () {//请求完成的处理
-                },
-                error: function () {//请求出错处理
-                }
-            });
-        }
     });
 
     map.on('mouseenter', 'section', function () {

@@ -120,15 +120,12 @@ function routes_radar(route_data,routes_id,station_name) {
     var width = (body_width * 0.15 -  border) ;
     var height = (body_height * 0.3 - 3 * border );
 
-
-    var color = ["#EDC951","#CC333F","#00A0B0","#ff5a29","#2f71b0","#55ff30","#570eb0","#883378"];
-
     var radarChartOptions = {
         w: width,
         h: height,
         levels: 5,
         roundStrokes: true,
-        color: color,
+        color: COLOR,
         routes_id:routes_id
     };
     if(d3.select("#station_name_div"))
@@ -344,7 +341,7 @@ function RadarChart(id, data, options) {
         .attr("class", "radarStroke")
         .attr("d", function(d,i) { return radarLine(d); })
         .style("stroke-width", cfg.strokeWidth + "px")
-        .style("stroke", function(d,i) { return options.color[i]; })
+        .style("stroke", function(d,i) { return COLOR[i]; })
         .style("fill", "none")
         .style("filter" , "url(#glow)");
 
