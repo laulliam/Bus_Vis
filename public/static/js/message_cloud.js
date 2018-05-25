@@ -1,4 +1,4 @@
-message_cloud(38001);
+//message_cloud(38001);
 
 function message_cloud(route_id) {
 
@@ -29,7 +29,6 @@ function message_cloud(route_id) {
                 });
                 d.values = val/d.values.length;
             });
-
             word_cloud(s);
         },
         complete: function () {//请求完成的处理
@@ -258,9 +257,11 @@ function message_cloud(route_id) {
             return d.val;
         });
 
+        d3.select("#cloud_div").remove("*");
+
         var cloud_div = d3.select("#message_cloud")
             .append("div")
-            .attr("id","div1")
+            .attr("id","cloud_div")
             .style({
                 "position":"relative",
                 "top":"55%",
@@ -327,7 +328,7 @@ function message_cloud(route_id) {
             });
 
 
-        oDiv=document.getElementById('div1');
+        oDiv=document.getElementById('cloud_div');
         aA=oDiv.getElementsByTagName('a');
 
         for(var i=0;i<aA.length;i++)

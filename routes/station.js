@@ -31,6 +31,45 @@ router.get('/station_info', function(req, res, next) {
     });
 
 });
+
+router.get('/route_station', function(req, res, next) {
+
+    var route = req.query.route_id;
+
+    console.log(route);
+
+    var pattern = new RegExp(""+route+"");
+
+    var selectData = function(db, callback) {
+        //连接到表
+        var collection = db.collection('station');
+        //查询数据
+        var whereStr = {}
+        collection.find({sub_routes_id:{$regex:pattern}},{
+            "sub_routes_id":0,
+            "sub_routes_number":0,
+            "_id":0,
+            "routes_id":0,
+            "routes_number":0
+        }).toArray(function(err, result) {
+            if(err)
+            {
+                console.log('Error:'+ err);
+                return;
+            }
+            callback(result);
+        });
+    }
+
+    MongoClient.connect(DB_CONN_STR, function(err, db) {
+        selectData(db, function(result) {
+            res.json(result);
+            db.close();
+        });
+    });
+
+});
+
 router.get('/sub_routes_numbers', function(req, res, next) {
 
     var station_id = req.query.station_id;
