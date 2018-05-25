@@ -1,28 +1,4 @@
-/**
- * Created by Liang Liu on 2018/1/20.
- */
-/*var southWest = L.latLng(31.32255387, 104.57336425),
-    northEast = L.latLng(31.59725256, 104.91016387),
-    my_bounds = L.latLngBounds(southWest, northEast);
-
-var osmUrl = 'http://localhost:8888/tiles/{z}/{x}/{y}.png',
-    osm_Attr = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    osm = L.tileLayer(osmUrl, {
-        //maxBounds:my_bounds,
-        minZoom: 12,
-        maxZoom: 18,
-        attribution: osm_Attr
-    });
-
-var map = L.map('main')
-    .setView([31.46,104.7416], 12)
-    .addLayer(osm);
-
-map.setMaxBounds(my_bounds);
-
-console.log(map.getBounds());
-console.log(map.getCenter());*/
-
+/* Created by Liang Liu on 2018/1/20.*/
 var bounds = [
     [104.57336425, 31.32255387], // Southwest coordinates
     [104.91016387, 31.59725256]  // Northeast coordinates
@@ -38,8 +14,6 @@ var map =new mapboxgl.Map({
     //maxBounds: bounds // Sets bounds as max
 });
 
-d3.select("#main").style({"z-index":80});
-
 var data_section;
 var data_point;
 
@@ -49,7 +23,7 @@ Init_tools();
 
 Draw_route_Init();
 
-heat_Map(station_info);
+//heat_Map(station_info);
 
 //Animation_route();
 
@@ -57,8 +31,8 @@ heat_Map(station_info);
 //Section_render(new Date(2016,0,1,7,0,0),new Date(2016,0,1,8,0,0));
 function Init_tools() {
 
-    DrawSection(section_info);
-    DrawStation(station_info);
+   // DrawSection(section_info);
+   // DrawStation(station_info);
 
     var mainChart_tool = d3.select("#main")
         .append("div")
@@ -67,10 +41,11 @@ function Init_tools() {
             "position": "absolute",
             "float":"left",
             "z-index": "999",
-            "left": "10%"
+            "left": "10%",
+            "top":"2%"
         })
         .selectAll("btn btn-default")
-        .data(["play", "user", "refresh"])
+        .data(["calendar", "book", "refresh"])
         .enter()
         .append("button")
         .attr({
@@ -79,12 +54,12 @@ function Init_tools() {
         })
         .attr("title", function (d) {
             switch (d) {
-                case "play":
-                    return "zz";
-                case "user":
-                    return "xx";
+                case "calendar":
+                    return "日期";
+                case "book":
+                    return "图层";
                 case "refresh":
-                    return "cc";
+                    return "刷新";
             }
         });
 
@@ -114,10 +89,10 @@ function Init_tools() {
         .attr("height",20)
         .attr("class","input-group input-group-sm")
         .style({
-            "position": "relative",
+            "position": "absolute",
             "float":"right",
             "z-index": "999",
-            "top": "1.5%",
+            "top": "2%",
             "right":"8%",
             "width":"15%"
         });
@@ -140,8 +115,8 @@ function Init_tools() {
             "position": "relative",
             "float":"right",
             "z-index": "999",
-            "top": "5.5%",
-            "right":"-9%",
+            "top": "6%",
+            "right":"8%",
             "width":"15%"
         });
 
@@ -150,10 +125,9 @@ function Init_tools() {
         .attr("role","menu")
         .attr("aria-labelledby","dropdownMenu1")
         .style({
-            "border":"0",
+            "border":"1",
             "display":"block",
             "padding":"0 0",
-            "left":"-13%",
             "min-width": $("#input_search").width()
         });
 }
@@ -460,18 +434,24 @@ function heat_Map(station_info) {
     });
 }
 
-$("#input_search").keyup(function(){
+var search_value = $("#input_search");
+var search_ul = $('.dropdown-menu');
+search_value.keyup(function(){
 
-    var val = $("#input_search").val(); // #获取搜索框输入的值
+    var val = search_value.val(); // #获取搜索框输入的值
 
     input_search(val,d3.select(".dropdown-menu"));
 
-    $('#input_search').keydown(function(){
-        d3.select('.dropdown-menu').selectAll("li").remove();
+    search_value.keydown(function(){
+        d3.select('.dropdown-menu').selectAll("li").transition().duration(300).remove();
     });
-    $('#input_search').click(function(){
-        $("#input_search").val('');
-    })
+    search_value.click(function(){
+        search_value.val('');
+        d3.select('.dropdown-menu').selectAll("li").transition().duration(300).remove();
+    });
+   search_ul.mouseleave(function(){
+        d3.select('.dropdown-menu').selectAll("li").transition().duration(300).remove();
+    });
 });
 
 function input_search(val,obj) {
@@ -506,7 +486,6 @@ function input_search(val,obj) {
                         .attr("href","javascript:void(0)")
                         .text(d.sub_route_id)
                         .on("click",function () {
-
                             d3.select('.dropdown-menu').selectAll("li").remove();
                             $("#input_search").val(d.sub_route_id);
                             Draw_route(d.sub_route_id);

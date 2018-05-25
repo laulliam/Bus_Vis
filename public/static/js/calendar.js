@@ -48,7 +48,7 @@ function Draw_calender_(datas) {
 
     function heatmapChart(data,widths,heights) {
 
-        var svg = d3.select("#calender")
+        var svg = d3.select("#calendar")
             .append("svg")
             .attr("width",widths)
             .attr("height",  heights );
@@ -142,7 +142,7 @@ function Draw_calender_(datas) {
                 d3.selectAll(".hour").attr("opacity",1);
             })
             .style("fill","#646765")
-            .attr("transform","translate(0,"+25+")")
+            .attr("transform","translate(0,"+d3.select("#day_1").attr("y")+")")
             .transition()
             .duration(1000)
             .style("fill", function (d) {
