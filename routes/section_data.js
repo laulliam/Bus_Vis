@@ -68,6 +68,40 @@ router.get('/route_search', function(req, res, next) {
 
 });
 
+router.get('/section_heat', function(req, res, next) {
+
+    var section_id = req.query.section_id;
+    var selectData = function(db, callback) {
+        //连接到表
+        var collection = db.collection('section_run_data');
+        //查询数据
+        collection.find({"start_date_time" : {$gte:new Date(2016,0,1,7,0,0),$lte:new Date(2016,0,1,8,0,0)}},
+            {
+                "from_station_id":0,
+                "id":0,
+                "stay_time":0,
+                "from_station_name":0,
+                "_id":0
+            })
+            .toArray(function(err, result) {
+                if(err)
+                {
+                    console.log('Error:'+ err);
+                    return;
+                }
+                callback(result);
+            });
+    }
+
+    MongoClient.connect(DB_CONN_STR, function(err, db) {
+        selectData(db, function(result) {
+            res.json(result);
+            db.close();
+        });
+    });
+
+});
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
     res.render('index', { title: 'Express' });

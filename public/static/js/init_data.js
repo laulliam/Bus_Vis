@@ -62,9 +62,7 @@ function Init_data() {
         beforeSend: function () {//请求前的处理
         },
         success: function (station, textStatus) {
-
             Draw_calender_(station);
-
         },
         complete: function () {//请求完成的处理
         },

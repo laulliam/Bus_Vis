@@ -14,7 +14,7 @@ var map =new mapboxgl.Map({
     //maxBounds: bounds // Sets bounds as max
 });
 
-var mainChart = {};
+//var mainChart = {};
 
 var data_section;
 var data_point;
@@ -37,8 +37,8 @@ var search_ul = $('.dropdown-menu');
 
 function Init_tools() {
 
-    DrawSection(section_info);
-    DrawStation(station_info);
+    //DrawSection(section_info);
+    //DrawStation(station_info);
 
     var mainChart_tool = d3.select("#main")
         .append("div")
@@ -138,7 +138,7 @@ function Init_tools() {
     mainChart_layerSet.on("click", function (d) {
         switch (d) {
             case "routes":
-               Change_stat(d3.select(this));
+                Change_stat(d3.select(this));
                 break;
             case "stations":
                 Change_stat(d3.select(this));
@@ -150,7 +150,7 @@ function Init_tools() {
 
         function Change_stat(current) {
             if(current.selectAll('span').attr("class")== "glyphicon glyphicon-eye-open")
-               current.selectAll('span').attr("class","glyphicon glyphicon-eye-close");
+                current.selectAll('span').attr("class","glyphicon glyphicon-eye-close");
             else
                 current.selectAll('span').attr("class","glyphicon glyphicon-eye-open");
         }
@@ -365,30 +365,29 @@ function Animation_route() {
 
 }
 
-function heat_Map(station_info) {
+//Init_heat_Map(section_info);
 
-    var features_point = [];
-    station_info.forEach(function (d) {
-        features_point.push({
+function Init_heat_Map(section_heat) {
+    var heat_point;
+    var features_heat = [];
+    section_heat.forEach(function (d) {
+        features_heat.push({
             "type": "Feature",
             "properties": {
-                "station_id": d.station_id,
-                "description": d.station_name + d.station_id,
-                "color": "#8fa9ff",
-                //"mag":Math.round(Math.random())
-                "mag":0.5
-                // "icon": "music"
+                "section_id": d.key,
+                "color": "#ff5766",
+                "mag":d.values
             },
             "geometry": {
                 "type": "Point",
-                "coordinates": [d.longitude, d.latitude]
+                "coordinates": d.coor
             }
         });
     });
 
-    var data_point = {
+    heat_point = {
         "type": "FeatureCollection",
-        "features": features_point
+        "features": features_heat
     };
 
     map.on('load', function() {
@@ -396,19 +395,17 @@ function heat_Map(station_info) {
         // Heatmap layers also work with a vector tile source.
         map.addSource('earthquakes', {
             "type": "geojson",
-            "data": data_point
+            "data": heat_point
         });
-
         map.addLayer({
             "id": "earthquakes-heat",
             "type": "heatmap",
             "source": "earthquakes",
-            "maxzoom": 15,
+            "maxzoom": 14,
             "paint": {
                 // Increase the heatmap weight based on frequency and property magnitude
                 "heatmap-weight": [
-                    "interpolate",
-                    ["linear"],
+                    "interpolate", ["linear"],
                     ["get", "mag"],
                     0, 0,
                     6, 1
@@ -419,8 +416,8 @@ function heat_Map(station_info) {
                     "interpolate",
                     ["linear"],
                     ["zoom"],
-                    0, 1,
-                    15, 3
+                    10, 60,
+                    14, 3
                 ],
                 // Color ramp for heatmap.  Domain is 0 (low) to 1 (high).
                 // Begin color ramp at 0-stop with a 0-transparancy color
@@ -429,20 +426,20 @@ function heat_Map(station_info) {
                     "interpolate",
                     ["linear"],
                     ["heatmap-density"],
-                    0, "rgba(33,102,172,0)",
-                    0.2, "rgb(103,169,207)",
-                    0.4, "rgb(209,229,240)",
-                    0.6, "rgb(253,219,199)",
-                    0.8, "rgb(239,138,98)",
-                    1, "rgb(178,24,43)"
+                    60, "rgba(33,102,172,0)",
+                    50, "rgb(50,32,200)",
+                    40, "rgb(0,255,50)",
+                    30, "rgb(150,250,0)",
+                    20, "rgb(255,255,5)",
+                    10, "rgb(255,32,5)"
                 ],
                 // Adjust the heatmap radius by zoom level
                 "heatmap-radius": [
                     "interpolate",
                     ["linear"],
                     ["zoom"],
-                    0, 2,
-                    15, 20
+                    0, 8,
+                    14, 20
                 ],
                 // Transition from heatmap to circle layer by zoom level
                 "heatmap-opacity": [
@@ -450,11 +447,10 @@ function heat_Map(station_info) {
                     ["linear"],
                     ["zoom"],
                     7, 1,
-                    15, 0
+                    14, 0
                 ]
             }
         }, 'waterway-label');
-
         map.addLayer({
             "id": "earthquakes-point",
             "type": "circle",
@@ -463,48 +459,108 @@ function heat_Map(station_info) {
             "paint": {
                 // Size circle radius by earthquake magnitude and zoom level
                 "circle-radius": [
-                    "interpolate",
-                    ["linear"],
-                    ["zoom"],
-                    7, [
-                        "interpolate",
-                        ["linear"],
+                    "interpolate", ["linear"],
+                    ["zoom"], 7,
+                    ["interpolate", ["linear"],
                         ["get", "mag"],
                         1, 1,
                         6, 4
                     ],
                     16, [
-                        "interpolate",
-                        ["linear"],
+                        "interpolate", ["linear"],
                         ["get", "mag"],
                         1, 5,
-                        6, 50
+                        6, 60
                     ]
                 ],
                 // Color circle by earthquake magnitude
                 "circle-color": [
-                    "interpolate",
-                    ["linear"],
+                    "interpolate", ["linear"],
                     ["get", "mag"],
-                    1, "rgba(33,102,172,0)",
-                    2, "rgb(103,169,207)",
-                    3, "rgb(209,229,240)",
-                    4, "rgb(253,219,199)",
-                    5, "rgb(239,138,98)",
-                    6, "rgb(178,24,43)"
+                    60, "rgba(33,102,172,0)",
+                    50, "rgb(103,169,207)",
+                    40, "rgb(209,229,240)",
+                    30, "rgb(253,219,199)",
+                    20, "rgb(239,138,98)",
+                    10, "rgb(178,24,43)"
                 ],
                 // "circle-stroke-color": "white",
                 // "circle-stroke-width": 1,
                 // Transition from heatmap to circle layer by zoom level
                 "circle-opacity": [
-                    "interpolate",
-                    ["linear"],
-                    ["zoom"],
-                    7, 0,
+                    "interpolate", ["linear"],
+                    ["zoom"], 7, 0,
                     8, 1
                 ]
             }
         });
+    });
+}
+Update_heat_map();
+function Update_heat_map(){
+
+    $.ajax({
+        url: "/section_heat",    //请求的url地址
+        data: {
+        },
+        dataType: "json",   //返回格式为json
+        async: false,//true, //请求是否异步，默认为异步，这也是ajax重要特性
+        type: "GET",   //请求方式
+        contentType: "application/json",
+        beforeSend: function () {//请求前的处理
+        },
+        success: function (section_run_data, textStatus) {
+            console.log(section_run_data);
+            var nest = d3.nest().key(function (d) {
+                return d.section_id;
+            });
+            var section_heat = nest.entries(section_run_data);
+            section_heat.forEach(function (d) {
+                var sum =0;
+                d.values.forEach(function (s) {
+                    sum += s.speed;
+                });
+                d.values = sum/d.values.length;
+                d.coor = Ret_section_coor(d.key);
+            });
+            function Ret_section_coor(section_id){
+                var coor = [];
+                $.ajax({
+                    url: "/section_center",    //请求的url地址
+                    data: {
+                        section_id:section_id
+                    },
+                    dataType: "json",   //返回格式为json
+                    async: false,//true, //请求是否异步，默认为异步，这也是ajax重要特性
+                    type: "GET",   //请求方式
+                    contentType: "application/json",
+                    beforeSend: function () {//请求前的处理
+                    },
+                    success: function (section_coor, textStatus) {
+                        if(section_coor.length>0){
+                            section_coor[0].path = eval(section_coor[0].path);
+                            section_coor[0].path.forEach(function (s) {
+                                var tem = s[0];
+                                s[0] = s[1];
+                                s[1] = tem;
+                            });
+                            coor = section_coor[0].path[parseInt(section_coor[0].path.length/2)];
+                        }
+                    },
+                    complete: function () {//请求完成的处理
+                    },
+                    error: function () {//请求出错处理
+                    }
+                });
+                return coor;
+            }
+            //console.log(section_heat);
+            Init_heat_Map(section_heat)
+        },
+        complete: function () {//请求完成的处理
+        },
+        error: function () {//请求出错处理
+        }
     });
 }
 
@@ -881,7 +937,7 @@ function DrawStation(station_info) {
             "type": "Feature",
             "properties": {
                 "station_id": d.station_id,
-                "description": d.station_name + d.station_id,
+                "description": d.station_name,
                 "color": "#8fa9ff"
                 // "icon": "music"
             },
@@ -929,7 +985,8 @@ function DrawStation(station_info) {
             .setHTML(e.features[0].properties.description)
             .addTo(map);
 
-        update_radar(e.features[0].properties.station_id);
+        //update_radar(e.features[0].properties.station_id);
+        Information(e.features[0].properties.station_id);
         // Change the cursor to a pointer when the mouse is over the places layer.
         map.on('mouseenter', 'station', function () {
             map.getCanvas().style.cursor = 'pointer';
@@ -1152,7 +1209,7 @@ function Section_speed(section_id,date_start,date_end) {
     $.ajax({
         url: "/section_run_data",    //请求的url地址
         data: {
-            "section_id":section_id.toLocaleString(),
+            "section_id":section_id,
             "date_start": date_start,
             "date_end": date_end
         },
@@ -1170,6 +1227,5 @@ function Section_speed(section_id,date_start,date_end) {
         error: function () {//请求出错处理
         }
     });
-
     return speed;
 }

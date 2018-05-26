@@ -6,7 +6,7 @@ var router = express.Router();
 
 var MongoClient = require('mongodb').MongoClient;
 var DB_CONN_STR = 'mongodb://localhost:27017/traffic_data';
-
+//站点信息
 router.get('/station_info', function(req, res, next) {
         var selectData = function(db, callback) {
         //连接到表
@@ -32,6 +32,7 @@ router.get('/station_info', function(req, res, next) {
 
 });
 
+//路线上的站点查询
 router.get('/route_station', function(req, res, next) {
 
     var route = req.query.route_id;
@@ -70,19 +71,13 @@ router.get('/route_station', function(req, res, next) {
 
 });
 
+//站点经过路线查询
 router.get('/sub_routes_numbers', function(req, res, next) {
-
     var station_id = req.query.station_id;
-
     var selectData = function(db, callback) {
         //连接到表
         var collection = db.collection('station');
         //查询数据
-
-
-        console.log(typeof(station_id),station_id);
-
-        var whereStr = {}
         collection.find({"station_id":station_id}).toArray(function(err, result) {
             if(err)
             {

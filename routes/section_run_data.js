@@ -10,10 +10,10 @@ var DB_CONN_STR = 'mongodb://localhost:27017/traffic_data';
 router.get('/section_run_data', function(req, res, next) {
 
     var section_id = parseInt(req.query.section_id);
-    var date_start=req.query.date_start;
-    var date_end = req.query.date_end;
+    //var date_start=req.query.date_start;
+    //var date_end = req.query.date_end;
 
-    console.log(typeof(section_id),new Date(date_end));
+    console.log(typeof(section_id));
 
     var selectData = function(db, callback) {
         //连接到表
@@ -21,7 +21,7 @@ router.get('/section_run_data', function(req, res, next) {
         //查询数据
         collection.find({
             "section_id":section_id,
-            "start_date_time" :{$gte:new Date(date_start),$lte:new Date(date_end)}
+            "start_date_time" :{$gte:new Date(2016,0,1,7,0,0),$lte:new Date(2016,0,1,8,0,0)}
         }).toArray(function(err, result) {
             if(err)
             {
