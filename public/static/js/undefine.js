@@ -1,5 +1,5 @@
 chart(1);
-function chart(data) {
+function chart(dataset) {
     var border = 1;
     var all_view = $("#all_view");
     var body_width = all_view.width();
@@ -15,6 +15,10 @@ function chart(data) {
     var theta = function(r) {
         return numSpirals * Math.PI * r;
     };
+
+    var date_extent = d3.extent(dataset,function (d) {
+        return d.date;
+    });
 
     // used to assign nodes color by group
     var color = d3.scale.category10();

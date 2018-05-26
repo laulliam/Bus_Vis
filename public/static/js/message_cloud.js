@@ -1,4 +1,5 @@
-//message_cloud(38001);
+
+message_cloud(38001);
 
 function message_cloud(route_id) {
 

@@ -144,6 +144,7 @@ function Init_tools() {
                 Change_stat(d3.select(this));
                 break;
             case "heatmap":
+                //Update_heat_map();
                 Change_stat(d3.select(this));
                 break;
         }
@@ -206,10 +207,11 @@ function Init_tools() {
         });
 }
 
+Animation_route();
+
 function Animation_route() {
 
     var route_path = [];
-    var t = [];
 
     $.ajax({
         url: "/all_routes",    //请求的url地址
@@ -315,189 +317,59 @@ function Animation_route() {
         }
     });
 
-    /*    for(var t=0;t<route_path.length;t++){
+   /* for(var t=0;t<route_path.length;t++){
 
-     map.on('load', function() {
-     var geojson ={
-     "type": "FeatureCollection",
-     "features": [{
-     "type": "Feature",
-     "geometry": {
-     "type": "LineString",
-     "coordinates": [
-     route_path[i].path[0]
-     ]
-     }
-     }]
-     };
+        map.on('load', function() {
+            var geojson ={
+                "type": "FeatureCollection",
+                "features": [{
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "LineString",
+                        "coordinates": [
+                            route_path[t].path[0]
+                        ]
+                    }
+                }]
+            };
 
-     map.addLayer({
-     'id': 'line-animation'+i,
-     'type': 'line',
-     'source': {
-     'type': 'geojson',
-     'data': geojson
-     },
-     'layout': {
-     'line-cap': 'round',
-     'line-join': 'round'
-     },
-     'paint': {
-     'line-color': '#ed6498',
-     'line-width': 5,
-     'line-opacity': .8
-     }
-     });
-     var index = 0;
-     var interval = setInterval(function(){
-     if(index>=d.path.length-1)clearInterval(interval);
-     geojson.features[0].geometry.coordinates.push(route_path[i].path[index]);
-     map.getSource('line-animation'+i).setData(geojson);
-     index++;
-     },1000);
+            map.addLayer({
+                'id': 'line-animation'+i,
+                'type': 'line',
+                'source': {
+                    'type': 'geojson',
+                    'data': geojson
+                },
+                'layout': {
+                    'line-cap': 'round',
+                    'line-join': 'round'
+                },
+                'paint': {
+                    'line-color': '#ed6498',
+                    'line-width': 5,
+                    'line-opacity': .8
+                }
+            });
+            var index = 0;
+            var interval = setInterval(function(){
+                if(index>=d.path.length-1)clearInterval(interval);
+                geojson.features[0].geometry.coordinates.push(route_path[i].path[index]);
+                map.getSource('line-animation'+i).setData(geojson);
+                index++;
+            },1000);
 
-     while(interval)
-     {
-     console.log(1);
-     }
-     });
-     }*/
+            while(interval)
+            {
+                console.log(1);
+            }
+        });
+    }*/
 
 }
 
-//Init_heat_Map(section_info);
+//Init_heat_Map();
 
-function Init_heat_Map(section_heat) {
-    var heat_point;
-    var features_heat = [];
-    section_heat.forEach(function (d) {
-        features_heat.push({
-            "type": "Feature",
-            "properties": {
-                "section_id": d.key,
-                "color": "#ff5766",
-                "mag":d.values
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": d.coor
-            }
-        });
-    });
-
-    heat_point = {
-        "type": "FeatureCollection",
-        "features": features_heat
-    };
-
-    map.on('load', function() {
-        // Add a geojson point source.
-        // Heatmap layers also work with a vector tile source.
-        map.addSource('earthquakes', {
-            "type": "geojson",
-            "data": heat_point
-        });
-        map.addLayer({
-            "id": "earthquakes-heat",
-            "type": "heatmap",
-            "source": "earthquakes",
-            "maxzoom": 14,
-            "paint": {
-                // Increase the heatmap weight based on frequency and property magnitude
-                "heatmap-weight": [
-                    "interpolate", ["linear"],
-                    ["get", "mag"],
-                    0, 0,
-                    6, 1
-                ],
-                // Increase the heatmap color weight weight by zoom level
-                // heatmap-intensity is a multiplier on top of heatmap-weight
-                "heatmap-intensity": [
-                    "interpolate",
-                    ["linear"],
-                    ["zoom"],
-                    10, 60,
-                    14, 3
-                ],
-                // Color ramp for heatmap.  Domain is 0 (low) to 1 (high).
-                // Begin color ramp at 0-stop with a 0-transparancy color
-                // to create a blur-like effect.
-                "heatmap-color": [
-                    "interpolate",
-                    ["linear"],
-                    ["heatmap-density"],
-                    60, "rgba(33,102,172,0)",
-                    50, "rgb(50,32,200)",
-                    40, "rgb(0,255,50)",
-                    30, "rgb(150,250,0)",
-                    20, "rgb(255,255,5)",
-                    10, "rgb(255,32,5)"
-                ],
-                // Adjust the heatmap radius by zoom level
-                "heatmap-radius": [
-                    "interpolate",
-                    ["linear"],
-                    ["zoom"],
-                    0, 8,
-                    14, 20
-                ],
-                // Transition from heatmap to circle layer by zoom level
-                "heatmap-opacity": [
-                    "interpolate",
-                    ["linear"],
-                    ["zoom"],
-                    7, 1,
-                    14, 0
-                ]
-            }
-        }, 'waterway-label');
-        map.addLayer({
-            "id": "earthquakes-point",
-            "type": "circle",
-            "source": "earthquakes",
-            "minzoom": 7,
-            "paint": {
-                // Size circle radius by earthquake magnitude and zoom level
-                "circle-radius": [
-                    "interpolate", ["linear"],
-                    ["zoom"], 7,
-                    ["interpolate", ["linear"],
-                        ["get", "mag"],
-                        1, 1,
-                        6, 4
-                    ],
-                    16, [
-                        "interpolate", ["linear"],
-                        ["get", "mag"],
-                        1, 5,
-                        6, 60
-                    ]
-                ],
-                // Color circle by earthquake magnitude
-                "circle-color": [
-                    "interpolate", ["linear"],
-                    ["get", "mag"],
-                    60, "rgba(33,102,172,0)",
-                    50, "rgb(103,169,207)",
-                    40, "rgb(209,229,240)",
-                    30, "rgb(253,219,199)",
-                    20, "rgb(239,138,98)",
-                    10, "rgb(178,24,43)"
-                ],
-                // "circle-stroke-color": "white",
-                // "circle-stroke-width": 1,
-                // Transition from heatmap to circle layer by zoom level
-                "circle-opacity": [
-                    "interpolate", ["linear"],
-                    ["zoom"], 7, 0,
-                    8, 1
-                ]
-            }
-        });
-    });
-}
-Update_heat_map();
-function Update_heat_map(){
+function Init_heat_Map() {
 
     $.ajax({
         url: "/section_heat",    //请求的url地址
@@ -510,7 +382,6 @@ function Update_heat_map(){
         beforeSend: function () {//请求前的处理
         },
         success: function (section_run_data, textStatus) {
-            console.log(section_run_data);
             var nest = d3.nest().key(function (d) {
                 return d.section_id;
             });
@@ -554,14 +425,241 @@ function Update_heat_map(){
                 });
                 return coor;
             }
-            //console.log(section_heat);
-            Init_heat_Map(section_heat)
+            Draw_heatmap(section_heat);
         },
         complete: function () {//请求完成的处理
         },
         error: function () {//请求出错处理
         }
     });
+    function Draw_heatmap(section_heat) {
+
+        var heat_point;
+        var features_heat = [];
+        section_heat.forEach(function (d) {
+            features_heat.push({
+                "type": "Feature",
+                "properties": {
+                    "section_id": d.key,
+                    //"mag":Math.random()*100
+                    "mag": d.values
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": d.coor
+                }
+            });
+        });
+
+        heat_point = {
+            "type": "FeatureCollection",
+            "features": features_heat
+        };
+
+        map.on('load', function () {
+            // Add a geojson point source.
+            // Heatmap layers also work with a vector tile source.
+            map.addSource('heatmap_source', {
+                "type": "geojson",
+                "data": heat_point
+            });
+            map.addLayer({
+                "id": "section_heat",
+                "type": "heatmap",
+                "source": "heatmap_source",
+                "maxzoom": 14,
+                "paint": {
+                    // Increase the heatmap weight based on frequency and property magnitude
+                    "heatmap-weight": [
+                        "interpolate",
+                        ["linear"],
+                        ["get", "mag"],
+                        0, 0,
+                        30, 1
+                    ],
+                    // Increase the heatmap color weight weight by zoom level
+                    // heatmap-intensity is a multiplier on top of heatmap-weight
+                    "heatmap-intensity": [
+                        "interpolate",
+                        ["linear"],
+                        ["zoom"],
+                        7, 0,
+                        14, 1
+                    ],
+                    // Color ramp for heatmap.  Domain is 0 (low) to 1 (high).
+                    // Begin color ramp at 0-stop with a 0-transparancy color
+                    // to create a blur-like effect.
+                    "heatmap-color": [
+                        "interpolate",
+                        ["linear"],
+                        ["heatmap-density"],
+                        0, "rgba(33,102,172,0)",
+                        0.2, "rgb(65,105,255)",
+                        0.4, "rgb(0,250,154)",
+                        0.6, "rgb(175,255,43)",
+                        0.8, "rgb(255,255,10)",
+                        1, "rgb(255,0,0)"
+                    ],
+                    // Adjust the heatmap radius by zoom level
+                    "heatmap-radius": [
+                        "interpolate",
+                        ["linear"],
+                        ["zoom"],
+                        7, 2,
+                        14, 20
+                    ],
+                    // Transition from heatmap to circle layer by zoom level
+                    "heatmap-opacity": [
+                        "interpolate",
+                        ["linear"],
+                        ["zoom"],
+                        7, 0,
+                        12, 1
+                    ]
+                }
+            }, 'waterway-label');
+
+            /*  map.addLayer({
+             "id": "earthquakes-point",
+             "type": "circle",
+             "source": "earthquakes",
+             "minzoom": 7,
+             "paint": {
+             // Size circle radius by earthquake magnitude and zoom level
+             "circle-radius": [
+             "interpolate",
+             ["linear"],
+             ["zoom"],
+             7,
+             ["interpolate",
+             ["linear"],
+             ["get", "mag"],
+             7, 1,
+             13, 3
+             ],
+             13, [
+             "interpolate",
+             ["linear"],
+             ["get", "mag"],
+             13, 3,
+             18, 5
+             ]
+             ],
+             // Color circle by earthquake magnitude
+             "circle-color": [
+             "interpolate",
+             ["linear"],
+             ["get", "mag"],
+             7, "rgba(33,102,172,0)",
+             8, "rgb(103,169,207)",
+             9, "rgb(209,229,240)",
+             11, "rgb(253,219,199)",
+             14, "rgb(239,138,98)",
+             16, "rgb(178,24,43)"
+             ],
+             // "circle-stroke-color": "white",
+             // "circle-stroke-width": 1,
+             // Transition from heatmap to circle layer by zoom level
+             "circle-opacity": [
+             "interpolate",
+             ["linear"],
+             ["zoom"],
+             8, 0,
+             15, 1
+             ]
+             }
+             });*/
+        });
+    }
+}
+
+function Update_heat_map(date_extent){
+
+    $.ajax({
+        url: "/section_heat",    //请求的url地址
+        data: {
+            date_extent:date_extent
+        },
+        dataType: "json",   //返回格式为json
+        async: true, //请求是否异步，默认为异步，这也是ajax重要特性
+        type: "GET",   //请求方式
+        contentType: "application/json",
+        beforeSend: function () {//请求前的处理
+        },
+        success: function (section_run_data, textStatus) {
+            var nest = d3.nest().key(function (d) {
+                return d.section_id;
+            });
+            var section_heat = nest.entries(section_run_data);
+            section_heat.forEach(function (d) {
+                var sum =0;
+                d.values.forEach(function (s) {
+                    sum += s.speed;
+                });
+                d.values = sum/d.values.length;
+                d.coor = Ret_section_coor(d.key);
+            });
+            function Ret_section_coor(section_id){
+                var coor = [];
+                $.ajax({
+                    url: "/section_center",    //请求的url地址
+                    data: {
+                        section_id:section_id
+                    },
+                    dataType: "json",   //返回格式为json
+                    async: false,//true, //请求是否异步，默认为异步，这也是ajax重要特性
+                    type: "GET",   //请求方式
+                    contentType: "application/json",
+                    beforeSend: function () {//请求前的处理
+                    },
+                    success: function (section_coor, textStatus) {
+                        if(section_coor.length>0){
+                            section_coor[0].path = eval(section_coor[0].path);
+                            section_coor[0].path.forEach(function (s) {
+                                var tem = s[0];
+                                s[0] = s[1];
+                                s[1] = tem;
+                            });
+                            coor = section_coor[0].path[parseInt(section_coor[0].path.length/2)];
+                        }
+                    },
+                    complete: function () {//请求完成的处理
+                    },
+                    error: function () {//请求出错处理
+                    }
+                });
+                return coor;
+            }
+
+            var heat_point;
+            var features_heat = [];
+            section_heat.forEach(function (d) {
+                features_heat.push({
+                    "type": "Feature",
+                    "properties": {
+                        "section_id": d.key,
+                        "mag": d.values
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": d.coor
+                    }
+                });
+            });
+
+            heat_point = {
+                "type": "FeatureCollection",
+                "features": features_heat
+            };
+
+            map.getSource('heatmap_source').setData(heat_point);
+        },
+        complete: function () {//请求完成的处理
+        },
+        error: function () {//请求出错处理
+        }
+    });
+
 }
 
 search_value.keyup(function(){
