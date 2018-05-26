@@ -262,108 +262,103 @@ function Animation_route() {
         }
     });
 
-    route_path.forEach(function (d,i) {
+    console.log(route_path.reverse());
 
-        map.on('load', function() {
+    var geojson ={
+        "type": "FeatureCollection",
+        "features": [{
+            "type": "Feature",
+            'properties':{
+                'opacity':0
+            },
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    route_path[0].path[0]
+                ]
+            }
+        }]
+    };
 
-            //console.log(d.from_name,d.target_name);
-            var geojson ={
-                "type": "FeatureCollection",
-                "features": [{
-                    "type": "Feature",
-                    "geometry": {
-                        "type": "LineString",
-                        "coordinates": [
-                            d.path[0]
-                        ]
-                    }
-                }]
-            };
+    var geojson_point ={
+        "type": "FeatureCollection",
+        "features": [{
+            "type": "Feature",
+            'properties':{
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": route_path[0].path[0]
+            }
+        }]
+    };
 
-            map.addLayer({
-                'id': 'line-animation'+i,
-                'type': 'line',
-                'source': {
-                    'type': 'geojson',
-                    'data': geojson
-                },
-                'layout': {
-                    'line-cap': 'round',
-                    'line-join': 'round'
-                },
-                'paint': {
-                    'line-color': '#ed6498',
-                    'line-width': 5,
-                    'line-opacity': .8
-                }
-            });
+    console.log(route_path[0].path[0]);
+
+    map.on('load', function() {
+
+        map.addSource('point_animation', {
+            "type": "geojson",
+            "data": geojson_point
         });
 
-        function animate_line(id,geojson,data) {
-
-            var index = 0;
-            var interval = setInterval(function(){
-
-                if(index>=d.path.length-1){
-
-                    clearInterval(interval);
-                    return 1;
-                }
-                geojson.features[0].geometry.coordinates.push(data.path[index]);
-                map.getSource('line-animation'+i).setData(geojson);
-                index++;
-            },1000);
-
-        }
-    });
-
-   /* for(var t=0;t<route_path.length;t++){
-
-        map.on('load', function() {
-            var geojson ={
-                "type": "FeatureCollection",
-                "features": [{
-                    "type": "Feature",
-                    "geometry": {
-                        "type": "LineString",
-                        "coordinates": [
-                            route_path[t].path[0]
-                        ]
-                    }
-                }]
-            };
-
-            map.addLayer({
-                'id': 'line-animation'+i,
-                'type': 'line',
-                'source': {
-                    'type': 'geojson',
-                    'data': geojson
-                },
-                'layout': {
-                    'line-cap': 'round',
-                    'line-join': 'round'
-                },
-                'paint': {
-                    'line-color': '#ed6498',
-                    'line-width': 5,
-                    'line-opacity': .8
-                }
-            });
-            var index = 0;
-            var interval = setInterval(function(){
-                if(index>=d.path.length-1)clearInterval(interval);
-                geojson.features[0].geometry.coordinates.push(route_path[i].path[index]);
-                map.getSource('line-animation'+i).setData(geojson);
-                index++;
-            },1000);
-
-            while(interval)
-            {
-                console.log(1);
+        map.addSource('line-animation',{
+            'type': 'geojson',
+            'data': geojson
+        });
+        // add the line which will be modified in the animation
+        map.addLayer({
+            'id': 'line-animation',
+            'type': 'line',
+            'source':'line-animation',
+            'layout': {
+                'line-cap': 'round',
+                'line-join': 'round'
+            },
+            'paint': {
+                'line-color': '#fff95d',
+                'line-width': 2,
+                'line-opacity': .4
             }
         });
-    }*/
+
+        map.addLayer({
+            "id": "point_animation",
+            "source": "point_animation",
+            "type": "circle",
+            "paint": {
+                "circle-radius": 2.2,
+                "circle-color": "#ffff00"
+            }
+        });
+
+        animate_line();
+    });
+
+    function animate_line() {
+
+        var i = 0,j=0;
+        var interval = setInterval(function(){
+
+            if(i>route_path.length){
+                clearInterval(interval);
+                return 1;
+            }
+            else{
+                geojson.features[0].geometry.coordinates.push(route_path[i].path[j]);
+                geojson_point.features[0].geometry.coordinates = route_path[i].path[j];
+                map.getSource('line-animation').setData(geojson);
+                map.getSource('point_animation').setData(geojson_point);
+            }
+            j++;
+            if(j>route_path[i].path.length-1)
+            {
+                i++;
+                j=0;
+            }
+
+        },30);
+    }
 
 }
 
@@ -1094,125 +1089,6 @@ function DrawStation(station_info) {
         map.on('mouseleave', 'station', function () {
             map.getCanvas().style.cursor = '';
         });
-
-        /*        map.addLayer({
-         "id": "earthquakes-heat",
-         "type": "heatmap",
-         "source": {
-         "type": "geojson",
-         "data": {
-         "type": "FeatureCollection",
-         "features": features_point
-         }
-         },
-         "maxzoom": 18,
-         "paint": {
-         // Increase the heatmap weight based on frequency and property magnitude
-         "heatmap-weight": [
-         "interpolate",
-         ["linear"],
-         ["get", "mag"],
-         0, 0,
-         6, 1
-         ],
-         // Increase the heatmap color weight weight by zoom level
-         // heatmap-intensity is a multiplier on top of heatmap-weight
-         "heatmap-intensity": [
-         "interpolate",
-         ["linear"],
-         ["zoom"],
-         0, 1,
-         9, 3
-         ],
-         // Color ramp for heatmap.  Domain is 0 (low) to 1 (high).
-         // Begin color ramp at 0-stop with a 0-transparancy color
-         // to create a blur-like effect.
-         "heatmap-color": [
-         "interpolate",
-         ["linear"],
-         ["heatmap-density"],
-         0, "rgba(33,102,172,0)",
-         0.2, "rgb(103,169,207)",
-         0.4, "rgb(209,229,240)",
-         0.6, "rgb(253,219,199)",
-         0.8, "rgb(239,138,98)",
-         1, "rgb(178,24,43)"
-         ],
-         // Adjust the heatmap radius by zoom level
-         "heatmap-radius": [
-         "interpolate",
-         ["linear"],
-         ["zoom"],
-         0, 2,
-         9, 20
-         ],
-         // Transition from heatmap to circle layer by zoom level
-         "heatmap-opacity": [
-         "interpolate",
-         ["linear"],
-         ["zoom"],
-         7, 1,
-         9, 0
-         ],
-         }
-         }, 'waterway-label');
-
-         map.addLayer({
-         "id": "earthquakes-point",
-         "type": "circle",
-         "source": {
-         "type": "geojson",
-         "data": {
-         "type": "FeatureCollection",
-         "features": features_point
-         }
-         },
-         "minzoom": 7,
-         "paint": {
-         // Size circle radius by earthquake magnitude and zoom level
-         "circle-radius": [
-         "interpolate",
-         ["linear"],
-         ["zoom"],
-         7, [
-         "interpolate",
-         ["linear"],
-         ["get", "mag"],
-         1, 1,
-         6, 4
-         ],
-         16, [
-         "interpolate",
-         ["linear"],
-         ["get", "mag"],
-         1, 5,
-         6, 50
-         ]
-         ],
-         // Color circle by earthquake magnitude
-         "circle-color": [
-         "interpolate",
-         ["linear"],
-         ["get", "mag"],
-         1, "rgba(33,102,172,0)",
-         2, "rgb(103,169,207)",
-         3, "rgb(209,229,240)",
-         4, "rgb(253,219,199)",
-         5, "rgb(239,138,98)",
-         6, "rgb(178,24,43)"
-         ],
-         "circle-stroke-color": "white",
-         "circle-stroke-width": 1,
-         // Transition from heatmap to circle layer by zoom level
-         "circle-opacity": [
-         "interpolate",
-         ["linear"],
-         ["zoom"],
-         7, 0,
-         8, 1
-         ]
-         }
-         }, 'waterway-label');*/
     });
 
 }

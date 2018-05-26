@@ -5,12 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c7571ffe-9a61-46b8-bc7d-a0883f3a2cea" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/runConfigurations/bin_www.xml" afterPath="$PROJECT_DIR$/.idea/runConfigurations/bin_www.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/static/js/main.js" afterPath="$PROJECT_DIR$/public/static/js/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/static/js/message_cloud.js" afterPath="$PROJECT_DIR$/public/static/js/message_cloud.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/static/js/undefine.js" afterPath="$PROJECT_DIR$/public/static/js/undefine.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/index.html" afterPath="$PROJECT_DIR$/views/index.html" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -41,23 +37,27 @@
       <file leaf-file-name="main.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/static/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="36">
-              <caret line="213" column="24" lean-forward="false" selection-start-line="213" selection-start-column="24" selection-end-line="213" selection-end-column="24" />
+            <state relative-caret-position="246">
+              <caret line="281" column="0" lean-forward="true" selection-start-line="281" selection-start-column="0" selection-end-line="281" selection-end-column="0" />
               <folding>
                 <element signature="n#!!block;n#Init_tools#0" expanded="false" />
                 <element signature="e#1933#2806#0" expanded="false" />
-                <element signature="e#8910#9335#0" expanded="false" />
-                <element signature="e#9348#10813#0" expanded="false" />
+                <element signature="e#6543#7678#0" expanded="false" />
                 <element signature="n#!!block;n#Init_heat_Map#0" expanded="false" />
-                <element signature="e#11740#13039#0" expanded="false" />
+                <element signature="e#11222#12521#0" expanded="false" />
                 <element signature="n#!!block;n#Draw_heatmap#0;n#!!block;n#Init_heat_Map#0" expanded="false" />
-                <element signature="e#16404#17843#0" expanded="false" />
+                <element signature="e#15886#17325#0" expanded="false" />
                 <element signature="n#!!block;n#Update_heat_map#0" expanded="false" />
-                <element signature="e#18807#20106#0" expanded="false" />
-                <element signature="e#20966#21474#0" expanded="false" />
+                <element signature="e#18289#19588#0" expanded="false" />
+                <element signature="e#20448#20956#0" expanded="false" />
                 <element signature="n#!!block;n#input_search#0" expanded="false" />
                 <element signature="n#!!block;n#Draw_route#0" expanded="false" />
                 <element signature="n#!!block;n#Draw_route_Init#0" expanded="false" />
+                <element signature="n#!!block;n#DrawStation#0" expanded="false" />
+                <element signature="e#32863#33602#0" expanded="false" />
+                <element signature="n#!!block;n#DrawSection#0" expanded="false" />
+                <element signature="n#!!block;n#Section_render#0" expanded="false" />
+                <element signature="n#!!block;n#Section_speed#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -621,7 +621,7 @@
       <workItem from="1524646268807" duration="15456000" />
       <workItem from="1525935511318" duration="2495000" />
       <workItem from="1526461450399" duration="45698000" />
-      <workItem from="1527156108092" duration="32635000" />
+      <workItem from="1527156108092" duration="38324000" />
     </task>
     <task id="LOCAL-00001" summary="station data ajax   --Liang Liu">
       <created>1516453352020</created>
@@ -854,17 +854,24 @@
       <option name="project" value="LOCAL" />
       <updated>1527255483453</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="主要进行main热力图创建&#10;1.热力图创建已完成，查询需要很久时间，还需要继续优化&#10;2.着手开始制作地图动画&#10;..........&#10;--Liang Liu 2018/5/25 21:38">
+      <created>1527338998042</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1527338998042</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="424083000" />
+    <option name="totallyTimeSpent" value="429772000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14714494" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21303074" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3164933" sideWeight="0.579795" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3270142" sideWeight="0.48243046" order="7" side_tool="false" content_ui="tabs" />
@@ -937,11 +944,12 @@
     <MESSAGE value="雷达图 功能已完善 优化待完成&#10;1.站点名称显示&#10;2.图例交互展示&#10;--Liang Liu" />
     <MESSAGE value="1.time_line 基本完成 80% 后续添加tooltips legend 以及考虑更多交互&#10;2.calender 视图基本完成80%（针对路段）后续添加针对站点&#10;3.undefine 区域视图待确定&#10;--Liang Liu" />
     <MESSAGE value="主要进行main视图以及地图优化&#10;1.优化路线搜索，站点云同步切换&#10;2.添加地图图层显示隐藏按钮，功能暂未实现&#10;后期目标：&#10;1.完成图层的显示隐藏功能&#10;2.完成mian视图的日期选择功能&#10;3.控制视图功能完善&#10;4.热力图添加&#10;..........&#10;--Liang Liu 2018/5/25 21:38" />
-    <option name="LAST_COMMIT_MESSAGE" value="主要进行main视图以及地图优化&#10;1.优化路线搜索，站点云同步切换&#10;2.添加地图图层显示隐藏按钮，功能暂未实现&#10;后期目标：&#10;1.完成图层的显示隐藏功能&#10;2.完成mian视图的日期选择功能&#10;3.控制视图功能完善&#10;4.热力图添加&#10;..........&#10;--Liang Liu 2018/5/25 21:38" />
+    <MESSAGE value="主要进行main热力图创建&#10;1.热力图创建已完成，查询需要很久时间，还需要继续优化&#10;2.着手开始制作地图动画&#10;..........&#10;--Liang Liu 2018/5/25 21:38" />
+    <option name="LAST_COMMIT_MESSAGE" value="主要进行main热力图创建&#10;1.热力图创建已完成，查询需要很久时间，还需要继续优化&#10;2.着手开始制作地图动画&#10;..........&#10;--Liang Liu 2018/5/25 21:38" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="35" />
+      <option name="time" value="37" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1186,14 +1194,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/static/js/layout.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="23" column="68" lean-forward="false" selection-start-line="23" selection-start-column="27" selection-end-line="23" selection-end-column="68" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/static/js/radar.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1534">
@@ -1305,25 +1305,37 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/public/static/js/layout.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="23" column="68" lean-forward="false" selection-start-line="23" selection-start-column="27" selection-end-line="23" selection-end-column="68" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/public/static/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="213" column="24" lean-forward="false" selection-start-line="213" selection-start-column="24" selection-end-line="213" selection-end-column="24" />
+        <state relative-caret-position="246">
+          <caret line="281" column="0" lean-forward="true" selection-start-line="281" selection-start-column="0" selection-end-line="281" selection-end-column="0" />
           <folding>
             <element signature="n#!!block;n#Init_tools#0" expanded="false" />
             <element signature="e#1933#2806#0" expanded="false" />
-            <element signature="e#8910#9335#0" expanded="false" />
-            <element signature="e#9348#10813#0" expanded="false" />
+            <element signature="e#6543#7678#0" expanded="false" />
             <element signature="n#!!block;n#Init_heat_Map#0" expanded="false" />
-            <element signature="e#11740#13039#0" expanded="false" />
+            <element signature="e#11222#12521#0" expanded="false" />
             <element signature="n#!!block;n#Draw_heatmap#0;n#!!block;n#Init_heat_Map#0" expanded="false" />
-            <element signature="e#16404#17843#0" expanded="false" />
+            <element signature="e#15886#17325#0" expanded="false" />
             <element signature="n#!!block;n#Update_heat_map#0" expanded="false" />
-            <element signature="e#18807#20106#0" expanded="false" />
-            <element signature="e#20966#21474#0" expanded="false" />
+            <element signature="e#18289#19588#0" expanded="false" />
+            <element signature="e#20448#20956#0" expanded="false" />
             <element signature="n#!!block;n#input_search#0" expanded="false" />
             <element signature="n#!!block;n#Draw_route#0" expanded="false" />
             <element signature="n#!!block;n#Draw_route_Init#0" expanded="false" />
+            <element signature="n#!!block;n#DrawStation#0" expanded="false" />
+            <element signature="e#32863#33602#0" expanded="false" />
+            <element signature="n#!!block;n#DrawSection#0" expanded="false" />
+            <element signature="n#!!block;n#Section_render#0" expanded="false" />
+            <element signature="n#!!block;n#Section_speed#0" expanded="false" />
           </folding>
         </state>
       </provider>
