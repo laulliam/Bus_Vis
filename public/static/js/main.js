@@ -207,16 +207,38 @@ function Init_tools() {
         });
 }
 
-Animation_route();
+// Animation_route(27001);
+ //Animation_route(38001);
+//Animation_routes();
+function Animation_routes() {
+    $.ajax({
+        url: "/all_routes_animation",    //请求的url地址
+        dataType: "json",   //返回格式为json
+        async: true, //请求是否异步，默认为异步，这也是ajax重要特性
+        type: "GET",   //请求方式
+        contentType: "application/json",
+        beforeSend: function () {//请求前的处理
+        },
+        success: function (routes, textStatus) {
+            routes.forEach(function (d) {
+                Animation_route(d.sub_route_id);
+            });
+        },
+        complete: function () {//请求完成的处理
+        },
+        error: function () {//请求出错处理
+        }
+    });
+}
 
-function Animation_route() {
+function Animation_route(route_id) {
 
     var route_path = [];
 
     $.ajax({
         url: "/all_routes",    //请求的url地址
         data:{
-            route_id:27001
+            route_id:route_id
         },
         dataType: "json",   //返回格式为json
         async: false, //请求是否异步，默认为异步，这也是ajax重要特性
@@ -255,14 +277,13 @@ function Animation_route() {
                     }
                 });
             });
+            route_path.reverse();
         },
         complete: function () {//请求完成的处理
         },
         error: function () {//请求出错处理
         }
     });
-
-    console.log(route_path.reverse());
 
     var geojson ={
         "type": "FeatureCollection",
@@ -293,24 +314,22 @@ function Animation_route() {
         }]
     };
 
-    console.log(route_path[0].path[0]);
-
     map.on('load', function() {
 
-        map.addSource('point_animation', {
+        map.addSource('point_animation_'+route_id, {
             "type": "geojson",
             "data": geojson_point
         });
 
-        map.addSource('line-animation',{
+     /*   map.addSource('line-animation_'+route_id,{
             'type': 'geojson',
             'data': geojson
-        });
+        });*/
         // add the line which will be modified in the animation
-        map.addLayer({
-            'id': 'line-animation',
+       /* map.addLayer({
+            'id': 'line-animation_'+route_id,
             'type': 'line',
-            'source':'line-animation',
+            'source':'line-animation_'+route_id,
             'layout': {
                 'line-cap': 'round',
                 'line-join': 'round'
@@ -318,13 +337,13 @@ function Animation_route() {
             'paint': {
                 'line-color': '#fff95d',
                 'line-width': 2,
-                'line-opacity': .4
+                'line-opacity': .3
             }
-        });
+        });*/
 
         map.addLayer({
-            "id": "point_animation",
-            "source": "point_animation",
+            "id": "point_animation_"+route_id,
+            "source": "point_animation_"+route_id,
             "type": "circle",
             "paint": {
                 "circle-radius": 2.2,
@@ -340,15 +359,15 @@ function Animation_route() {
         var i = 0,j=0;
         var interval = setInterval(function(){
 
-            if(i>route_path.length){
+            if(i>route_path.length - 1){
                 clearInterval(interval);
                 return 1;
             }
             else{
-                geojson.features[0].geometry.coordinates.push(route_path[i].path[j]);
+                //geojson.features[0].geometry.coordinates.push(route_path[i].path[j]);
                 geojson_point.features[0].geometry.coordinates = route_path[i].path[j];
-                map.getSource('line-animation').setData(geojson);
-                map.getSource('point_animation').setData(geojson_point);
+                //map.getSource('line-animation_'+route_id).setData(geojson);
+                map.getSource('point_animation_'+route_id).setData(geojson_point);
             }
             j++;
             if(j>route_path[i].path.length-1)

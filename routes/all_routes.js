@@ -39,6 +39,32 @@ router.get('/all_routes', function(req, res, next) {
 
 });
 
+router.get('/all_routes_animation', function(req, res, next) {
+    var selectData = function(db, callback) {
+        //连接到表
+        var collection = db.collection('all_routes');
+        //查询数据
+        collection.find({},{
+            "_id":0
+        }).toArray(function(err, result) {
+            if(err)
+            {
+                console.log('Error:'+ err);
+                return;
+            }
+            callback(result);
+        });
+    }
+
+    MongoClient.connect(DB_CONN_STR, function(err, db) {
+        selectData(db, function(result) {
+            res.json(result);
+            db.close();
+        });
+    });
+
+});
+
 router.get('/route_search', function(req, res, next) {
 
     var sub_route_id = req.query.sub_route_id;
@@ -47,8 +73,9 @@ router.get('/route_search', function(req, res, next) {
         //连接到表
         var collection = db.collection('all_routes');
         //查询数据
-        var whereStr = sub_route_id;
-        collection.find({sub_route_id:{$regex:whereStr}}).toArray(function(err, result) {
+        var pattern = new RegExp("^"+sub_route_id+"");
+        console.log(pattern);
+        collection.find({sub_route_id:{$regex:pattern}}).toArray(function(err, result) {
             if(err)
             {
                 console.log('Error:'+ err);
