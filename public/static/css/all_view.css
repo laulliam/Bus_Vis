@@ -13,22 +13,23 @@ body {
     border: dashed gray;
     background-color: #303030;
     border-width: 1px 1px 0 1px;
+    align-content: center;
 }
 
 #header .title {
     margin-left: 5px;
-    height: 20px;
+    height: 15px;
     color: white;
     font-family: sans-serif;
     float: left;
-    font-size: 12px;
+    font-size: 10px;
 }
 
 #header .time {
-    height: 20px;
+    height: 15px;
     margin-right: 5px;
     color: white;
     float: right;
     font-family: sans-serif;
-    font-size: 12px;
+    font-size: 10px;
 }

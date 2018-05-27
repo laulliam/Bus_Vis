@@ -3,7 +3,7 @@ function chart(dataset) {
     var border = 1;
     var all_view = $("#all_view");
     var body_width = all_view.width();
-    var body_height = all_view.height()-20;
+    var body_height = all_view.height()-15;
 
     var width=(body_width * 0.15 -  border);
     var height=(body_height * 0.25 - border);

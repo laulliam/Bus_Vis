@@ -37,8 +37,8 @@ var search_ul = $('.dropdown-menu');
 
 function Init_tools() {
 
-    //DrawSection(section_info);
-    //DrawStation(station_info);
+    DrawSection(section_info);
+    DrawStation(station_info);
 
     var mainChart_tool = d3.select("#main")
         .append("div")
@@ -175,7 +175,7 @@ function Init_tools() {
     mainChart_search.append("input")
         .attr("id","input_search")
         .attr("class","form-control input-sm")
-        .attr("placeholder","请输入公交路线");
+        .attr("placeholder","公交路线/站点");
 
     mainChart_search.append("span")
         .attr("class","input-group-addon")
@@ -1082,7 +1082,7 @@ function DrawStation(station_info) {
             },
             "paint": {
                 "circle-radius": 4,
-                "circle-color": ['get', 'color']//station_color
+                "circle-color":"#42cdd6"//station_color
             }
         });
     });

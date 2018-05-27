@@ -4,12 +4,12 @@
     border: dashed gray;
     border-width: 1px 1px 0 1px;
     font-family: 'Open Sans', sans-serif;
-    font-weight: 300;
     text-align: center;
     cursor: default;
     align-content: center;
     overflow:hidden;
 }
+
 .name_message{
     position:absolute;
     font-family: Microsoft YaHei;

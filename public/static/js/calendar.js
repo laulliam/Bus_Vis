@@ -3,7 +3,7 @@ function Draw_calender_(datas) {
     var margin = { top: 0, right: 0, bottom:20, left: 0 },
         border =1,
         body_width =  $("#all_view").width(),
-        body_height =  $("#all_view").height()-20,
+        body_height =  $("#all_view").height()-15,
         width=(body_width * 0.15 -  border),
         height=(body_height - 190) - body_height * 0.25 ,
         gridSize = height/40,
@@ -92,7 +92,7 @@ function Draw_calender_(datas) {
             })
             .text(function(d) { return d; })
             .attr("x", 10)
-            .attr("y", function(d, i) { return (i+3)* gridSize; })
+            .attr("y", function(d, i) { return (i+4)* gridSize; })
             .style({
                 "font-size":"10",
                 "font-family": "Consolas, courier",
@@ -109,7 +109,7 @@ function Draw_calender_(datas) {
             .enter()
             .append("rect")
             .attr("x", function(d) { return (d.hour-3) * gridSize; } )
-            .attr("y", function(d,i) {return (d.day  -2) * gridSize; })
+            .attr("y", function(d,i) {return (d.day  -1) * gridSize; })
             .attr("rx", 3)
             .attr("ry", 3)
             .attr("class", "hour bordered")
@@ -126,7 +126,7 @@ function Draw_calender_(datas) {
                     .attr("id","time_hour")
                     .text(this_hour)
                     .attr("x", this_x)
-                    .attr("y",10)
+                    .attr("y",20)
                     .style({
                         "font-size":"10",
                         "font-family": "Consolas, courier",

@@ -6,7 +6,7 @@ function chart(data) {
     var border = 1;
     var all_view = $("#all_view");
     var body_width = all_view.width();
-    var body_height = all_view.height()-20;
+    var body_height = all_view.height()-15;
 
     var width = (body_width * 0.7 - 2 * border);
     var height = (body_height * 0.25 - 3 * border);
@@ -74,7 +74,7 @@ function chart(data) {
         .append("g")
         .attr("class","routes_line")
         .attr("id", function(d){ return d.key})
-        .attr('transform', function(d, i){ return "translate(0," + (height - (i+1) * line_height) +")"; });
+        .attr('transform', function(d, i){ return "translate(0," + (height - (i+1.5) * line_height) +")"; });
 
     routes_g.append("path")
         .attr('fill', "none")
@@ -121,7 +121,7 @@ function update_stream(section_id) {
         url: "/section_id_data",    //请求的url地址
         data:{
             section_id:section_id.toLocaleString(),
-            date_extent:[new Date(2016,0,1,7,0,0),new Date(2016,0,2,7,0,0)]
+            date_extent:[new Date(2016,0,1,7,0,0),new Date(2016,1,1,7,0,0)]
         },
         dataType: "json",   //返回格式为json
         async: true, //请求是否异步，默认为异步，这也是ajax重要特性
