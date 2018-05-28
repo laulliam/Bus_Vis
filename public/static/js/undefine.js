@@ -1,5 +1,5 @@
-chart(1);
-function chart(dataset) {
+
+function undefined_(dataset) {
     var border = 1;
     var all_view = $("#all_view");
     var body_width = all_view.width();
@@ -16,9 +16,44 @@ function chart(dataset) {
         return numSpirals * Math.PI * r;
     };
 
-    var date_extent = d3.extent(dataset,function (d) {
-        return d.date;
+    var nest = d3.nest().key(function (d) {
+        return d.start_date_time;
     });
+
+    var test = nest.entries(dataset);
+
+    test.forEach(function (d) {
+        var sum = 0;
+        d.key = new Date(d.key);
+        d.values.forEach(function (s) {
+            if(s.speed>60)
+                s.speed = 0;
+            sum += s.speed;
+        });
+        d.values = sum/d.values.length;
+    });
+
+    var date_extent = d3.extent(test,function (d) {
+        return d.key;
+    });
+
+    date_extent[0].setMinutes(0,0);
+    date_extent[1].setMinutes(0,0);
+    date_extent[1].setHours(date_extent[1].getHours()+1,0);
+
+    var data_10min = [];
+    for(var i=date_extent[0].getTime();i<=date_extent[1].getTime();i += 1000*60*10){
+        var sum = 0;
+        var index = 0;
+        test.forEach(function (d) {
+            if(d.key.getTime() >= i && d.key.getTime() < i + 1000*60*10) {
+                sum += d.values;
+                index++;
+            }
+        });
+        sum = Math.pow(sum,5);
+        data_10min.push({date:new Date(i),value:(index)?(sum/index):0});
+    }
 
     // used to assign nodes color by group
     var color = d3.scale.category10();
@@ -50,34 +85,24 @@ function chart(dataset) {
         .style("stroke", "#FFFFFF");
 
     var spiralLength = path.node().getTotalLength(),
-        N = 365,
+        N = data_10min.length,
         barWidth = (spiralLength / N) - 1;
-    var someData = [];
-    for (var i = 0; i < N; i++) {
-        var currentDate = new Date();
-        currentDate.setDate(currentDate.getDate() + i);
-        someData.push({
-            date: currentDate,
-            value: Math.random()*500,
-            group: currentDate.getMonth()
-        });
-    }
 
     var timeScale = d3.time.scale()
-        .domain(d3.extent(someData, function(d){
+        .domain(d3.extent(data_10min, function(d){
             return d.date;
         }))
         .range([0, spiralLength]);
 
     // yScale for the bar height
     var yScale = d3.scale.linear()
-        .domain([0, d3.max(someData, function(d){
+        .domain([0, d3.max(data_10min, function(d){
             return d.value;
         })])
         .range([0, (r / numSpirals) -20]);
 
     svg.selectAll("rect")
-        .data(someData)
+        .data(data_10min)
         .enter()
         .append("rect")
         .attr("x", function(d,i){
@@ -91,7 +116,6 @@ function chart(dataset) {
             d.y = posOnLine.y; // y position on the spiral
 
             d.a = (Math.atan2(angleOnLine.y, angleOnLine.x) * 180 / Math.PI) - 90; //angle at the spiral position
-
             return d.x;
         })
         .attr("y", function(d){
@@ -110,35 +134,35 @@ function chart(dataset) {
         });
 
     // add date labels
-    var tF = d3.time.format("%b %Y"),
-        firstInMonth = {};
+    /* var tF = d3.time.format("%d"),
+         firstInMonth = {};
 
-    svg.selectAll("text")
-        .data(someData)
-        .enter()
-        .append("text")
-        .attr("dy", 10)
-        .style("text-anchor", "start")
-        .style("font", "10px arial")
-        .append("textPath")
-        // only add for the first of each month
-        .filter(function(d){
-            var sd = tF(d.date);
-            if (!firstInMonth[sd]){
-                firstInMonth[sd] = 1;
-                return true;
-            }
-            return false;
-        })
-        .text(function(d){
-            return tF(d.date);
-        })
-        // place text along spiral
-        .attr("xlink:href", "#spiral")
-        .style("fill", "grey")
-        .attr("startOffset", function(d){
-            return ((d.linePer / spiralLength) * 100) + "%";
-        });
+     svg.selectAll("text")
+         .data(someData)
+         .enter()
+         .append("text")
+         .attr("dy", 10)
+         .style("text-anchor", "start")
+         .style("font", "10px arial")
+         .append("textPath")
+         // only add for the first of each month
+         .filter(function(d){
+             var sd = tF(d.date);
+             if (!firstInMonth[sd]){
+                 firstInMonth[sd] = 1;
+                 return true;
+             }
+             return false;
+         })
+         .text(function(d){
+             return tF(d.date);
+         })
+         // place text along spiral
+         .attr("xlink:href", "#spiral")
+         .style("fill", "grey")
+         .attr("startOffset", function(d){
+             return ((d.linePer / spiralLength) * 100) + "%";
+         });*/
 
     svg.selectAll("rect")
         .on('mouseover', function(d) {
@@ -154,4 +178,36 @@ function chart(dataset) {
             d3.select("#undefine").selectAll("rect")
                 .style("opacity", 1);
         });
+}
+
+getData(38001);
+
+function getData(route_id){
+    $.ajax({
+        url: "/route_run_data",    //请求的url地址
+        data:{
+            sub_route_id:route_id.toString()
+            // date_extent:[new Date(2016,0,1,7,0,0),new Date(2016,0,2,7,0,0)]
+        },
+        dataType: "json",   //返回格式为json
+        async: true, //请求是否异步，默认为异步，这也是ajax重要特性
+        type: "GET",   //请求方式
+        contentType: "application/json",
+        beforeSend: function () {//请求前的处理
+        },
+        success: function (route_data, textStatus) {
+            route_data.forEach(function (d) {
+                d.start_date_time = new Date(d.start_date_time);
+                if(d.start_date_time.getSeconds()>30) {
+                    d.start_date_time.setMinutes(d.start_date_time.getMinutes()+1,0);
+                }
+                d.start_date_time.setSeconds(0,0);
+            });
+            undefined_(route_data);
+        },
+        complete: function () {//请求完成的处理
+        },
+        error: function () {//请求出错处理
+        }
+    });
 }

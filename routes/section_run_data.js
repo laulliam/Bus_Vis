@@ -77,6 +77,41 @@ router.get('/section_id_data', function(req, res, next) {
 
 });
 
+router.get('/route_run_data', function(req, res, next) {
+
+    var route_id = req.query.sub_route_id;
+    //var date_start=req.query.date_start;
+    //var date_end = req.query.date_end;
+
+    console.log(typeof(section_id));
+
+    var selectData = function(db, callback) {
+        //连接到表
+        var collection = db.collection('section_run_data');
+        //查询数据
+        collection.find({
+            "sub_route_id":route_id,
+            "start_date_time" :{$gte:new Date(2016,0,1,0,0,0),$lte:new Date(2016,0,2,0,0,0)}
+        }).toArray(function(err, result) {
+            if(err)
+            {
+                console.log('Error:'+ err);
+                return;
+            }
+            callback(result);
+        });
+    }
+
+    MongoClient.connect(DB_CONN_STR, function(err, db) {
+        selectData(db, function(result) {
+            res.json(result);
+            //console.log(result);
+            db.close();
+        });
+    });
+
+});
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) {

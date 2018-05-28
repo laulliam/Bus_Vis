@@ -54,11 +54,12 @@ router.get('/route_station_data', function(req, res, next) {
 
     var route_id= req.query.sub_route_id;
 
+    console.log(route_id,typeof(route_id));
+
     var selectData = function(db, callback) {
         //连接到表
         var collection = db.collection('station_run_data');
         //查询数据
-        var whereStr = {}
         collection.find({"sub_route_id":route_id,"start_date_time":{$gte:new Date(2016,0,1,7,0,0),$lte:new Date(2016,0,2,7,0,0)}
         },{
             "_id":0,
@@ -67,7 +68,7 @@ router.get('/route_station_data', function(req, res, next) {
         }).toArray(function(err, result) {
             if(err)
             {
-                console.log('Error:'+ err);
+                console.log('Error:'+ err);s
                 return;
             }
             callback(result);
