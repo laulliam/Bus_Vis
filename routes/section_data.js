@@ -69,13 +69,13 @@ router.get('/route_search', function(req, res, next) {
 });
 
 router.get('/section_heat', function(req, res, next) {
-
-    var section_id = req.query.section_id;
+    var date_extent = req.query.date_extent;
+    console.log(new Date(date_extent[0]));
     var selectData = function(db, callback) {
         //连接到表
         var collection = db.collection('section_run_data');
         //查询数据
-        collection.find({"start_date_time" : {$gte:new Date(2016,0,1,7,0,0),$lte:new Date(2016,0,1,8,0,0)}},
+        collection.find({"start_date_time" : {$gte:new Date(date_extent[0]),$lte:new Date(date_extent[1])}},
             {
                 "from_station_id":0,
                 "id":0,

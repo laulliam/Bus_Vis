@@ -62,7 +62,7 @@ function message_cloud(route_id) {
         var lasta = 1;
         var lastb = 1;
         var distr = true;
-        var tspeed=1;//文字移动速度
+        var tspeed=10;//文字移动速度
         var size=140;
 
         var mouseX=0;
@@ -99,8 +99,7 @@ function message_cloud(route_id) {
 
             var c=0;
             sineCosine(a,b,c);
-            for(var j=0;j<mcList.length;j++)
-            {
+            for(var j=0;j<mcList.length;j++) {
                 var rx1=mcList[j].cx;
                 var ry1=mcList[j].cy*ca+mcList[j].cz*(-sa);
                 var rz1=mcList[j].cy*sa+mcList[j].cz*ca;
@@ -298,30 +297,22 @@ function message_cloud(route_id) {
             .attr("class","name_message")
             .text(function(d){return d.key})
             .on("mouseover",function (d) {
-                tspeed = 0.5;
+                tspeed = 0.2;
             })
             .on("mouseout",function (d) {
-                tspeed = 15;
+                tspeed = 10;
             })
             .on("click",function (d) {
-
-                tspeed = 0;
-
-                data_point.features.forEach(function (s) {
-
+                mainChart.data_point.features.forEach(function (s) {
                     if(s.properties.station_id == d.station_id)
                     {
-                        map.flyTo({
-                            center:s.geometry.coordinates });
-
-                        if(click_pop)
-                            click_pop.remove();
-
-                        click_pop = new mapboxgl.Popup()
+                        map.flyTo({center:s.geometry.coordinates });
+                        if(mainChart.station_pop)
+                            mainChart.station_pop.remove();
+                        mainChart.station_pop = new mapboxgl.Popup()
                             .setLngLat(s.geometry.coordinates)
                             .setHTML(s.properties.description)
                             .addTo(map);
-
                         ///update_radar(d.station_id);
                     }
                 });

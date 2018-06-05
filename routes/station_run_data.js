@@ -10,23 +10,23 @@ var router = express.Router();
 var MongoClient = require('mongodb').MongoClient;
 var DB_CONN_STR = 'mongodb://localhost:27017/traffic_data';
 
+
+//获取站点雷达数据
 router.get('/sub_route_data', function(req, res, next) {
 
     var sub_route_id = req.query.sub_route_id;
     var station_id = req.query.station_id;
-    var start_time = req.query.start_time;
-    var end_time = req.query.end_time;
+    var date_extent = req.query.date_extent;
 
 
     var selectData = function(db, callback) {
         //连接到表
         var collection = db.collection('station_run_data');
         //查询数据
-        var whereStr = {}
         collection.find({
             "sub_route_id":sub_route_id,
             "station_id":station_id,
-            "start_date_time":{$gte:new Date(2016,0,1,7,0,0),$lte:new Date(2016,0,2,7,0,0)}
+            "start_date_time":{$gte:new Date(date_extent[0]),$lte:new Date(date_extent[1])}
         },{
             "_id":0,
             "id":0,
@@ -83,7 +83,6 @@ router.get('/route_station_data', function(req, res, next) {
     });
 
 });
-
 /* GET home page. */
 router.get('/', function(req, res, next) {
     res.render('index', { title: 'Express' });

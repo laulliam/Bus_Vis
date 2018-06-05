@@ -1,9 +1,9 @@
 function Control_Chart() {
 
     var obj_station = {
-        'Size': 3,
-        'Color': "#42cdd6",
-        'Opacity': 0.8
+        'Size': 5,
+        'Color': "#0cb1d6",
+        'Opacity': 0.5
     };
 
     var obj_road = {
@@ -13,7 +13,7 @@ function Control_Chart() {
     var gui = new dat.gui.GUI();
 
     var f1 = gui.addFolder('Station Style');
-    var station_size = f1.add(obj_station, 'Size').min(1).max(5).step(0.1).listen();
+    var station_size = f1.add(obj_station, 'Size').min(1).max(10).step(0.1).listen();
     var station_color = f1.addColor(obj_station, 'Color').listen();
     var station_opacity = f1.add(obj_station, 'Opacity').min(0).max(1).step(0.1).listen();
 

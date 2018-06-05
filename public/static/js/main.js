@@ -8,24 +8,65 @@ mapboxgl.accessToken = 'pk.eyJ1Ijoic2lsZW50bGwiLCJhIjoiY2o4NGEycGN2MDZ4ZDMza2Exe
 
 var map =new mapboxgl.Map({
     container: 'main',
-    style: 'mapbox://styles/silentll/cjckbaggi8de22sp5g6cblhnx',
+    style: 'mapbox://styles/silentll/cjckbaggi8de22sp5g6cblhnx',//'mapbox://styles/silentll/cjhynnwpq39yo2rt7nm41q58e', //
     zoom: 12,
-    center: [104.78, 31.437]
+    center: [104.7503025807656, 31.45559907197881]
     //maxBounds: bounds // Sets bounds as max
 });
 
 var mainChart = {};
-mainChart.section_data =[];
+mainChart.date_extent = null;
 
 Init_tools();
-//DrawSection(section_info);
-//DrawStation(station_info);
 
-//heat_Map(station_info);
-//Section_render(new Date(2016,0,1,7,0,0),new Date(2016,0,1,8,0,0));
+mainChart.Message_search = $("#input_search");
+mainChart.search_ul = $('#suggest_text .dropdown-menu');
+mainChart.layer_setting = $('#layer_setting .dropdown-toggle').dropdown();
+mainChart.Message_search.keyup(function(){
+    var val = mainChart.Message_search.val(); // #获取搜索框输入的值
+    Message_search(val,d3.select("#suggest_text .dropdown-menu"));
+    mainChart.Message_search.keydown(function(){
+        d3.select('#suggest_text .dropdown-menu').selectAll("li").remove();
+    });
+    mainChart.Message_search.click(function(){
+        mainChart.Message_search.select();
+        d3.select('#suggest_text .dropdown-menu').selectAll("li").remove();
+    });
+    mainChart.search_ul.mouseleave(function(){
+        d3.select('#suggest_text .dropdown-menu').selectAll("li").remove();
+    });
+});
+$("#ECalendar").ECalendar({
+    type:"time",
+    stamp:false,
+    skin:5,
+    format:"yyyy-mm-dd hh:00",
+    date:new Date(2016,0,1,0,0),
+    callback:function(v,e) {
+        mainChart.date_extent = v.toString();
+        var date_start = new Date(mainChart.date_extent);
+        var date_end = new Date(new Date(mainChart.date_extent).setHours(new Date(mainChart.date_extent).getHours()+1));
+        //Update_section([date_start,date_end]);
+    }
+});
 
-mainChart.input_search = $("#input_search");
-mainChart.search_ul = $('.dropdown-menu');
+var get_date = setInterval(function () {
+    if(mainChart.date_extent) {
+        var date_start = new Date(mainChart.date_extent);
+        var date_end = new Date(new Date(mainChart.date_extent).setDate(new Date(mainChart.date_extent).getDate()+1));
+        mainChart.date_extent =[date_start,date_end];
+        clearInterval(get_date);
+        return 1;
+    }
+});
+
+
+mainChart.map_view = {
+    "default":false,
+    "heatmap":false,
+    "animation":false,
+    "calendar":false
+};
 
 function Init_tools() {
 
@@ -40,16 +81,19 @@ function Init_tools() {
             "top":"2%"
         })
         .selectAll("btn btn-default")
-        .data(["calendar", "book", "refresh"])
+        .data(["ECalendar", "book", "refresh"])
         .enter()
         .append("button")
         .attr({
+            "id":function (d) {
+                return d;
+            },
             "type": "button",
             "class": "btn btn-default"
         })
         .attr("title", function (d) {
             switch (d) {
-                case "calendar":
+                case "ECalendar":
                     return "日期";
                 case "book":
                     return "图层";
@@ -60,92 +104,152 @@ function Init_tools() {
 
     mainChart_tool.append("span")
         .attr("class", function (d) {
-            return "glyphicon glyphicon-"+ d;
+            if(d == "ECalendar")
+                return "glyphicon glyphicon-calendar";
+            else
+                return "glyphicon glyphicon-"+ d;
         })
         .attr("aria-hidden",true);
 
     mainChart_tool.on("click", function (d) {
         switch (d) {
-            case "calendar":
+            case "ECalendar":
+                mainChart.map_view.calendar=!mainChart.map_view.calendar;
+                if(mainChart.map_view.calendar)
+                    d3.select(".calendarWrap").style({"display":"block"});
+                else
+                    d3.select(".calendarWrap").style({"display":"none"});
                 break;
             case "book":
-                var stat = d3.select("#layerSet_div").style("display");
-                var layerSet_div = d3.select("#layerSet_div");
-                (stat == "none")?layerSet_div.style("display","block"):layerSet_div.style("display","none");
-
                 break;
             case "refresh":
-                mainChart.input_search.val('');
-                map.flyTo({
-                    center: [104.78, 31.437],
-                    zoom:12});
-                map.setLayoutProperty('route_layer', 'visibility', 'none');
+                map.setFilter("station-hover", ["==", "station_id", ""]);
+                map.setLayoutProperty('line_animation', 'visibility', 'none');
                 map.setLayoutProperty('route_station', 'visibility', 'none');
-                map.setPaintProperty('section', 'line-opacity',1);
-                map.setLayoutProperty('station', 'visibility', 'visible');
+                map.setPaintProperty('section', 'line-color', '#ffd435');
+                map.flyTo({
+                    center: [104.7503025807656, 31.45559907197881],
+                    zoom:12});
+                if (mainChart.click_pop_flag)
+                    mainChart.click_pop_flag.remove();
                 break;
         }
     });
 
-    var mainChart_layerSet = d3.select("#main")
+    var layer_setting = d3.select("#main")
         .append("div")
-        .attr("id","layerSet_div")
-        .attr("class", "btn-group-vertical btn-group-xs")
+        .attr("id","layer_setting")
+        .attr("class", "dropdown")
         .style({
             "position": "absolute",
             "float":"left",
             "z-index": "999",
-            "left": "14%",
-            "top":"8%",
-            "display":"none"
-        })
-        .selectAll("btn btn-default")
-        .data(["routes", "stations", "heatmap"])
+            "left": "2%",
+            "top":"2%"
+        });
+
+    var layerSetting_button = layer_setting.append("button")
+        .attr("id","dLabel")
+        .attr("type","button")
+        .attr("class","btn btn-sm btn-default")
+        .attr("data-toggle","dropdown")
+        .text("主视图布局  ");
+
+    var layer_available =["default","heatmap","animation"];
+
+    layerSetting_button
+        .append("span")
+        .attr("class","caret");
+
+    var layer_setting_ul = layer_setting.append("ul")
+        .attr("class","dropdown-menu")
+        .attr("role","menu")
+        .attr("aria-labelledby","dLabel");
+
+    layer_setting_ul.append("li")
+        .attr("role","presentation")
+        .attr("class","divider");
+
+    var layer_setting_li = layer_setting_ul.selectAll(".layer_setting_li")
+        .data(layer_available)
         .enter()
-        .append("button")
-        .attr({
-            "type": "button",
-            "class": "btn btn-default"
-        })
-        .attr("title", function (d) {
-            switch (d) {
-                case "routes":
-                    return "路线";
-                case "stations":
-                    return "站点";
-                case "heatmap":
-                    return "热力图";
+        .append("li")
+        .attr("class","layer_setting_li")
+        .on("click",function (d) {
+            switch (d){
+                case 'default':
+                    mainChart.map_view.default = !mainChart.map_view.default;
+                    if(!mainChart.map_view.default){
+                        map.setLayoutProperty('section', 'visibility', 'visible');
+                        map.setLayoutProperty('station', 'visibility', 'visible');
+                        map.setLayoutProperty('section-hover', 'visibility', 'visible');
+                        map.setLayoutProperty('station-hover', 'visibility', 'visible');
+                        d3.select(this).select("span").attr("class","glyphicon glyphicon-eye-open");
+                    }
+                    else {
+                        map.setLayoutProperty('section', 'visibility', 'none');
+                        map.setLayoutProperty('station', 'visibility', 'none');
+                        map.setLayoutProperty('section-hover', 'visibility', 'none');
+                        map.setLayoutProperty('station-hover', 'visibility', 'none');
+                        d3.select(this).select("span").attr("class","glyphicon glyphicon-eye-close");
+                    }
+                    break;
+                case 'heatmap':
+                    mainChart.map_view.heatmap = !mainChart.map_view.heatmap;
+                    if(mainChart.map_view.heatmap){
+                        map.setLayoutProperty('section_heat', 'visibility', 'visible');
+                        d3.select(this).select("span").attr("class","glyphicon glyphicon-eye-open");
+                    }
+                    else{
+                        map.setLayoutProperty('section_heat', 'visibility', 'none');
+                        d3.select(this).select("span").attr("class","glyphicon glyphicon-eye-close");
+                    }
+                    break;
+                case 'animation':
+                    mainChart.map_view.animation = !mainChart.map_view.animation;
+                    if(mainChart.map_view.animation){
+                        Update_Animation();
+                        d3.select(this).select("span").attr("class","glyphicon glyphicon-eye-open");
+                    }
+                    else{
+                        mainChart.clear_animation_interval(1);
+                        d3.select(this).select("span").attr("class","glyphicon glyphicon-eye-close");
+                    }
+                    break;
             }
         });
 
-    mainChart_layerSet.append("span")
-        .attr("class", function (d) {
-            return "glyphicon glyphicon-eye-open";
+    layer_setting_li
+        .append("a")
+        .attr("role","menuitem")
+        .attr("tabindex","-1")
+        .attr("href","#")
+        .text(function (d) {
+            var type_flag;
+            switch (d){
+                case 'default':
+                    type_flag = "默认视图";
+                    break;
+                case 'heatmap':
+                    type_flag = "热力视图";
+                    break;
+                case 'animation':
+                    type_flag = "动态视图";
+                    break;
+            }
+            return type_flag;
         })
-        .attr("aria-hidden",true);
-
-    mainChart_layerSet.on("click", function (d) {
-        switch (d) {
-            case "routes":
-                Change_stat(d3.select(this));
-                break;
-            case "stations":
-                Change_stat(d3.select(this));
-                break;
-            case "heatmap":
-                //Update_heat_map();
-                Change_stat(d3.select(this));
-                break;
-        }
-
-        function Change_stat(current) {
-            if(current.selectAll('span').attr("class")== "glyphicon glyphicon-eye-open")
-                current.selectAll('span').attr("class","glyphicon glyphicon-eye-close");
+        .append("span")
+        .attr("class",function (d) {
+            if(d == 'default')
+                return  "glyphicon glyphicon-eye-close";
             else
-                current.selectAll('span').attr("class","glyphicon glyphicon-eye-open");
-        }
-    });
-
+                return  "glyphicon glyphicon-eye-open";
+        })
+        .style({
+            "float":"left",
+            "left":"-3%"
+        });
 
     var mainChart_search = d3.select("#main")
         .append("div")
@@ -196,8 +300,228 @@ function Init_tools() {
         });
 }
 
+//*************Init Station&&Section*****
+DrawStation(station_info);
+DrawSection(section_info);
+function DrawStation(station_info) {
+    mainChart.station_features = [];
+    station_info.forEach(function (d) {
+        mainChart.station_features.push({
+            "type": "Feature",
+            "properties": {
+                "station_id": d.station_id,
+                "description": d.station_name,
+                "color": "#0cb1d6",
+                "opacity":0.5,
+                "radius":5
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [d.longitude, d.latitude]
+            }
+        });
+    });
+    mainChart.data_point = {
+        "type": "FeatureCollection",
+        "features": mainChart.station_features
+    };
+    map.on('load', function () {
+        //station point
+        map.addSource("station_source", {
+            "type": "geojson",
+            'data': mainChart.data_point
+        });
+
+        map.addLayer({
+            "id": "station",
+            "source": "station_source",
+            "minzoom":7,
+            "type": "circle",
+            "paint": {
+                "circle-radius": ['get','radius'],
+                /* "circle-radius": [
+                     "interpolate",
+                     ["linear"],
+                     ["zoom"],
+                     7,1,
+                     13,8
+                 ],*/
+                "circle-color":['get','color'],//station_color
+                "circle-opacity":['get','opacity'],
+                "circle-stroke-color": "#9c9c9c",
+                "circle-stroke-width": 0.5,
+                "circle-opacity": [
+                    "interpolate",
+                    ["linear"],
+                    ["zoom"],
+                    8, 0,
+                    15, 1
+                ]
+            }
+        }, 'waterway-label');
+
+        map.addLayer({
+            "id": "station-hover",
+            "source": "station_source",
+            //"minzoom":7,
+            "type": "circle",
+            "paint": {
+                //"circle-radius": ['get','radius'],
+                "circle-radius": 10,
+                "circle-color":['get','color'],//station_color
+                "circle-opacity":1,
+                "circle-stroke-color": "#9c9c9c",
+                "circle-stroke-width": 0.5
+            },
+            "filter": ["==", "station_id", ""]
+        }, 'waterway-label');
+    });
+    map.on('click', 'station-hover', function (e) {
+
+        if(mainChart.station_pop)
+            mainChart.station_pop.remove();
+
+        mainChart.station_pop = new mapboxgl.Popup()
+            .setLngLat(e.features[0].geometry.coordinates)
+            .setHTML(e.features[0].properties.description)
+            .addTo(map);
+
+        update_radar(e.features[0].properties.station_id,mainChart.date_extent);
+        //Information(e.features[0].properties.station_id);
+    });
+    // Change the cursor to a pointer when the mouse is over the places layer.
+    map.on('mouseenter', 'station', function (e) {
+        mainChart.station_timeout = setTimeout(function () {
+            map.setFilter("station-hover", ["==", "station_id", e.features[0].properties.station_id]);
+            if(mainChart.station_pop)
+                mainChart.station_pop.remove();
+            mainChart.station_pop = new mapboxgl.Popup()
+                .setLngLat(e.features[0].geometry.coordinates)
+                .setHTML(e.features[0].properties.description)
+                .addTo(map);
+        },500);
+        map.getCanvas().style.cursor = 'pointer';
+    });
+    // Change it back to a pointer when it leaves.
+    map.on('mouseleave', 'station', function () {
+        clearTimeout( mainChart.station_timeout );
+        map.setFilter("station-hover", ["==", "station_id",""]);
+        map.getCanvas().style.cursor = '';
+    });
+    /*    // add markers to map
+        radarChart.data_point.features.forEach(function(marker) {
+            // create a DOM element for the marker
+            var el = document.createElement('div');
+            el.className = 'marker';
+            el.style.backgroundImage = "url('static/img/station.ico')";
+            el.style.width = marker.properties.iconSize[0] + 'px';
+            el.style.height = marker.properties.iconSize[1] + 'px';
+
+            el.addEventListener('click', function() {
+                window.alert(marker.properties.message);
+            });
+
+            // add marker to map
+            new mapboxgl.Marker(el)
+                .setLngLat(marker.geometry.coordinates)
+                .addTo(map);
+        });
+    */
+}
+function DrawSection(section_info) {
+
+    var features_line = [];
+    section_info.forEach(function (d) {
+
+        features_line.push({
+            'type': 'Feature',
+            'properties':{
+                'color': "#ffd435",
+                'section_id': d.section_id
+            },
+            'geometry': {
+                'type': 'LineString',
+                'coordinates': d.path
+            }
+        });
+
+    });
+    mainChart.section_data = {
+        "type": "FeatureCollection",
+        "features": features_line
+    };
+    map.on("load", function () {
+
+        map.addSource("section_source", {
+            'type': 'geojson',
+            'data': mainChart.section_data
+        });
+
+        map.addLayer({
+            'id': 'section',
+            'type': 'line',
+            'source': 'section_source',
+            'paint': {
+                'line-width': 2,
+                'line-color': ['get', 'color'],
+                'line-opacity':0.2
+            }
+        }, 'waterway-label');
+
+        map.addLayer({
+            'id': 'section-hover',
+            'type': 'line',
+            'source': 'section_source',
+            'paint': {
+                'line-width': 4,
+                'line-color': ['get', 'color'],
+                'line-opacity':0.7
+            },
+            "filter": ["==", "section_id", ""]
+        }, 'waterway-label');
+
+    });
+
+    map.on('click', 'section-hover', function (e) {
+        //update_stream(e.features[0].properties.section_id);
+        if (mainChart.section_pop)
+            mainChart.section_pop.remove();
+
+        var section_id = e.features[0].properties.section_id;
+
+        mainChart.section_pop= new mapboxgl.Popup()
+            .setLngLat(section_info[section_id-1].path[parseInt(section_info[section_id-1].path.length/2)])
+            .setHTML("上一站 : "+section_info[section_id-1].from_name+"<br>" + "下一站 : "+section_info[section_id-1].target_name)
+            .addTo(map);
+
+        map.getCanvas().style.cursor = 'pointer';
+    });
+
+    map.on('mouseenter', 'section', function (e) {
+        var section_id = e.features[0].properties.section_id;
+        mainChart.section_timeout = setTimeout(function () {
+            map.setFilter("section-hover", ["==", "section_id", e.features[0].properties.section_id]);
+            if(mainChart.section_pop)
+                mainChart.section_pop.remove();
+            mainChart.section_pop= new mapboxgl.Popup()
+                .setLngLat(section_info[section_id-1].path[parseInt(section_info[section_id-1].path.length/2)])
+                .setHTML("上一站 : "+section_info[section_id-1].from_name+"<br>" + "下一站 : "+section_info[section_id-1].target_name)
+                .addTo(map);
+        },500);
+        map.getCanvas().style.cursor = 'pointer';
+    });
+
+    // Change it back to a pointer when it leaves.
+    map.on('mouseleave', 'section', function () {
+        clearTimeout( mainChart.section_timeout );
+        map.setFilter("section-hover", ["==", "section_id",""]);
+        map.getCanvas().style.cursor = '';
+    });
+}
+//************************
+
 //*************single route animation
-//Init_Animation_route();
+Init_Animation_route();
 function Init_Animation_route() {
     var route_path = [];
     $.ajax({
@@ -382,6 +706,9 @@ function Init_Animation_route() {
 //******Update****
 function Update_Animation_route(route_id) {
 
+    map.setLayoutProperty('line_animation', 'visibility', 'visible');
+    map.setLayoutProperty('route_station', 'visibility', 'visible');
+
     var route_path = [];
 
     $.ajax({
@@ -525,9 +852,9 @@ function Update_Animation_route(route_id) {
 //......********
 
 //******Animation
-//Animation_All_routes();
-function Animation_All_routes() {
-    var Bus_lines = [];
+Init_Animation();
+function Init_Animation() {
+    mainChart.Bus_lines = [];
     $.ajax({
         url: "/all_routes_animation",    //请求的url地址
         dataType: "json",   //返回格式为json
@@ -539,16 +866,16 @@ function Animation_All_routes() {
         success: function (all_routes, textStatus) {
             //console.log(all_routes);
             all_routes.forEach(function (d,i) {
-                Bus_lines[i] =[];
+                mainChart.Bus_lines[i] =[];
                 var section_arr = d.path.split(',');
                 section_arr.reverse();
                 section_arr.forEach(function (section_id) {
                     section_info[parseInt(section_id)-1].path.forEach(function (coor) {
-                        Bus_lines[i].push(coor);
+                        mainChart.Bus_lines[i].push(coor);
                     });
                 });
             });
-            //console.log(Bus_lines);
+            //console.log(mainChart.Bus_lines);
         },
         complete: function () {//请求完成的处理
         },
@@ -557,12 +884,12 @@ function Animation_All_routes() {
     });
     var features_route = [];
     var features_line = [];
-    var route_length=[];
+    mainChart.route_length=[];
 
     var color =["#5c17ff","#87ff51","#ff7f11","#217cff"];
 
-    Bus_lines.forEach(function (d,i) {
-        route_length.push(0);
+    mainChart.Bus_lines.forEach(function (d,i) {
+        mainChart.route_length.push(0);
         features_route.push({
             "type": "Feature",
             "properties": {
@@ -587,7 +914,7 @@ function Animation_All_routes() {
         });
     });
 
-    var route_point = {
+    mainChart.route_point = {
         "type": "FeatureCollection",
         "features": features_route
     };
@@ -596,14 +923,14 @@ function Animation_All_routes() {
 
         map.addSource("init_animation", {
             "type": "geojson",
-            'data': route_point
+            'data': mainChart.route_point
         });
         map.addLayer({
             "id": "init_animation",
             "source": "init_animation",
             "type": "circle",
             'layout': {
-                'visibility': 'visible'
+                'visibility': 'none'
             },
             "paint": {
                 "circle-radius": 1.8,
@@ -613,6 +940,9 @@ function Animation_All_routes() {
         map.addLayer({
             'id': 'init_routes',
             'type': 'line',
+            'layout': {
+                'visibility': 'none'
+            },
             'source':{
                 "type":"geojson",
                 "data":{
@@ -626,84 +956,65 @@ function Animation_All_routes() {
                 'line-opacity': .2
             }
         },'line_animation');
-        animate();
     });
-    function animate() {
-        var interval = setInterval(function(){
-            if(mainChart.clear_interval==true){
-                clearInterval();
-                return 1;
-            }
-            for(var i = 0;i<Bus_lines.length;i++){
-                route_length[i]++;
-                if(route_length[i]==Bus_lines[i].length)
-                    route_length[i] = 0;
-                route_point.features[i].geometry.coordinates = Bus_lines[i][route_length[i]];
-            }
-            map.getSource('init_animation').setData(route_point);
-        },100);
-    }
+}
+function Update_Animation() {
+
+    map.setLayoutProperty('init_animation', 'visibility', 'visible');
+    map.setLayoutProperty('init_routes', 'visibility', 'visible');
+
+    mainChart.clear_animation_interval = function (IS_SOP) {
+        if(IS_SOP){
+            clearInterval(mainChart.animation_interval);
+            map.setLayoutProperty('init_animation', 'visibility', 'none');
+            map.setLayoutProperty('init_routes', 'visibility', 'none');
+        }
+    };
+
+    mainChart.animation_interval= setInterval(function(){
+        for(var i = 0;i<mainChart.Bus_lines.length;i++){
+            mainChart.route_length[i]++;
+            if(mainChart.route_length[i]==mainChart.Bus_lines[i].length)
+                mainChart.route_length[i] = 0;
+            mainChart.route_point.features[i].geometry.coordinates = mainChart.Bus_lines[i][mainChart.route_length[i]];
+        }
+        map.getSource('init_animation').setData(mainChart.route_point);
+    },100);
 }
 //**********
 
+//**********heatMap*********
 Init_heat_Map();
-//Update_heat_map();
 function Init_heat_Map() {
-
     $.ajax({
         url: "/section_heat",    //请求的url地址
         data: {
+            date_extent:[new Date(2016,0,1,7,0,0),new Date(2016,0,1,8,0,0)]
         },
         dataType: "json",   //返回格式为json
-        async: false,//true, //请求是否异步，默认为异步，这也是ajax重要特性
+        async:false, //请求是否异步，默认为异步，这也是ajax重要特性
         type: "GET",   //请求方式
         contentType: "application/json",
         beforeSend: function () {//请求前的处理
         },
         success: function (section_run_data, textStatus) {
+
             var nest = d3.nest().key(function (d) {
                 return d.section_id;
             });
             var section_heat = nest.entries(section_run_data);
+
+            for(var i=0;i<section_heat.length;i++){
+                if(section_heat[i].key == "null") section_heat.splice(i,1);
+            }
             section_heat.forEach(function (d) {
                 var sum =0;
                 d.values.forEach(function (s) {
                     sum += s.speed;
                 });
                 d.values = sum/d.values.length;
-                d.coor = Ret_section_coor(d.key);
+                d.coor = section_info[d.key-1].path[2];
             });
-            function Ret_section_coor(section_id){
-                var coor = [];
-                $.ajax({
-                    url: "/section_center",    //请求的url地址
-                    data: {
-                        section_id:section_id
-                    },
-                    dataType: "json",   //返回格式为json
-                    async: false,//true, //请求是否异步，默认为异步，这也是ajax重要特性
-                    type: "GET",   //请求方式
-                    contentType: "application/json",
-                    beforeSend: function () {//请求前的处理
-                    },
-                    success: function (section_coor, textStatus) {
-                        if(section_coor.length>0){
-                            section_coor[0].path = eval(section_coor[0].path);
-                            section_coor[0].path.forEach(function (s) {
-                                var tem = s[0];
-                                s[0] = s[1];
-                                s[1] = tem;
-                            });
-                            coor = section_coor[0].path[parseInt(section_coor[0].path.length/2)];
-                        }
-                    },
-                    complete: function () {//请求完成的处理
-                    },
-                    error: function () {//请求出错处理
-                    }
-                });
-                return coor;
-            }
             Draw_heatmap(section_heat);
         },
         complete: function () {//请求完成的处理
@@ -712,7 +1023,6 @@ function Init_heat_Map() {
         }
     });
     function Draw_heatmap(section_heat) {
-
         var heat_point;
         var features_heat = [];
         section_heat.forEach(function (d) {
@@ -745,6 +1055,9 @@ function Init_heat_Map() {
             map.addLayer({
                 "id": "section_heat",
                 "type": "heatmap",
+                "layout":{
+                    'visibility': 'none'
+                },
                 "source": "heatmap_source",
                 "maxzoom": 14,
                 "paint": {
@@ -792,8 +1105,8 @@ function Init_heat_Map() {
                         "interpolate",
                         ["linear"],
                         ["zoom"],
-                        0, 0,
-                        20, 0.7
+                        8, 0,
+                        20, 1
                     ]
                 }
             }, 'waterway-label');
@@ -851,470 +1164,204 @@ function Init_heat_Map() {
         });
     }
 }
+//******Update****
 function Update_heat_map(date_extent){
-
     $.ajax({
         url: "/section_heat",    //请求的url地址
         data: {
             date_extent:date_extent
         },
         dataType: "json",   //返回格式为json
-        async: true, //请求是否异步，默认为异步，这也是ajax重要特性
+        async:false, //请求是否异步，默认为异步，这也是ajax重要特性
         type: "GET",   //请求方式
         contentType: "application/json",
         beforeSend: function () {//请求前的处理
         },
         success: function (section_run_data, textStatus) {
+
             var nest = d3.nest().key(function (d) {
                 return d.section_id;
             });
             var section_heat = nest.entries(section_run_data);
+
+            for(var i=0;i<section_heat.length;i++){
+                if(section_heat[i].key == "null") section_heat.splice(i,1);
+            }
+            for(i=0;i<section_heat.length;i++){
+                if(section_heat[i].key>2611) section_heat.splice(i,1);
+            }
+
             section_heat.forEach(function (d) {
                 var sum =0;
                 d.values.forEach(function (s) {
                     sum += s.speed;
                 });
                 d.values = sum/d.values.length;
-                d.coor = Ret_section_coor(d.key);
+                if(section_info[d.key-1].path.length<2)
+                    d.coor = section_info[d.key-1].path[0];
+                else
+                    d.coor = section_info[d.key-1].path[parseInt(section_info[d.key-1].path.length/2)];
             });
-            function Ret_section_coor(section_id){
-                var coor = [];
-                $.ajax({
-                    url: "/section_center",    //请求的url地址
-                    data: {
-                        section_id:section_id
-                    },
-                    dataType: "json",   //返回格式为json
-                    async: false,//true, //请求是否异步，默认为异步，这也是ajax重要特性
-                    type: "GET",   //请求方式
-                    contentType: "application/json",
-                    beforeSend: function () {//请求前的处理
-                    },
-                    success: function (section_coor, textStatus) {
-                        if(section_coor.length>0){
-                            section_coor[0].path = eval(section_coor[0].path);
-                            section_coor[0].path.forEach(function (s) {
-                                var tem = s[0];
-                                s[0] = s[1];
-                                s[1] = tem;
-                            });
-                            coor = section_coor[0].path[parseInt(section_coor[0].path.length/2)];
-                        }
-                    },
-                    complete: function () {//请求完成的处理
-                    },
-                    error: function () {//请求出错处理
-                    }
-                });
-                return coor;
-            }
-
-            var heat_point;
-            var features_heat = [];
-            section_heat.forEach(function (d) {
-                features_heat.push({
-                    "type": "Feature",
-                    "properties": {
-                        "section_id": d.key,
-                        "mag": d.values
-                    },
-                    "geometry": {
-                        "type": "Point",
-                        "coordinates": d.coor
-                    }
-                });
-            });
-
-            heat_point = {
-                "type": "FeatureCollection",
-                "features": features_heat
-            };
-
-            map.getSource('heatmap_source').setData(heat_point);
+            console.log(section_heat);
+            Draw_heatmap(section_heat);
         },
         complete: function () {//请求完成的处理
         },
         error: function () {//请求出错处理
         }
     });
-
-}
-
-mainChart.input_search.keyup(function(){
-
-    var val = mainChart.input_search.val(); // #获取搜索框输入的值
-
-    input_search(val,d3.select(".dropdown-menu"));
-
-    mainChart.input_search.keydown(function(){
-        d3.select('.dropdown-menu').selectAll("li").remove();
-    });
-    mainChart.input_search.click(function(){
-        mainChart.input_search.val('');
-        d3.select('.dropdown-menu').selectAll("li").transition().duration(300).remove();
-    });
-    mainChart.search_ul.mouseleave(function(){
-        d3.select('.dropdown-menu').selectAll("li").transition().duration(300).remove();
-    });
-});
-
-function input_search(val,obj) {
-
-    $.ajax({
-        url: "/route_search",    //请求的url地址
-        data:{
-            sub_route_id: val
-        },
-        dataType: "json",   //返回格式为json
-        async: false, //请求是否异步，默认为异步，这也是ajax重要特性
-        type: "GET",   //请求方式
-        contentType: "application/json",
-        beforeSend: function () {//请求前的处理
-        },
-        success: function (route, textStatus) {
-
-            var i =0;
-            route.forEach(function (d) {
-                i++;
-                if(i<8){
-                    obj.append("li")
-                        .attr("class","suggest_li")
-                        .attr("role","presentation")
-                        .attr("id","li_"+d.sub_route_id+"");
-
-                    d3.select("#li_"+d.sub_route_id+"")
-                        .append("a")
-                        .attr("class","route_id_li")
-                        .attr("role","menuitem")
-                        .attr("tabindex","-1")
-                        .attr("href","javascript:void(0)")
-                        .text(d.sub_route_id)
-                        .on("click",function () {
-                            d3.select('.dropdown-menu').selectAll("li").remove();
-                            $("#input_search").val(d.sub_route_id);
-                            // Draw_route(d.sub_route_id);
-                            Update_Animation_route(d.sub_route_id);
-                            // message_cloud(d.sub_route_id);
-                        });
+    function Draw_heatmap(section_heat) {
+        var features_heat = [];
+        section_heat.forEach(function (d) {
+            features_heat.push({
+                "type": "Feature",
+                "properties": {
+                    "section_id": d.key,
+                    //"mag":Math.random()*100
+                    "mag": d.values
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": d.coor
                 }
             });
+        });
 
-        },
-        complete: function () {//请求完成的处理
+        var heat_point = {
+            "type": "FeatureCollection",
+            "features": features_heat
+        };
 
-        },
-        error: function () {//请求出错处理
-        }
-    });
+        map.getSource('heatmap_source').setData(heat_point);
+    }
+
 }
+//*************************
 
-function Draw_route(route_id) {
+//**********Route Search*********************//
+function Message_search(val,obj) {
 
-    var new_route_path = [];
+    if (mainChart.click_pop_flag)
+        mainChart.click_pop_flag.remove();
 
-    $.ajax({
-        url: "/all_routes",    //请求的url地址
-        data:{
-            route_id:route_id
-        },
-        dataType: "json",   //返回格式为json
-        async: false, //请求是否异步，默认为异步，这也是ajax重要特性
-        type: "GET",   //请求方式
-        contentType: "application/json",
-        beforeSend: function () {//请求前的处理
-        },
-        success: function (routes, textStatus) {
+    d3.select('#suggest_text .route_option').remove();
+    map.setLayoutProperty('station-hover', 'visibility', 'visible');
+    map.setFilter("station-hover", ["==", "station_id", ""]);
 
-            var section_arr = routes[0].path.split(',');
+    var reg = /^[0-9]+.?[0-9]*$/;
+    var VAL_ISNUMBER = reg.test(val);
+    if(VAL_ISNUMBER){
+        $.ajax({
+            url: "/route_search",    //请求的url地址
+            data:{
+                sub_route_id: val
+            },
+            dataType: "json",   //返回格式为json
+            async: false, //请求是否异步，默认为异步，这也是ajax重要特性
+            type: "GET",   //请求方式
+            contentType: "application/json",
+            beforeSend: function () {//请求前的处理
+            },
+            success: function (route, textStatus) {
+                if(route.length>7)
+                    route.splice(8,route.length-8);
 
-            section_arr.forEach(function (section_id) {
+                if(route.length>0)
+                    obj.append("li")
+                        .attr("role","presentation")
+                        .attr("class","divider");
 
-                $.ajax({
-                    url: "/section_",    //请求的url地址
-                    data:{
-                        section_id: section_id
-                    },
-                    dataType: "json",   //返回格式为json
-                    async: false, //请求是否异步，默认为异步，这也是ajax重要特性
-                    type: "GET",   //请求方式
-                    contentType: "application/json",
-                    beforeSend: function () {//请求前的处理
-                    },
-                    success: function (section, textStatus) {
+                obj.selectAll(".route_option")
+                    .data(route)
+                    .enter()
+                    .append("li")
+                    .attr("class",".route_option")
+                    .attr("role","presentation")
+                    .append("a")
+                    .attr("role","menuitem")
+                    .attr("tabindex","-1")
+                    .attr("href","javascript:void(0)")
+                    .text(function (d) {
+                        return d.sub_route_id;
+                    })
+                    .on("click",function (d) {
+                        $("#input_search").val(d.sub_route_id);
+                        Update_Animation_route(d.sub_route_id);
+                        // message_cloud(d.sub_route_id);
+                    });
+            },
+            complete: function () {//请求完成的处理
 
-                        section.forEach(function (d) {
-                            d.path = eval(d.path);
-                            d.path.forEach(function (s) {
-                                var tem = s[0];
-                                s[0] = s[1];
-                                s[1] = tem;
-                            });
-                            new_route_path.push(d.path);
+            },
+            error: function () {//请求出错处理
+            }
+        });
+    }
+    else if(val != ""){
+        $.ajax({
+            url: "/station_name_search",    //请求的url地址
+            data:{
+                station_name: val
+            },
+            dataType: "json",   //返回格式为json
+            async: false, //请求是否异步，默认为异步，这也是ajax重要特性
+            type: "GET",   //请求方式
+            contentType: "application/json",
+            beforeSend: function () {//请求前的处理
+            },
+            success: function (station, textStatus) {
+                if(station.length>7)
+                    station.splice(8,station.length-8);
+
+                if(station.length>0)
+                    obj.append("li")
+                        .attr("role","presentation")
+                        .attr("class","divider");
+
+                obj.selectAll(".station_option")
+                    .data(station)
+                    .enter()
+                    .append("li")
+                    .attr("class",".station_option")
+                    .attr("role","presentation")
+                    .append("a")
+                    .attr("role","menuitem")
+                    .attr("tabindex","-1")
+                    .attr("href","javascript:void(0)")
+                    .text(function (d){
+                        return d.station_name;
+                    })
+                    .on("click",function (d) {
+                        $("#input_search").val(d.station_name);
+                        map.flyTo({
+                            center: [d.longitude, d.latitude],
+                            zoom:13
                         });
+                        mainChart.click_pop_flag = new mapboxgl.Popup()
+                            .setLngLat([d.longitude, d.latitude])
+                            .setHTML(d.station_name)
+                            .addTo(map);
 
-                    },
-                    complete: function () {//请求完成的处理
-                    },
-                    error: function () {//请求出错处理
-                    }
-                });
-            });
-
-        },
-        complete: function () {//请求完成的处理
-        },
-        error: function () {//请求出错处理
-        }
-    });
-
-    $.ajax({
-        url: "/route_station",    //请求的url地址
-        data:{
-            route_id:route_id
-        },
-        dataType: "json",   //返回格式为json
-        async: false, //请求是否异步，默认为异步，这也是ajax重要特性
-        type: "GET",   //请求方式
-        contentType: "application/json",
-        beforeSend: function () {//请求前的处理
-        },
-        success: function (route_station, textStatus) {
-
-            var station_point = [];
-
-            route_station.forEach(function (d) {
-                station_point.push({
-                    "type": "Feature",
-                    "properties": {
-                        "station_id": d.station_id,
-                        "description": d.station_name,
-                        "color": "#188fff",
-                        "opacity":0.8
-                        // "icon": "music"
-                    },
-                    "geometry": {
-                        "type": "Point",
-                        "coordinates": [d.longitude, d.latitude]
-                    }
-                });
-            });
-
-            var route_station_data = {
-                "type": "FeatureCollection",
-                "features": station_point
-            };
-
-            map.getSource('route_station_source').setData(route_station_data);
-
-        },
-        complete: function () {//请求完成的处理
-        },
-        error: function () {//请求出错处理
-        }
-    });
-
-    var features_line = [];
-
-    new_route_path.forEach(function (d) {
-        features_line.push({
-            'type': 'Feature',
-            'properties':{
-                'color':"#fff8f9",
-                'opacity':0.75
+                        map.setFilter("station-hover", ["==", "station_id", d.station_id]);
+                    });
             },
-            'geometry': {
-                'type': 'LineString',
-                'coordinates': d
+            complete: function () {//请求完成的处理
+
+            },
+            error: function () {//请求出错处理
             }
         });
-    });
-
-    var section_source = {
-        "type": "FeatureCollection",
-        "features": features_line
-    };
-
-    map.getSource('route_source').setData(section_source);
-
-    map.flyTo({
-        center: new_route_path[parseInt(new_route_path.length/2)][0],
-        zoom:11
-    });
-
-    map.setLayoutProperty('route_layer', 'visibility', 'visible');
-
-    //map.setLayoutProperty('section', 'opacity', '0.3');
-
-    map.setPaintProperty('section', 'line-opacity',0.1);
-
-    map.setLayoutProperty('station', 'visibility', 'none');
-
+    }
 
 }
+//*******************************************//
 
-function DrawStation(station_info) {
-
-    var features_point = [];
-    station_info.forEach(function (d) {
-        features_point.push({
-            "type": "Feature",
-            "properties": {
-                "station_id": d.station_id,
-                "description": d.station_name,
-                "color": "#8fa9ff"
-                // "icon": "music"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [d.longitude, d.latitude]
-            }
-        });
-    });
-
-    var data_point = {
-        "type": "FeatureCollection",
-        "features": features_point
-    };
-
-    map.on('load', function () {
-
-        //station point
-        map.addSource("station_source", {
-            "type": "geojson",
-            'data': data_point
-        });
-
-        map.addLayer({
-            "id": "station",
-            "source": "station_source",
-            "type": "circle",
-            'layout': {
-                'visibility': 'visible'
-            },
-            "paint": {
-                "circle-radius": 4,
-                "circle-color":"#42cdd6"//station_color
-            }
-        });
-    });
-
-    map.on('click', 'station', function (e) {
-
-        if(mainChart.click_pop_flag)
-            mainChart.click_pop_flag.remove();
-
-        mainChart.click_pop_flag = new mapboxgl.Popup()
-            .setLngLat(e.features[0].geometry.coordinates)
-            .setHTML(e.features[0].properties.description)
-            .addTo(map);
-
-        //update_radar(e.features[0].properties.station_id);
-        Information(e.features[0].properties.station_id);
-        // Change the cursor to a pointer when the mouse is over the places layer.
-        map.on('mouseenter', 'station', function () {
-            map.getCanvas().style.cursor = 'pointer';
-        });
-
-        // Change it back to a pointer when it leaves.
-        map.on('mouseleave', 'station', function () {
-            map.getCanvas().style.cursor = '';
-        });
-    });
-
-}
-
-function DrawSection(section_info) {
-
-    var features_line = [];
-
-    section_info.forEach(function (d) {
-
-        features_line.push({
-            'type': 'Feature',
-            'properties':{
-                'color': (Math.round(Math.random()*50)>2.5)?"#fff95d":"#80ff29",
-                'section_id': d.section_id
-            },
-            'geometry': {
-                'type': 'LineString',
-                'coordinates': d.path
-            }
-        });
-
-    });
-
-    mainChart.section_data = {
-        "type": "FeatureCollection",
-        "features": features_line
-    };
-
-    map.on("load", function () {
-
-        map.addSource("section_source", {
-            'type': 'geojson',
-            'data': mainChart.section_data
-        });
-
-        map.addLayer({
-            'id': 'section',
-            'type': 'line',
-            'source': 'section_source',
-            'paint': {
-                'line-width': 2,
-                'line-color': ['get', 'color']
-            }
-        });
-
-    });
-
-    map.on('click', 'section', function (e) {
-
-        update_stream(e.features[0].properties.section_id);
-
-    });
-
-    map.on('mouseenter', 'section', function () {
-        map.getCanvas().style.cursor = 'pointer';
-    });
-
-    // Change it back to a pointer when it leaves.
-    map.on('mouseleave', 'section', function () {
-        map.getCanvas().style.cursor = '';
-    });
-}
-
-function Section_render(start_time,end_time) {
-
-    mainChart.section_data.features.forEach(function (d) {
-
-        var section_speed = Section_speed(d.properties.section_id,start_time,end_time);
-
-        if(section_speed) {
-            if (section_speed < 20)
-                d.properties.color = "#ff2513";
-            else if (section_speed >= 20 && section_speed <= 35)
-                d.properties.color = "#f2f73f";
-            else
-                d.properties.color = "#51ff20";
-        }
-    });
-
-    map.on("load", function () {
-        map.getSource('section_source').setData(mainChart.section_data);
-    });
-
-}
-
-function Section_speed(section_id,date_start,date_end) {
-
-    var speed=0;
-
+//**********section render*********************//
+function Update_section(date_extent) {
     $.ajax({
         url: "/section_run_data",    //请求的url地址
         data: {
-            "section_id":section_id,
-            "date_start": date_start,
-            "date_end": date_end
+            date_extent:date_extent
         },
         dataType: "json",   //返回格式为json
         async: false,//true, //请求是否异步，默认为异步，这也是ajax重要特性
@@ -1323,13 +1370,62 @@ function Section_speed(section_id,date_start,date_end) {
         beforeSend: function () {//请求前的处理
         },
         success: function (section_run_data, textStatus) {
-            speed = parseFloat(section_run_data[0].speed);
+            console.log(section_run_data);
+            var nest = d3.nest().key(function (d) {
+                return d.section_id;
+            });
+            var section_data = nest.entries(section_run_data);
+            for(var i=0;i<section_data.length;i++){
+                if(section_data[i].key == "null") section_data.splice(i,1);
+            }
+            for(i=0;i<section_data.length;i++){
+                if(section_data[i].key>2611) section_data.splice(i,1);
+            }
+            section_data.forEach(function (d) {
+                var sum =0;
+                d.values.forEach(function (s) {
+                    sum += s.speed;
+                });
+                d.values = sum/d.values.length;
+                d.path = section_info[d.key-1].path;
+            });
+            var features_line = [];
+
+            section_data.forEach(function (d) {
+                features_line.push({
+                    'type': 'Feature',
+                    'properties':{
+                        'color':section_render(d.values),
+                        'section_id': d.key
+                    },
+                    'geometry': {
+                        'type': 'LineString',
+                        'coordinates': d.path
+                    }
+                });
+            });
+
+            function section_render(value){
+                if(value) {
+                    if (value < 20)
+                        return "#ff2513";
+                    else if (value >= 20 && value <= 35)
+                        return "#f2f73f";
+                    else
+                        return "#51ff20";
+                }
+            }
+            mainChart.section_data = {
+                "type": "FeatureCollection",
+                "features": features_line
+            };
+            map.getSource('section_source').setData(mainChart.section_data);
         },
         complete: function () {//请求完成的处理
         },
         error: function () {//请求出错处理
         }
     });
-    return speed;
 }
+
 

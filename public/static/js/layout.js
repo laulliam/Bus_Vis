@@ -2,7 +2,7 @@ function Layout() {
     var border = 1;
     var all_view = $("#all_view");
     var body_width = all_view.width();
-    var body_height = all_view.height()-15;
+    var body_height = all_view.height()-20;
 
     var header = document.getElementById("header");
     var control= document.getElementById("control");
@@ -15,7 +15,7 @@ function Layout() {
     var radar =document.getElementById("radar");
 
     header.style.width=(body_width ) + "px";
-    header.style.height = 15 + "px";
+    header.style.height = 20 + "px";
 
     control.style.width=(body_width * 0.15 - border) + "px";
     control.style.height = 190 + "px";
@@ -45,7 +45,6 @@ function Layout() {
         window.location.reload();
     })
 }
-window.onload= function (ev) {
     Layout();
-}
+
 
