@@ -36,6 +36,7 @@ router.get('/section_run_data', function(req, res, next) {
 
 });
 
+
 router.get('/section_id_data', function(req, res, next) {
 
     var section_id =parseInt(req.query.section_id);
@@ -71,13 +72,11 @@ router.get('/section_id_data', function(req, res, next) {
 
 });
 
-router.get('/route_run_data', function(req, res, next) {
+//spiral_line
+router.get('/spiral_data', function(req, res, next) {
 
     var route_id = req.query.sub_route_id;
-    //var date_start=req.query.date_start;
-    //var date_end = req.query.date_end;
-
-    console.log(typeof(section_id));
+    var date_extent=req.query.date_extent;
 
     var selectData = function(db, callback) {
         //连接到表
@@ -85,7 +84,7 @@ router.get('/route_run_data', function(req, res, next) {
         //查询数据
         collection.find({
             "sub_route_id":route_id,
-            "start_date_time" :{$gte:new Date(2016,0,1,0,0,0),$lte:new Date(2016,0,2,0,0,0)}
+            "start_date_time" :{$gte:new Date(date_extent[0]),$lte:new Date(date_extent[1])}
         }).toArray(function(err, result) {
             if(err)
             {

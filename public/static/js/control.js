@@ -2,7 +2,7 @@ function Control_Chart() {
 
     var obj_station = {
         'Size': 5,
-        'Color': "#0cb1d6",
+        'Color': "#eae33f",
         'Opacity': 0.5
     };
 
@@ -48,5 +48,3 @@ function Control_Chart() {
     customContainer.appendChild(gui.domElement);
 }
 Control_Chart();
-
-var STATION_COLOR = "#ff2513";

@@ -1,5 +1,6 @@
 
 message_cloud(38001);
+
 function message_cloud(route_id) {
 
     $.ajax({
@@ -271,8 +272,8 @@ function message_cloud(route_id) {
             .attr("width",width)
             .attr("height",height);
 
-        var a = d3.rgb(0,255,0);
-        var b = d3.rgb(255,0,0);
+        var a = d3.rgb(255,215,0);
+        var b = d3.rgb(255,50,0);
 
         var linear = d3.scale.linear()
             .domain([min_data,max_data])
@@ -297,19 +298,19 @@ function message_cloud(route_id) {
             .attr("class","name_message")
             .text(function(d){return d.key})
             .on("mouseover",function (d) {
-                tspeed = 0.2;
+                tspeed = 1;
             })
             .on("mouseout",function (d) {
-                tspeed = 10;
+                tspeed = 5;
             })
             .on("click",function (d) {
                 mainChart.data_point.features.forEach(function (s) {
                     if(s.properties.station_id == d.station_id)
                     {
                         map.flyTo({center:s.geometry.coordinates });
-                        if(mainChart.station_pop)
-                            mainChart.station_pop.remove();
-                        mainChart.station_pop = new mapboxgl.Popup()
+                        if(mainChart.Msg_pop)
+                            mainChart.Msg_pop.remove();
+                        mainChart.Msg_pop = new mapboxgl.Popup()
                             .setLngLat(s.geometry.coordinates)
                             .setHTML(s.properties.description)
                             .addTo(map);

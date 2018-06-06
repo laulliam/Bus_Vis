@@ -61,6 +61,7 @@ router.get('/section_', function(req, res, next) {
     });
 
 });
+
 router.get('/Next_station', function(req, res, next) {
 
     var from_id = req.query.station_id;

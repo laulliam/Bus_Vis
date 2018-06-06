@@ -40,13 +40,15 @@ $("#ECalendar").ECalendar({
     type:"time",
     stamp:false,
     skin:5,
-    format:"yyyy-mm-dd hh:00",
+    step:10,
+    format:"yyyy-mm-dd hh:ii",
     date:new Date(2016,0,1,0,0),
     callback:function(v,e) {
         mainChart.date_extent = v.toString();
         var date_start = new Date(mainChart.date_extent);
-        var date_end = new Date(new Date(mainChart.date_extent).setHours(new Date(mainChart.date_extent).getHours()+1));
+        var date_end = new Date(new Date(mainChart.date_extent).setMinutes(new Date(mainChart.date_extent).getMinutes()+30));
         //Update_section([date_start,date_end]);
+        Update_heat_map([date_start,date_end])
     }
 });
 
@@ -311,7 +313,7 @@ function DrawStation(station_info) {
             "properties": {
                 "station_id": d.station_id,
                 "description": d.station_name,
-                "color": "#0cb1d6",
+                "color": "#eae33f",
                 "opacity":0.5,
                 "radius":5
             },
@@ -378,10 +380,10 @@ function DrawStation(station_info) {
     });
     map.on('click', 'station-hover', function (e) {
 
-        if(mainChart.station_pop)
-            mainChart.station_pop.remove();
+        if(mainChart.Msg_pop)
+            mainChart.Msg_pop.remove();
 
-        mainChart.station_pop = new mapboxgl.Popup()
+        mainChart.Msg_pop = new mapboxgl.Popup()
             .setLngLat(e.features[0].geometry.coordinates)
             .setHTML(e.features[0].properties.description)
             .addTo(map);
@@ -393,9 +395,9 @@ function DrawStation(station_info) {
     map.on('mouseenter', 'station', function (e) {
         mainChart.station_timeout = setTimeout(function () {
             map.setFilter("station-hover", ["==", "station_id", e.features[0].properties.station_id]);
-            if(mainChart.station_pop)
-                mainChart.station_pop.remove();
-            mainChart.station_pop = new mapboxgl.Popup()
+            if(mainChart.Msg_pop)
+                mainChart.Msg_pop.remove();
+            mainChart.Msg_pop = new mapboxgl.Popup()
                 .setLngLat(e.features[0].geometry.coordinates)
                 .setHTML(e.features[0].properties.description)
                 .addTo(map);
@@ -484,12 +486,12 @@ function DrawSection(section_info) {
 
     map.on('click', 'section-hover', function (e) {
         //update_stream(e.features[0].properties.section_id);
-        if (mainChart.section_pop)
-            mainChart.section_pop.remove();
+        if (mainChart.Msg_pop)
+            mainChart.Msg_pop.remove();
 
         var section_id = e.features[0].properties.section_id;
 
-        mainChart.section_pop= new mapboxgl.Popup()
+        mainChart.Msg_pop= new mapboxgl.Popup()
             .setLngLat(section_info[section_id-1].path[parseInt(section_info[section_id-1].path.length/2)])
             .setHTML("上一站 : "+section_info[section_id-1].from_name+"<br>" + "下一站 : "+section_info[section_id-1].target_name)
             .addTo(map);
@@ -501,9 +503,9 @@ function DrawSection(section_info) {
         var section_id = e.features[0].properties.section_id;
         mainChart.section_timeout = setTimeout(function () {
             map.setFilter("section-hover", ["==", "section_id", e.features[0].properties.section_id]);
-            if(mainChart.section_pop)
-                mainChart.section_pop.remove();
-            mainChart.section_pop= new mapboxgl.Popup()
+            if(mainChart.Msg_pop)
+                mainChart.Msg_pop.remove();
+            mainChart.Msg_pop= new mapboxgl.Popup()
                 .setLngLat(section_info[section_id-1].path[parseInt(section_info[section_id-1].path.length/2)])
                 .setHTML("上一站 : "+section_info[section_id-1].from_name+"<br>" + "下一站 : "+section_info[section_id-1].target_name)
                 .addTo(map);
@@ -886,7 +888,7 @@ function Init_Animation() {
     var features_line = [];
     mainChart.route_length=[];
 
-    var color =["#5c17ff","#87ff51","#ff7f11","#217cff"];
+    var color =["#EDC951","#CC333F","#92ff4e","#ff5a29"];
 
     mainChart.Bus_lines.forEach(function (d,i) {
         mainChart.route_length.push(0);
@@ -933,10 +935,12 @@ function Init_Animation() {
                 'visibility': 'none'
             },
             "paint": {
-                "circle-radius": 1.8,
-                "circle-color":['get','color']//station_color
+                "circle-radius": 3,
+                "circle-color":['get','color'],//station_color
+                "circle-opacity":0.7
             }
-        },'line_animation');
+        });
+
         map.addLayer({
             'id': 'init_routes',
             'type': 'line',
@@ -952,10 +956,10 @@ function Init_Animation() {
             },
             'paint': {
                 'line-color':['get','color'],
-                'line-width': 1,
-                'line-opacity': .2
+                'line-width': 1.5,
+                'line-opacity': .5
             }
-        },'line_animation');
+        },'init_animation');
     });
 }
 function Update_Animation() {
@@ -1166,6 +1170,7 @@ function Init_heat_Map() {
 }
 //******Update****
 function Update_heat_map(date_extent){
+
     $.ajax({
         url: "/section_heat",    //请求的url地址
         data: {
@@ -1233,6 +1238,7 @@ function Update_heat_map(date_extent){
         };
 
         map.getSource('heatmap_source').setData(heat_point);
+        map.setLayoutProperty('section_heat', 'visibility', 'visible');
     }
 
 }

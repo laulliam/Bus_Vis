@@ -7,7 +7,7 @@ function Layout() {
     var header = document.getElementById("header");
     var control= document.getElementById("control");
     var calendar = document.getElementById("calendar");
-    var undefine = document.getElementById("undefine");
+    var spiral_line = document.getElementById("spiral_line");
     var main = document.getElementById("main");
     var information = document.getElementById("information");
     var message_cloud=document.getElementById("message_cloud");
@@ -23,8 +23,8 @@ function Layout() {
     calendar.style.width=(body_width * 0.15 -  border) + "px";
     calendar.style.height=((body_height - 190) - body_height * 0.25 ) + "px";
 
-    undefine.style.width=(body_width * 0.15 -  border) + "px";
-    undefine.style.height=(body_height * 0.25 - border) + "px";
+    spiral_line.style.width=(body_width * 0.15 -  border) + "px";
+    spiral_line.style.height=(body_height * 0.25 - border) + "px";
 
     main.style.width = (body_width * 0.7+2*border) + "px";
     main.style.height = (body_height * 0.75 -  border) + "px";
