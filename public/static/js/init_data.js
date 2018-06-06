@@ -45,8 +45,10 @@ function Init_data() {
                         s[1] = tem;
                     });
                 });
+                section_data.sort(function (a,b) {
+                    return a.section_id - b.section_id;
+                });
                 section_info = section_data;
-                console.log(section_info);
             },
             complete: function () {//请求完成的处理
             },
