@@ -7,6 +7,6 @@
     align-content: center;
     overflow:hidden;
 }
-#test_div {margin:0 auto;overflow:hidden;position:relative;list-style-type:none;}
-#test_div a{position:absolute;text-decoration:none;color:#666;}
-#test_div a:hover{color:#ccc;}
+#slide_div {margin:0 auto;overflow:hidden;position:relative;list-style-type:none;}
+#slide_div a{position:absolute;text-decoration:none;color:#666;}
+#slide_div a:hover{color:#ccc;}

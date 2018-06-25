@@ -125,10 +125,16 @@ function Init_tools() {
             case "book":
                 break;
             case "refresh":
+                Control_Chart();
                 map.setFilter("station-hover", ["==", "station_id", ""]);
                 map.setLayoutProperty('line_animation', 'visibility', 'none');
                 map.setLayoutProperty('route_station', 'visibility', 'none');
                 map.setPaintProperty('section', 'line-color', '#ffd435');
+                map.setPaintProperty('section', 'line-width', 2);
+                map.setPaintProperty('section', 'line-opacity', .5);
+                map.setPaintProperty('station', 'circle-color', '#eae33f');
+                map.setPaintProperty('station', 'circle-radius', 5);
+                map.setPaintProperty('station', 'circle-opacity', .5);
                 map.flyTo({
                     center: [104.7503025807656, 31.45559907197881],
                     zoom:12});
@@ -388,7 +394,7 @@ function DrawStation(station_info) {
             .setHTML(e.features[0].properties.description)
             .addTo(map);
 
-        //update_radar(e.features[0].properties.station_id,mainChart.date_extent);
+        update_radar(e.features[0].properties.station_id,mainChart.date_extent);
         Information(e.features[0].properties.station_id,e.features[0].properties.description);
     });
     // Change the cursor to a pointer when the mouse is over the places layer.

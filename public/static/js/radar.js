@@ -390,6 +390,8 @@ function update_radar(station_id) {
                 sub_route_data.forEach(function (d) {
                     d.start_date_time=new Date(d.start_date_time);
                     d.end_date_time = new Date(d.end_date_time);
+                    if(d.stay_time>1000)
+                        d.stay_time = 0;
                 });
                 route_data = sub_route_data;
             },

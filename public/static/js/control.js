@@ -1,25 +1,26 @@
+
 function Control_Chart() {
 
     var obj_station = {
-        'Size': 5,
-        'Color': "#eae33f",
-        'Opacity': 0.5
+        '大小': 5,
+        '颜色': "#eae33f",
+        '透明度': 0.5
     };
 
     var obj_road = {
-        'Width': 2,
-        'Opacity': 0.5
+        '宽度': 2,
+        '透明度': 0.5
     };
     var gui = new dat.gui.GUI();
 
-    var f1 = gui.addFolder('Station Style');
-    var station_size = f1.add(obj_station, 'Size').min(1).max(10).step(0.1).listen();
-    var station_color = f1.addColor(obj_station, 'Color').listen();
-    var station_opacity = f1.add(obj_station, 'Opacity').min(0).max(1).step(0.1).listen();
+    var f1 = gui.addFolder('站点样式');
+    var station_size = f1.add(obj_station, '大小').min(1).max(10).step(0.1).listen();
+    var station_color = f1.addColor(obj_station, '颜色').listen();
+    var station_opacity = f1.add(obj_station, '透明度').min(0).max(1).step(0.1).listen();
 
-    var f2 = gui.addFolder('Road Style');
-    var road_width = f2.add(obj_road, 'Width').min(1).max(5).step(0.1).listen();
-    var road_opacity = f2.add(obj_road, 'Opacity').min(0).max(1).step(0.1).listen();
+    var f2 = gui.addFolder('道路样式');
+    var road_width = f2.add(obj_road, '宽度').min(1).max(5).step(0.1).listen();
+    var road_opacity = f2.add(obj_road, '透明度').min(0).max(1).step(0.1).listen();
 
     station_size.onFinishChange(function (value) {
         map.setPaintProperty('station', 'circle-radius',value);
