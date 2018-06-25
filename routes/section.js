@@ -62,6 +62,34 @@ router.get('/section_', function(req, res, next) {
 
 });
 
+router.get('/last_station', function(req, res, next) {
+
+    var target_id = req.query.station_id;
+
+    var selectData = function(db, callback) {
+        //连接到表
+        var collection = db.collection('section');
+        //查询数据
+        collection.find({"target_id":target_id}).toArray(function(err, result) {
+            if(err)
+            {
+                console.log('Error:'+ err);
+                return;
+            }
+            callback(result);
+        });
+    }
+
+    MongoClient.connect(DB_CONN_STR, function(err, db) {
+        selectData(db, function(result) {
+            res.json(result);
+            db.close();
+        });
+    });
+
+});
+
+
 router.get('/Next_station', function(req, res, next) {
 
     var from_id = req.query.station_id;

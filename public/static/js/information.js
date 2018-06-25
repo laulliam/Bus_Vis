@@ -1,9 +1,52 @@
 /**
  * Created by Liang Liu on 2018/5/16.
  */
-function Information(station_id) {
-    console.log(station_id);
+function Information(station_id,station_name) {
+
     $.ajax({
+        url: "/last_station",    //请求的url地址
+        data:{
+            station_id:station_id
+        },
+        dataType: "json",   //返回格式为json
+        async: true, //请求是否异步，默认为异步，这也是ajax重要特性
+        type: "GET",   //请求方式
+        contentType: "application/json",
+        beforeSend: function () {//请求前的处理
+        },
+        success: function (last_station, textStatus) {
+            console.log(last_station);
+            $("#last_station")[0].innerText = last_station[0].from_name;
+        },
+        complete: function () {//请求完成的处理
+        },
+        error: function () {//请求出错处理
+        }
+    });
+
+    $("#current_station")[0].innerText = station_name;
+
+    $.ajax({
+        url: "/Next_station",    //请求的url地址
+        data:{
+            station_id:station_id
+        },
+        dataType: "json",   //返回格式为json
+        async: true, //请求是否异步，默认为异步，这也是ajax重要特性
+        type: "GET",   //请求方式
+        contentType: "application/json",
+        beforeSend: function () {//请求前的处理
+        },
+        success: function (next_station, textStatus) {
+            $("#next_station")[0].innerText = next_station[0].target_name;
+        },
+        complete: function () {//请求完成的处理
+        },
+        error: function () {//请求出错处理
+        }
+    });
+
+/*    $.ajax({
         url: "/sub_routes_numbers",    //请求的url地址
         data:{
             station_id:station_id
@@ -23,29 +66,22 @@ function Information(station_id) {
         error: function () {//请求出错处理
         }
     });
-
-    $.ajax({
-        url: "/Next_station",    //请求的url地址
-        data:{
-            station_id:station_id
-        },
-        dataType: "json",   //返回格式为json
-        async: false, //请求是否异步，默认为异步，这也是ajax重要特性
-        type: "GET",   //请求方式
-        contentType: "application/json",
-        beforeSend: function () {//请求前的处理
-        },
-        success: function (station, textStatus) {
-            console.log(station);
-        },
-        complete: function () {//请求完成的处理
-        },
-        error: function () {//请求出错处理
-        }
-    });
+*/
 }
 
-Slide_word(1);
+///Information_Init();
+
+function Information_Init(){
+
+    var information = $("#information");
+    var width =information.width();
+    var height = information.height();
+
+
+
+}
+
+//Slide_word(1);
 function Slide_word(data) {
 
     var border = 1;

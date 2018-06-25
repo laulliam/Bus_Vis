@@ -388,8 +388,8 @@ function DrawStation(station_info) {
             .setHTML(e.features[0].properties.description)
             .addTo(map);
 
-        update_radar(e.features[0].properties.station_id,mainChart.date_extent);
-        //Information(e.features[0].properties.station_id);
+        //update_radar(e.features[0].properties.station_id,mainChart.date_extent);
+        Information(e.features[0].properties.station_id,e.features[0].properties.description);
     });
     // Change the cursor to a pointer when the mouse is over the places layer.
     map.on('mouseenter', 'station', function (e) {
@@ -493,7 +493,7 @@ function DrawSection(section_info) {
 
         mainChart.Msg_pop= new mapboxgl.Popup()
             .setLngLat(section_info[section_id-1].path[parseInt(section_info[section_id-1].path.length/2)])
-            .setHTML("上一站 : "+section_info[section_id-1].from_name+"<br>" + "下一站 : "+section_info[section_id-1].target_name)
+            .setHTML("路段起点 : "+section_info[section_id-1].from_name+"<br>" + "路段终点 : "+section_info[section_id-1].target_name)
             .addTo(map);
 
         map.getCanvas().style.cursor = 'pointer';
@@ -501,13 +501,14 @@ function DrawSection(section_info) {
 
     map.on('mouseenter', 'section', function (e) {
         var section_id = e.features[0].properties.section_id;
+        map.setFilter("section-hover", ["==", "section_id",""]);
         mainChart.section_timeout = setTimeout(function () {
             map.setFilter("section-hover", ["==", "section_id", e.features[0].properties.section_id]);
             if(mainChart.Msg_pop)
                 mainChart.Msg_pop.remove();
             mainChart.Msg_pop= new mapboxgl.Popup()
                 .setLngLat(section_info[section_id-1].path[parseInt(section_info[section_id-1].path.length/2)])
-                .setHTML("上一站 : "+section_info[section_id-1].from_name+"<br>" + "下一站 : "+section_info[section_id-1].target_name)
+                .setHTML("路段起点 : "+section_info[section_id-1].from_name+"<br>" + "路段终点 : "+section_info[section_id-1].target_name)
                 .addTo(map);
         },500);
         map.getCanvas().style.cursor = 'pointer';
@@ -516,7 +517,7 @@ function DrawSection(section_info) {
     // Change it back to a pointer when it leaves.
     map.on('mouseleave', 'section', function () {
         clearTimeout( mainChart.section_timeout );
-        map.setFilter("section-hover", ["==", "section_id",""]);
+        //map.setFilter("section-hover", ["==", "section_id",""]);
         map.getCanvas().style.cursor = '';
     });
 }
@@ -878,7 +879,7 @@ function Init_Animation() {
                     });
                 });
             });
-            console.log(mainChart.Bus_lines);
+            //console.log(mainChart.Bus_lines);
         },
         complete: function () {//请求完成的处理
         },

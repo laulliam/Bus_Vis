@@ -1,3 +1,22 @@
+calendar();
+function calendar(){
+    $.ajax({
+        url: "/section_route_data",    //请求的url地址
+        dataType: "json",   //返回格式为json
+        async: true, //请求是否异步，默认为异步，这也是ajax重要特性
+        type: "GET",   //请求方式
+        contentType: "application/json",
+        beforeSend: function () {//请求前的处理
+        },
+        success: function (station, textStatus) {
+            Draw_calender_(station);
+        },
+        complete: function () {//请求完成的处理
+        },
+        error: function () {//请求出错处理
+        }
+    });
+}
 function Draw_calender_(datas) {
 
     var margin = { top: 0, right: 0, bottom:20, left: 0 },

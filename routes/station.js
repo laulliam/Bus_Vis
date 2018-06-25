@@ -11,8 +11,6 @@ router.get('/station_info', function(req, res, next) {
         var selectData = function(db, callback) {
         //连接到表
         var collection = db.collection('station');
-        //查询数据
-        var whereStr = {}
         collection.find({}).toArray(function(err, result) {
             if(err)
             {
