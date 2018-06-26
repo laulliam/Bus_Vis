@@ -503,6 +503,8 @@ function DrawSection(section_info) {
             .addTo(map);
 
         map.getCanvas().style.cursor = 'pointer';
+
+        Calendar(section_id);
     });
 
     map.on('mouseenter', 'section', function (e) {

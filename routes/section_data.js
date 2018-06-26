@@ -7,17 +7,16 @@ var DB_CONN_STR = 'mongodb://localhost:27017/traffic_data';
 
 router.get('/section_route_data', function(req, res, next) {
 
+    var section_id = req.query.section_id;
     var selectData = function(db, callback) {
         //连接到表
         var collection = db.collection('section_run_data');
         //查询数据
-        var whereStr = {}
-        collection.find({"sub_route_id" : "38001"},
+        collection.find({"section_id" : parseInt(section_id)},
             {
                 "from_station_id":0,
                 "id":0,
                 "stay_time":0,
-                "section_id":0,
                 "from_station_name":0,
                 "_id":0
             })
