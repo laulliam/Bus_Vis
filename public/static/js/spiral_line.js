@@ -1,7 +1,9 @@
 
-spiral_line(38001,date_extent = [new Date(2016,0,1,0,0,0),new Date(2016,0,2,0,0,0)]);
+spiral_line(27001,date_extent = [new Date(2016,0,1,0,0,0),new Date(2016,0,2,0,0,0)]);
 
 function spiral_line(route_id,date_extent){
+
+    $("#spiral_route")[0].innerHTML=route_id;
 
     $.ajax({
         url: "/spiral_data",    //请求的url地址
@@ -91,17 +93,21 @@ function spiral_line(route_id,date_extent){
         // used to assign nodes color by group
         var color = d3.scale.category10();
 
-        var r = d3.min([width, height])/2 -20;
+        var r = d3.min([width, height])/2 -15;
 
         var radius = d3.scale.linear()
             .domain([start, end])
             .range([20, r]);
 
+        if(d3.select("#spiral_svg"))
+            d3.select("#spiral_svg").remove();
+
         var svg = d3.select("#spiral_line").append("svg")
+            .attr("id","spiral_svg")
             .attr("width", width )
             .attr("height", height )
             .append("g")
-            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+            .attr("transform", "translate(" + width / 2 + "," + height/2  + ")");
 
         var points = d3.range(start, end + 0.001, (end - start) / 1000);
 
@@ -178,7 +184,7 @@ function spiral_line(route_id,date_extent){
             .append("text")
             .attr("dy", 10)
             .style("text-anchor", "start")
-            .style("font", "9px arial")
+            .style("font", "8px arial")
             .append("textPath")
             // only add for the first of each month
             .filter(function(d){

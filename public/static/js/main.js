@@ -44,19 +44,25 @@ $("#ECalendar").ECalendar({
     format:"yyyy-mm-dd hh:ii",
     date:new Date(2016,0,1,0,0),
     callback:function(v,e) {
-        mainChart.date_extent = v.toString();
-        var date_start = new Date(mainChart.date_extent);
-        var date_end = new Date(new Date(mainChart.date_extent).setMinutes(new Date(mainChart.date_extent).getMinutes()+30));
+        var temp_date = v.toString();
+        var date_start = new Date(temp_date);
+        var date_end = new Date(new Date(temp_date).setMinutes(new Date(temp_date).getMinutes()+30));
+
+        mainChart.date_extent = [];
+
+        mainChart.date_extent[0] = new Date(temp_date);
+        mainChart.date_extent[1] = new Date(new Date(temp_date).setDate(new Date(temp_date).getDate()+1));
+
+        var date_start1 = new Date(temp_date);
+        var date_end1 = new Date(new Date(temp_date).setDate(new Date(temp_date).getDate()+1));
         //Update_section([date_start,date_end]);
-        Update_heat_map([date_start,date_end])
+        //Update_heat_map([date_start,date_end]);
     }
 });
 
 var get_date = setInterval(function () {
     if(mainChart.date_extent) {
-        var date_start = new Date(mainChart.date_extent);
-        var date_end = new Date(new Date(mainChart.date_extent).setDate(new Date(mainChart.date_extent).getDate()+1));
-        mainChart.date_extent =[date_start,date_end];
+        console.log(mainChart.date_extent);
         clearInterval(get_date);
         return 1;
     }
@@ -396,6 +402,7 @@ function DrawStation(station_info) {
 
         update_radar(e.features[0].properties.station_id,mainChart.date_extent);
         Information(e.features[0].properties.station_id,e.features[0].properties.description);
+
     });
     // Change the cursor to a pointer when the mouse is over the places layer.
     map.on('mouseenter', 'station', function (e) {
