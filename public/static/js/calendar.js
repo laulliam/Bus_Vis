@@ -29,7 +29,7 @@ function Draw_calender_(datas) {
         width=(body_width * 0.15 -  border),
         height=(body_height - 190) - body_height * 0.25 ,
         gridSize = height/40,
-        legendElementWidth = gridSize*2,
+        legendElementWidth = width/10,
         buckets = 9,
         colors = ["#38A800","#8BD100","#FFFF00","#FF8000","#ff1c24"],
         times  = ["6am" ,"11pm"],
@@ -65,10 +65,14 @@ function Draw_calender_(datas) {
     });
 
     data_line.forEach(function (d) {
+
         d.day = new Date(d.key).getDate();
         d.hour = new Date(d.key).getHours();
         d.speed = d.values;
+
     });
+
+    console.log(data_line);
 
     if(d3.select("#calendar_svg"))
         d3.select("#calendar_svg").remove();
@@ -86,24 +90,22 @@ function Draw_calender_(datas) {
 
     times_label_g
         .append("text")
-        .text("am6")
+        .text("6:00")
         .attr("x", 15)
         .attr("y",10)
         .style({
-            "font-size":"10",
-            "font-family": "Consolas, courier",
+            "font-size":"8",
             "fill": "#aaa",
             "text-anchor":"middle"
         });
 
     times_label_g
         .append("text")
-        .text("pm11")
+        .text("23:00")
         .attr("x", width - 15)
         .attr("y",10)
         .style({
-            "font-size":"10",
-            "font-family": "Consolas, courier",
+            "font-size":"8",
             "fill": "#aaa",
             "text-anchor":"middle"
         });
@@ -118,10 +120,10 @@ function Draw_calender_(datas) {
         })
         .text(function(d) { return d; })
         .attr("x", 10)
-        .attr("y", function(d, i) { return (i+4)* gridSize; })
+        .attr("y", function(d, i) { return (i+1)* gridSize; })
+        .attr("transform","translate("+0+","+3*gridSize+")")
         .style({
-            "font-size":"10",
-            "font-family": "Consolas, courier",
+            "font-size":"8",
             "fill": "#aaa",
             "text-anchor":"middle"
         });
@@ -150,14 +152,13 @@ function Draw_calender_(datas) {
 
             var time = calender_g.append("text")
                 .attr("id","time_hour")
-                .text(this_hour)
+                .text(this_hour+":00")
                 .attr("x", this_x)
                 .attr("y",20)
                 .style({
-                    "font-size":"10",
-                    "font-family": "Consolas, courier",
+                    "font-size":"8",
                     "fill": "#aaa",
-                    "text-anchor":"left"
+                    "text-anchor":"middle"
                 });
             d3.selectAll(".hour").attr("opacity",0.2);
             d3.select(this).attr("opacity",1);
@@ -167,39 +168,44 @@ function Draw_calender_(datas) {
             d3.select("#time_hour").remove();
             d3.selectAll(".hour").attr("opacity",1);
         })
+        .on("click",function (d,i) {
+
+            var curr_date = new Date(2016,1,d.day,d.hour,0,0);
+
+            console.log(curr_date);
+        })
         .style("fill","#646765")
-        .attr("transform","translate(0,"+d3.select("#day_1").attr("y")+")")
+        .attr("transform","translate(0,"+3*gridSize+")")
         .transition()
         .duration(1000)
         .style("fill", function (d) {
-            if(speed<=18){return colors[4]}
-            else if(d.speed>18&&d.speed<25){return colors[3]}
-            else if(d.speed>=25&&d.speed<30){return colors[2]}
-            else if(d.speed>=30&&d.speed<40){return colors[1]}
-            else if(d.speed>=40){return colors[0];}
+            if(d.speed<=15){return colors[4]}
+            else if(d.speed>15&&d.speed<=25){return colors[3]}
+            else if(d.speed>25&&d.speed<=35){return colors[2]}
+            else if(d.speed>35&&d.speed<=45){return colors[1]}
+            else if(d.speed>45){return colors[0];}
         });
 
-    var legArray=[0,1,2,3,4];
+    var legArray=['0-2','2-4','4-6','6-8','8-10'];
 
-    var legend = calender_legend.selectAll(".legend")
+    var legend = calender_legend.selectAll(".calendar_legend")
         .data(legArray)
         .enter()
         .append("rect")
-        .attr("class","legend")
-        .attr("x",function(d, i) { return legendElementWidth * i+0.2*width; })
-        .attr("y",  height - margin.bottom)
+        .attr("class","calendar_legend")
+        .attr("x",function(d, i) { return (legendElementWidth)* (i+2); })
+        .attr("y",  height - margin.bottom*2)
         .attr("rx", 3)
         .attr("ry", 3)
         .attr("width",  legendElementWidth )
-        .attr("height",gridSize)
+        .attr("height",gridSize*0.8)
         .style("fill", function(d, i) { return colors[i]; })
         .on("mouseover",function (d) {
-            console.log(10);
-            d3.selectAll(".legend").attr("opacity",0.2);
+            d3.selectAll(".calendar_legend").attr("opacity",0.2);
             d3.select(this).attr("opacity",1);
         })
         .on("mouseout",function (d) {
-            d3.selectAll(".legend").attr("opacity",1);
+            d3.selectAll(".calendar_legend").attr("opacity",1);
         });
 
     //legend.exit().remove();

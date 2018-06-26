@@ -491,7 +491,7 @@ function DrawSection(section_info) {
     });
 
     map.on('click', 'section-hover', function (e) {
-        //update_stream(e.features[0].properties.section_id);
+        update_stream(e.features[0].properties.section_id);
         if (mainChart.Msg_pop)
             mainChart.Msg_pop.remove();
 

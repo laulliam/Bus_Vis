@@ -4,14 +4,23 @@
     border-width: 1px 1px 1px 1px;
 }
 
+.hour{
+    text-decoration:none;
+    cursor:pointer;
+    -webkit-user-select:none;
+    -khtml-user-select:none;;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select: none;
+}
+
 rect.bordered {
     stroke: rgba(85, 85, 85, 0.95);
     stroke-width:1px;
 }
 
 text.mono {
-    font-size: 9px;
-    font-family: Consolas, courier;
+    font-size: 6px;
     fill: #aaa;
 }
 
