@@ -1,4 +1,4 @@
-Calendar(960);
+Calendar(1025);
 function Calendar(section_id){
     $.ajax({
         url: "/section_route_data",    //请求的url地址
@@ -6,13 +6,13 @@ function Calendar(section_id){
         data:{
             section_id:section_id
         },
-        async: true, //请求是否异步，默认为异步，这也是ajax重要特性
+        async: false, //请求是否异步，默认为异步，这也是ajax重要特性
         type: "GET",   //请求方式
         contentType: "application/json",
         beforeSend: function () {//请求前的处理
         },
-        success: function (station, textStatus) {
-            Draw_calender_(station);
+        success: function (section, textStatus) {
+            Draw_calender_(section);
         },
         complete: function () {//请求完成的处理
         },
@@ -20,7 +20,7 @@ function Calendar(section_id){
         }
     });
 }
-function Draw_calender_(datas) {
+function Draw_calender_(data_line) {
 
     var margin = { top: 0, right: 0, bottom:20, left: 0 },
         border =1,
@@ -36,43 +36,6 @@ function Draw_calender_(datas) {
         days = [ "01","02","03","04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23","24","25","26","27","28","29","30","31"],
         dailyValueExtent = {};
 
-    datas.forEach(function (d) {
-        if(d.speed >= 60){
-            d.speed = 0;
-        }
-        d.start_date_time = new Date(d.start_date_time);
-        d.start_date_time.setMinutes(0,0);
-        d.start_date_time.setSeconds(0,0);
-    });
-
-    var nest = d3.nest().key(function (d) {
-        return d.start_date_time;
-    });
-
-    var data_line = nest.entries(datas);
-
-    data_line.forEach(function (d) {
-        var sum =0;
-        d.key = new Date(d.key);
-        d.values.forEach(function (s) {
-            sum += s.speed;
-        });
-        d.values = sum/d.values.length;
-    });
-
-    data_line.sort(function (a,b) {
-        return a.key - b.key;
-    });
-
-    data_line.forEach(function (d) {
-
-        d.day = new Date(d.key).getDate();
-        d.hour = new Date(d.key).getHours();
-        d.speed = d.values;
-
-    });
-
-    console.log(data_line);
 
     if(d3.select("#calendar_svg"))
         d3.select("#calendar_svg").remove();
@@ -169,21 +132,20 @@ function Draw_calender_(datas) {
             d3.selectAll(".hour").attr("opacity",1);
         })
         .on("click",function (d,i) {
-
             var curr_date = new Date(2016,1,d.day,d.hour,0,0);
-
-            console.log(curr_date);
         })
         .style("fill","#646765")
         .attr("transform","translate(0,"+3*gridSize+")")
         .transition()
         .duration(1000)
         .style("fill", function (d) {
+
+            if(d.speed==null)return "#b6b6b6";
             if(d.speed<=15){return colors[4]}
-            else if(d.speed>15&&d.speed<=25){return colors[3]}
-            else if(d.speed>25&&d.speed<=35){return colors[2]}
-            else if(d.speed>35&&d.speed<=45){return colors[1]}
-            else if(d.speed>45){return colors[0];}
+            else if(d.speed>15&&d.speed<=18){return colors[3]}
+            else if(d.speed>18&&d.speed<=30){return colors[2]}
+            else if(d.speed>30&&d.speed<=38){return colors[1]}
+            else if(d.speed>38){return colors[0];}
         });
 
     var legArray=['0-2','2-4','4-6','6-8','8-10'];

@@ -64,24 +64,7 @@ function update_radar(station_id) {
     if(d3.select("#station_name_div"))
         d3.select("#station_name_div").remove();
 
-    var tooltip=d3.select("#radar").append("div")
-        .attr("id","station_name_div")
-        .style({
-            "position": "absolute",
-            "float":"left",
-            "z-index": "999",
-            "left": "1%",
-            "top":"2%"
-        });
-
-    tooltip.append("p")
-        .attr("id","tooltip_area")
-        .style({
-            "font-size":5,
-            "color":"#FFF",
-            "text-anchor":"middle"
-        })
-        .text(station_name);
+    $("#radar_station")[0].innerHTML = station_name;
 
 //Call function to draw the Radar chart
     RadarChart("#radar", radar_data, radarChartOptions);
