@@ -35,7 +35,8 @@ function update_radar(station_id) {
         for(i =0;i<24;i++) {
             hours_data.push({
                 axis:(i<10)?("0"+i):i,
-                value:hours_temp[i],route_id:route_id
+                value:hours_temp[i],
+                route_id:route_id
             });
         }
         radar_data.push(hours_data);
@@ -119,7 +120,7 @@ function update_radar(station_id) {
             .attr("height", cfg.h)
             .attr("class", "radar"+id);
         //Append a g element
-        var g = svg.append("g").attr("transform", "translate(" + (cfg.w/2 ) + "," + (cfg.h/2 ) + ")");
+        var g = svg.append("g").attr("transform", "translate(" + (cfg.w/2 ) + "," + (cfg.h/2+10 ) + ")");
 
         /////////////////////////////////////////////////////////
         ////////// Glow filter for some extra pizzazz ///////////
@@ -226,34 +227,19 @@ function update_radar(station_id) {
             .append("path")
             .attr("class", "radarArea")
             .attr("d", function(d,i) { return radarLine(d); })
-            .style("fill", function(d,i) { return cfg.color[i]; })
+            .style("fill", function(d,i) { return cfg.color[i%8]; })
             .style("fill-opacity", cfg.opacityArea)
             .on('mouseover', function (d,i){
                 //Bring back the hovered over blob
                 d3.select(this)
                     .transition().duration(200)
                     .style("fill-opacity", 0.7);
-
-                var tooltip=d3.select("#radar").append("div")
-                    .attr("id","tooltip_div")
-                    .style({
-                        "position": "absolute",
-                        "float":"left",
-                        "z-index": "999",
-                        "left": "10%",
-                        "bottom":"10%"
-                    });
-                tooltip.append("p")
-                    .attr("id","tooltip_area")
-                    .style({
-                        "font-size":5,
-                        "color":"#FFF",
-                        "text-anchor":"middle"
-                    })
-                    .text(d[0].route_id);
+                $("#route_labels").css("visibility","visible");
+                $("#route_label")[0].innerHTML=d[0].route_id;
+                //visibility:hidden;
             })
             .on('mouseout', function(){
-                d3.select("#tooltip_div").remove();
+                $("#route_labels").css("visibility","hidden");
                 //Bring back all blobs
                 d3.select(this)
                     .transition().duration(200)
@@ -265,7 +251,7 @@ function update_radar(station_id) {
             .attr("class", "radarStroke")
             .attr("d", function(d,i) { return radarLine(d); })
             .style("stroke-width", cfg.strokeWidth + "px")
-            .style("stroke", function(d,i) { return COLOR[i]; })
+            .style("stroke", function(d,i) { return COLOR[i%8]; })
             .style("fill", "none")
             .style("filter" , "url(#glow)");
 
@@ -288,22 +274,10 @@ function update_radar(station_id) {
             .attr("ry", 3)
             .attr("width",  legendElementWidth )
             .attr("height",gridSize)
-            .style("fill", function(d, i) { return options.color[i]; })
+            .style("fill", function(d, i) { return options.color[i%8]; })
             .on("mouseover",function (d,i) {
-                var this_x = d3.select(this).attr("x");
-                var tooltip=legend_g.append("text")
-                    .attr("id","tooltip")
-                    .attr("x", function (d) {
-                        //return cfg.w/legend_id.length + i*20 ;
-                        return this_x;
-                    })
-                    .attr("y", cfg.h - 1.5*cfg.margin .bottom)
-                    .attr("font-size",0)
-                    .attr("text-anchor", "middle")
-                    // .attr("dy", "0.15em")
-                    .attr("fill","#FFF")
-                    .text(d);
-
+                $("#route_labels").css("visibility","visible");
+                $("#route_label")[0].innerHTML=d;
                 legend_id.forEach(function (route) {
                     if(route != d)
                         d3.select(".radar_"+route).attr("opacity",0.2);
@@ -312,16 +286,17 @@ function update_radar(station_id) {
                 d3.select(this).attr("opacity",1);
             })
             .on("mouseout",function (d) {
-                d3.select("#tooltip").remove();
+                $("#route_labels").css("visibility","hidden");
                 legend_id.forEach(function (route) {
                     d3.select(".radar_"+route).attr("opacity",1);
                 });
                 d3.selectAll(".radar_legend").attr("opacity",1);
+            })
+            .on("click",function (d) {
+                d3.select(this).attr("opacity","0.2");
+                d3.select(".radar_"+d).attr("visibility","hidden");
             });
 
-        //d3.selectAll(".radar_legend").attr("opacity",0.2);
-
-        //Taken from http://bl.ocks.org/mbostock/7555321
         //Wraps SVG text
         function wrap(text, width) {
             text.each(function() {

@@ -67,17 +67,18 @@ var get_date = setInterval(function () {
         return 1;
     }
 });
-var date=new Date(2016,0,1,17,0,0).getTime();
+/*var date=new Date(2016,0,1,17,0,0).getTime();
 var test_interval =setInterval(function (){
-    date_start = new Date(date);
-    var date_end =new Date(new Date(date).setMinutes(new Date(date).getMinutes()+30));
-    Update_heat_map([date_start,date_end]);
-    console.log([date_start,date_end]);
-    date = date_end.getTime();
-    if(date_start.getMonth()>0)
-        date = new Date(2016,0,1,17,0,0).getTime();
 
-},5000);
+        date_start = new Date(date);
+        var date_end = new Date(new Date(date).setMinutes(new Date(date).getMinutes() + 30));
+        Update_heat_map([date_start, date_end]);
+        console.log([date_start, date_end]);
+        date = date_end.getTime();
+        if (date_start.getMonth() > 0)
+            date = new Date(2016, 0, 1, 17, 0, 0).getTime();
+
+},5000);*/
 
 
 
