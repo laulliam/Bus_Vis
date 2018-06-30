@@ -16,6 +16,7 @@
 .radar_legend {
     font-family: 'Raleway', sans-serif;
     fill: #ffffff;
+    cursor:pointer;
 }
 
 .line{

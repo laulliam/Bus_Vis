@@ -274,27 +274,25 @@ function update_radar(station_id) {
             .attr("ry", 3)
             .attr("width",  legendElementWidth )
             .attr("height",gridSize)
+            .attr("opacity",1)
             .style("fill", function(d, i) { return options.color[i%8]; })
             .on("mouseover",function (d,i) {
-                $("#route_labels").css("visibility","visible");
+                d3.select("#route_labels") .transition().duration(200).style("visibility","visible");
                 $("#route_label")[0].innerHTML=d;
-                legend_id.forEach(function (route) {
-                    if(route != d)
-                        d3.select(".radar_"+route).attr("opacity",0.2);
-                });
-                d3.selectAll(".radar_legend").attr("opacity",0.2);
-                d3.select(this).attr("opacity",1);
             })
             .on("mouseout",function (d) {
-                $("#route_labels").css("visibility","hidden");
-                legend_id.forEach(function (route) {
-                    d3.select(".radar_"+route).attr("opacity",1);
-                });
-                d3.selectAll(".radar_legend").attr("opacity",1);
+                d3.select("#route_labels") .transition().duration(200).style("visibility","hidden");
             })
             .on("click",function (d) {
-                d3.select(this).attr("opacity","0.2");
-                d3.select(".radar_"+d).attr("visibility","hidden");
+
+                if(d3.select(this).attr("opacity") == 1){
+                    d3.select(this) .transition().duration(200).attr("opacity",0.2);
+                    d3.select(".radar_"+d) .transition().duration(200).attr("visibility","hidden");
+                }
+                else {
+                    d3.select(this) .transition().duration(200).attr("opacity",1);
+                    d3.select(".radar_"+d) .transition().duration(200).attr("visibility","visible");
+                }
             });
 
         //Wraps SVG text
