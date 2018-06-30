@@ -1,4 +1,4 @@
-Calendar(1025);
+Calendar(960);
 function Calendar(section_id){
     $.ajax({
         url: "/section_route_data",    //请求的url地址
@@ -86,7 +86,7 @@ function Draw_calender_(data_line) {
         .attr("y", function(d, i) { return (i+1)* gridSize; })
         .attr("transform","translate("+0+","+3*gridSize+")")
         .style({
-            "font-size":"8",
+            "font-size":"9",
             "fill": "#aaa",
             "text-anchor":"middle"
         });
