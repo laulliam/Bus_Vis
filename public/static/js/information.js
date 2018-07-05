@@ -18,9 +18,9 @@ function Information(station_id,station_name) {
      },
      success: function (routes_numbers, textStatus) {
      var routes_id = routes_numbers[0].sub_routes_id.split(",");
-
-         Slide_word(routes_id)
          $("#routes_number")[0].innerHTML = routes_id.length;
+         //Slide_word(routes_id);
+         routes_label(routes_id);
      },
      complete: function () {//请求完成的处理
      },
@@ -28,6 +28,48 @@ function Information(station_id,station_name) {
      }
      });
 
+    function routes_label(data){
+
+        if(d3.select("#routes_div"))
+        d3.select("#routes_div").remove();
+
+        var rotes_div = d3.select("#information").append("div")
+            .attr("id","routes_div")
+            .attr("class","message_scroll")
+            .style({
+                "position":"relative",
+                "float":"left",
+                "z-index": "999",
+                "left": "0%",
+                "top":"15%",
+                "width":"100%",
+                "overflow-x":"scroll",
+                "overflow-y":"hidden"
+            })
+            .selectAll("label label-default route_label")
+            .data(data)
+            .enter()
+            .append("span")
+            .attr("class","label label-default route_label")
+            .on("mouseover",function (d) {
+
+            })
+            .on("mouseout",function (d) {
+
+            })
+            .style({
+                "background-color":function (d,i) {
+                    if(i%4 == 0)
+                    $("#route_label").after("<br>");
+                    return COLOR[i];
+                },
+                "margin":"7px"
+            })
+            .html(function (d) {
+                return d;
+            });
+
+    }
 
     function Slide_word(data) {
 
@@ -39,7 +81,7 @@ function Information(station_id,station_name) {
         var cloud = $("#information");
 
         var width = (body_width * 0.15 - border);
-        var height = (body_height * 0.3 );
+        var height = (body_height * 0.4 );
 
         if(d3.select("#slide_div"))
             d3.select("#slide_div").remove('*');
@@ -47,7 +89,7 @@ function Information(station_id,station_name) {
         var slide_div =  d3.select("#information").append("div")
             .attr("id","slide_div")
             .attr("width",width)
-            .attr("height",height/2);
+            .attr("height",height/4);
 
         var ul = slide_div.append("ul");
 
@@ -56,6 +98,7 @@ function Information(station_id,station_name) {
             .enter()
             .append("li")
             .append("a")
+            .attr()
             .text(function (d) {
                 return d;
             });
@@ -64,7 +107,8 @@ function Information(station_id,station_name) {
         var offset = 0;
         var stepping = 0.01;
         var list = $('#slide_div');
-        var $list = $(list)
+        var $list = $(list);
+
         $list.mousemove(function(e){
             var topOfList = $list.eq(0).offset().top;
             var listHeight = $list.height();
@@ -83,12 +127,12 @@ function Information(station_id,station_name) {
 
         function render(){
             for (var i = element.length - 1; i >= 0; i--){
-                var angle = element[i].elemAngle + offset;
-                x = 120 + Math.sin(angle) * 30;
-                y = 45 + Math.cos(angle) * 40;
-                size = Math.round(7 - Math.sin(angle) * 10);
+                var angle = element[i].elemAngle + offset,
+                    x = 120 + Math.sin(angle) * 30,
+                    y = 45 + Math.cos(angle) * 40,
+                    size = Math.round(7 - Math.sin(angle) * 10);
                 var elementCenter = $(element[i]).width() / 2;
-                var leftValue = (($list.width()/2) * x / 100 - elementCenter) + "px"
+                var leftValue = (($list.width()/2) * x / 100 - elementCenter) + "px";
                 $(element[i]).css("fontSize", size + "px");
                 $(element[i]).css("opacity",size/10);
                 $(element[i]).css("zIndex" ,size);

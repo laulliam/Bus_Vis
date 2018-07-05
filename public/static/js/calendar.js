@@ -99,7 +99,7 @@ function Draw_calender_(data_line) {
         .data(data_line, function(d) {return d.day+':'+d.hour;})
         .enter()
         .append("rect")
-        .attr("x", function(d) { return (d.hour-3) * gridSize; } )
+        .attr("x", function(d) { return (d.hour-4) * gridSize; } )
         .attr("y", function(d,i) {return (d.day  -1) * gridSize; })
         .attr("rx", 3)
         .attr("ry", 3)

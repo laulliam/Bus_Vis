@@ -102,7 +102,7 @@ function Init_tools() {
             "top":"2%"
         })
         .selectAll("btn btn-default")
-        .data(["ECalendar", "book", "refresh"])
+        .data(["ECalendar","refresh"])
         .enter()
         .append("button")
         .attr({
@@ -116,8 +116,8 @@ function Init_tools() {
             switch (d) {
                 case "ECalendar":
                     return "日期";
-                case "book":
-                    return "图层";
+                case "dLabel":
+                    return "主视图布局";
                 case "refresh":
                     return "刷新";
             }
@@ -525,11 +525,13 @@ function DrawSection(section_info) {
         map.getCanvas().style.cursor = 'pointer';
 
         Calendar(section_id);
-        //update_stream(e.features[0].properties.section_id);
+        update_stream(e.features[0].properties.section_id);
     });
 
     map.on('mouseenter', 'section', function (e) {
+
         var section_id = e.features[0].properties.section_id;
+        console.log(section_id);
         map.setFilter("section-hover", ["==", "section_id",""]);
         mainChart.section_timeout = setTimeout(function () {
             map.setFilter("section-hover", ["==", "section_id", e.features[0].properties.section_id]);

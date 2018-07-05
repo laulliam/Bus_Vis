@@ -31,12 +31,15 @@ function message_cloud(route_id) {
                 d.values = val/d.values.length;
             });
             word_cloud(s);
+           // Slide_word(s);
         },
         complete: function () {//请求完成的处理
         },
         error: function () {//请求出错处理
         }
     });
+
+
 
 
     function word_cloud(dataset) {
@@ -63,7 +66,7 @@ function message_cloud(route_id) {
         var lasta = 1;
         var lastb = 1;
         var distr = true;
-        var tspeed=10;//文字移动速度
+        var tspeed=1;//文字移动速度
         var size=140;
 
         var mouseX=0;
@@ -298,10 +301,8 @@ function message_cloud(route_id) {
             .attr("class","name_message")
             .text(function(d){return d.key})
             .on("mouseover",function (d) {
-                tspeed = 1;
             })
             .on("mouseout",function (d) {
-                tspeed = 5;
             })
             .on("click",function (d) {
                 mainChart.data_point.features.forEach(function (s) {
@@ -335,13 +336,20 @@ function message_cloud(route_id) {
 
         positionAll();
 
+        var active_=false;
+
         oDiv.onmouseover=function ()
         {
+            if(active_)
             active=true;
         };
 
         oDiv.onmouseout=function ()
         {
+           // active=false;
+        };
+        document.getElementById("message_cloud").ondblclick= function(){
+            active_=!active_;
             active=false;
         };
 

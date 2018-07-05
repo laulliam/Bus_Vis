@@ -100,7 +100,7 @@ function update_radar(station_id) {
 
         var allAxis = (data[0].map(function(i, j){return i.axis})),	//Names of each axis
             total = allAxis.length,					//The number of different axes
-            radius = Math.min((cfg.w - 2.5*(cfg.margin.right + cfg.margin.left))/2, (cfg.h - 2.5*(cfg.margin.top + cfg.margin.bottom))/2), 	//Radius of the outermost circle
+            radius = Math.min((cfg.w/2 - 2*(cfg.margin.right + cfg.margin.left)), (cfg.h/2 - 2*(cfg.margin.top + cfg.margin.bottom))), 	//Radius of the outermost circle
             angleSlice = Math.PI * 2 / total;		//The width in radians of each "slice"
 
         //Scale for the radius
@@ -263,9 +263,12 @@ function update_radar(station_id) {
             .data(legend_id)
             .enter()
             .append("rect")
+            .attr("id",function (d) {
+                return "rect_legend_"+d
+            })
             .attr("class","radar_legend")
             .attr("x",function(d, i) {
-                return cfg.w/legend_id.length + i*20 ;
+                return i*20 ;
             })
             .attr("y", function(d,i){
                 return cfg.h - cfg.margin .bottom;
@@ -279,12 +282,20 @@ function update_radar(station_id) {
             .on("mouseover",function (d,i) {
                 d3.select("#route_labels") .transition().duration(200).style("visibility","visible");
                 $("#route_label")[0].innerHTML=d;
+                if(d3.select(this).attr("opacity")==1){
+                    legend_id.forEach(function (value) {
+                        if(d != value)
+                            d3.select(".radar_"+value).attr("opacity",0.3);
+                    });
+                }
             })
             .on("mouseout",function (d) {
                 d3.select("#route_labels") .transition().duration(200).style("visibility","hidden");
+                legend_id.forEach(function (value) {
+                    d3.select(".radar_"+value).attr("opacity",1);
+                });
             })
             .on("click",function (d) {
-
                 if(d3.select(this).attr("opacity") == 1){
                     d3.select(this) .transition().duration(200).attr("opacity",0.2);
                     d3.select(".radar_"+d) .transition().duration(200).attr("visibility","hidden");
@@ -294,7 +305,11 @@ function update_radar(station_id) {
                     d3.select(".radar_"+d) .transition().duration(200).attr("visibility","visible");
                 }
             });
-
+       var offset_legend = cfg.w/2-d3.select("#rect_legend_"+legend_id[parseInt(legend_id.length/2)]).attr("x");
+       if(legend_id.length%2)
+           legend_g.attr("transform","translate("+(offset_legend-legendElementWidth/2)+",0)");
+       else
+           legend_g.attr("transform","translate("+(offset_legend+2.5)+",0)");
         //Wraps SVG text
         function wrap(text, width) {
             text.each(function() {

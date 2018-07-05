@@ -1,6 +1,8 @@
 
 
-function chart(data) {
+function Time_Line(data,section_id) {
+
+    d3.select("#time_line").html("");
 
     var margin = {top: 10, right: 5, bottom: 20, left: 5};
     var border = 1;
@@ -20,13 +22,16 @@ function chart(data) {
 
     var nest_data = nest.entries(data);
 
+    var legend_id=[];
+
     nest_data.forEach(function (d) {
         d.values.sort(function (a,b) {
             return a.start_date_time - b.start_date_time;
         });
+        legend_id.push(d.key);
     });
 
-    var line_height = (height - margin.bottom)/nest_data.length;
+    var line_height = (height - margin.bottom)/(nest_data.length+1);
 
     var xScale = d3.time.scale().range([0, width]);
 
@@ -108,9 +113,53 @@ function chart(data) {
         });
     }
 
+    var message_div = d3.select("#time_line").append("div")
+        .style({
+            "position": "absolute",
+            "float":"left",
+            "z-index": "999",
+            "left": "0%",
+            "top":"2%"
+        })
+        .append("span")
+        .attr("class","label label-default")
+        .append("span")
+        .attr("class","glyphicon glyphicon-map-marker")
+        .html(section_info[section_id-1].from_name+">>>>>"+section_info[section_id-1].target_name);
+
+    var legend_div = d3.select("#time_line").append("div")
+        .style({
+            "position": "absolute",
+            "float":"left",
+            "z-index": "999",
+            "left": "15%",
+            "top":"2%"
+        })
+        .selectAll("label label-default legend_label")
+        .data(legend_id)
+        .enter()
+        .append("span")
+        .attr("class","label label-default legend_label")
+        .on("mouseover",function (d) {
+
+        })
+        .on("mouseout",function (d) {
+
+        })
+        .style({
+            "background-color":function (d,i) {
+                return COLOR[i];
+            },
+            "margin":"7px"
+        })
+        .html(function (d) {
+            return d;
+        });
+
+
 }
 
-update_stream(1385);
+update_stream(474);
 
 function update_stream(section_id) {
 
@@ -138,7 +187,7 @@ function update_stream(section_id) {
             });
 
             d3.select("#time_svg").remove("*");
-            chart(section_data);
+            Time_Line(section_data,section_id);
         },
         complete: function () {//请求完成的处理
         },
