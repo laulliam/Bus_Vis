@@ -32,7 +32,6 @@ function Information(station_id,station_name) {
 
         if(d3.select("#routes_div"))
         d3.select("#routes_div").remove();
-
         var rotes_div = d3.select("#information").append("div")
             .attr("id","routes_div")
             .attr("class","message_scroll")
@@ -143,4 +142,8 @@ function Information(station_id,station_name) {
         }
 
     }
+}
+
+function section_message(section_id){
+    d3.select("#current_section").html(section_info[section_id-1].from_name+">>>>>"+section_info[section_id-1].target_name);
 }

@@ -113,26 +113,12 @@ function Time_Line(data,section_id) {
         });
     }
 
-    var message_div = d3.select("#time_line").append("div")
-        .style({
-            "position": "absolute",
-            "float":"left",
-            "z-index": "999",
-            "left": "0%",
-            "top":"2%"
-        })
-        .append("span")
-        .attr("class","label label-default")
-        .append("span")
-        .attr("class","glyphicon glyphicon-map-marker")
-        .html(section_info[section_id-1].from_name+">>>>>"+section_info[section_id-1].target_name);
-
     var legend_div = d3.select("#time_line").append("div")
         .style({
             "position": "absolute",
             "float":"left",
             "z-index": "999",
-            "left": "15%",
+            "left": "0%",
             "top":"2%"
         })
         .selectAll("label label-default legend_label")

@@ -55,8 +55,8 @@ $("#ECalendar").ECalendar({
 
         var date_start1 = new Date(temp_date);
         var date_end1 = new Date(new Date(temp_date).setDate(new Date(temp_date).getDate()+1));
-        //Update_section([date_start,date_end]);
-        Update_heat_map([date_start,date_end]);
+        Update_section([date_start,date_end]);
+        //Update_heat_map([date_start,date_end]);
     }
 });
 
@@ -521,15 +521,14 @@ function DrawSection(section_info) {
             .setLngLat(section_info[section_id-1].path[parseInt(section_info[section_id-1].path.length/2)])
             .setHTML("路段起点 : "+section_info[section_id-1].from_name+"<br>" + "路段终点 : "+section_info[section_id-1].target_name)
             .addTo(map);
-
         map.getCanvas().style.cursor = 'pointer';
 
+        section_message(section_id);
         Calendar(section_id);
-        update_stream(e.features[0].properties.section_id);
+        update_stream(section_id);
     });
 
     map.on('mouseenter', 'section', function (e) {
-
         var section_id = e.features[0].properties.section_id;
         console.log(section_id);
         map.setFilter("section-hover", ["==", "section_id",""]);
