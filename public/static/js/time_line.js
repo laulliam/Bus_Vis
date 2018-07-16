@@ -3,7 +3,10 @@
 function Time_Line(data,section_id) {
 
     d3.select("#time_line").html("");
-
+    var time_line ={
+        IsZoom:true,
+        IsChecked:false
+    };
     var margin = {top: 10, right: 5, bottom: 20, left: 5};
     var border = 1;
     var all_view = $("#all_view");
@@ -49,8 +52,17 @@ function Time_Line(data,section_id) {
 
     var zoom = d3.behavior.zoom()
         .x(xScale)
-        // .scaleExtent(SCALE_EXTENT)
+        //.scaleExtent(SCALE_EXTENT)
         .on("zoom", zoomed);
+
+    var tooltip = d3.select("#time_line")
+        .append("div")
+        .attr("class", "remove")
+        .style("position", "absolute")
+        .style("z-index", "20")
+        .style("visibility", "hidden")
+        .style("top", "30px")
+        .style("left", "55px");
 
     var svg = d3.select("#time_line").append("svg")
         .attr("id","time_svg")
@@ -68,7 +80,7 @@ function Time_Line(data,section_id) {
         })//曲线中y的值
         .interpolate("basis")//把曲线设置光滑
 
-    svg.append("g")
+    var axis = svg.append("g")
         .attr("class", "x axis")
         .attr("transform", "translate(" + margin.left + "," + (height - margin.bottom) + ")")
         .call(xAxis);
@@ -105,42 +117,162 @@ function Time_Line(data,section_id) {
             height: height
         });
 
+    InitTools();
+    CreateLegend();
 
-    function zoomed() {
+    function InitTools() {
+        var time_line_tool = d3.select("#time_line")
+            .append("div")
+            .attr("class", "btn-group btn-group-xs")
+            .style({
+                "position": "absolute",
+                "float":"left",
+                "z-index": "999",
+                "left": "7px",
+                "top":"15%"
+            })
+            .selectAll("btn btn-default")
+            .data(["play","unchecked"])
+            .enter()
+            .append("button")
+            .attr({
+                "id":function (d) {
+                    return d;
+                },
+                "type": "button",
+                "class": "btn btn-default"
+            })
+            .attr("title", function (d) {
+                switch (d) {
+                    case "play":
+                        return "播放暂停";
+                    case "unchecked":
+                        return "框选";
+                }
+            });
+
+        time_line_tool.append("span")
+            .attr("class", function (d) {
+                return "glyphicon glyphicon-"+ d;
+            })
+            .attr("aria-hidden",true);
+
+        time_line_tool.on("click",function (d) {
+            if(d == "play"){
+                var play_span = d3.select("#play span");
+                var stat = play_span.attr("class");
+                play_span.attr("class","glyphicon glyphicon-"+((stat == "glyphicon glyphicon-play")?"pause":"play"));
+                (stat == "glyphicon glyphicon-play")?play():stop();
+                time_line.IsZoom = !time_line.IsZoom;
+            }
+            else if(d == "unchecked"){
+                time_line.IsZoom=!time_line.IsZoom;
+                time_line.IsChecked=!time_line.IsChecked;
+                time_line.IsChecked?CreateBrush():RemoveBrush();
+            }
+        })
+    }
+
+    function play() {
+
+        var new_data_extent=data_extent;
+        time_line.interval = setInterval(function () {
+
+            new_data_extent=[new Date(new_data_extent[0].setHours(new_data_extent[0].getHours()+1)),new Date(new_data_extent[0].setHours(new_data_extent[0].getHours()+24))];
+            if(new_data_extent[1].getMonth()>0) {
+                new_data_extent=data_extent;
+            }
+            xScale.domain(new_data_extent);
+            //console.log(new_data_extent);
+            if( time_line.brush){
+                time_line.brush.x(xScale);
+                time_line.g_brush.call(time_line.brush);
+            }
+            xAxis.scale(xScale);
+            svg.select(".x.axis").call(xAxis);
+            routes_g.select("path").attr("d", function (d) {
+                return line(d.values);
+            });
+        },400);
+    }
+
+    function stop() {
+        clearInterval(time_line.interval);
+        xScale.domain(data_extent);
+        xAxis.scale(xScale);
         svg.select(".x.axis").call(xAxis);
         routes_g.select("path").attr("d", function (d) {
             return line(d.values);
         });
     }
 
-    var legend_div = d3.select("#time_line").append("div")
-        .style({
-            "position": "absolute",
-            "float":"left",
-            "z-index": "999",
-            "left": "0%",
-            "top":"2%"
-        })
-        .selectAll("label label-default legend_label")
-        .data(legend_id)
-        .enter()
-        .append("span")
-        .attr("class","label label-default legend_label")
-        .on("mouseover",function (d) {
 
-        })
-        .on("mouseout",function (d) {
+    function zoomed() {
+        if(time_line.IsZoom) {
+            svg.select(".x.axis").call(xAxis);
+            routes_g.select("path").attr("d", function (d) {
+                return line(d.values);
+            });
+        }
+    }
 
-        })
-        .style({
-            "background-color":function (d,i) {
-                return COLOR[i];
-            },
-            "margin":"7px"
-        })
-        .html(function (d) {
-            return d;
-        });
+    function CreateBrush() {
+        time_line.brush = d3.svg.brush()
+            .x(xScale)
+            //.extent(data_extent)
+            .on("brushend", brushed);
+
+        function brushed() {
+
+            console.log(time_line.brush.extent());
+
+        }
+
+        time_line.g_brush = svg.append("g")
+            .attr("class", "brush")
+            .attr("transform", "translate(" + margin.left + "," + 0 + ")")
+            .call(time_line.brush);
+
+        time_line.g_brush.selectAll("rect").attr("height", height-margin.bottom);
+    }
+    
+    function RemoveBrush() {
+        time_line.brush=null;
+        time_line.g_brush.remove();
+        time_line.g_brush=null;
+    }
+
+    function CreateLegend() {
+        var legend_div = d3.select("#time_line").append("div")
+            .style({
+                "position": "absolute",
+                "float":"left",
+                "z-index": "999",
+                "left": "0%",
+                "top":"2%"
+            })
+            .selectAll("label label-default legend_label")
+            .data(legend_id)
+            .enter()
+            .append("span")
+            .attr("class","label label-default legend_label")
+            .on("mouseover",function (d) {
+
+            })
+            .on("mouseout",function (d) {
+
+            })
+            .style({
+                "background-color":function (d,i) {
+                    return COLOR[i];
+                },
+                "margin":"7px"
+            })
+            .html(function (d) {
+                return d;
+            });
+    }
+
 
 
 }

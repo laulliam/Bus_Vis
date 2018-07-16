@@ -523,8 +523,8 @@ function DrawSection(section_info) {
             .addTo(map);
         map.getCanvas().style.cursor = 'pointer';
 
-        section_message(section_id);
-        Calendar(section_id);
+        //section_message(section_id);
+        //Calendar(section_id);
         update_stream(section_id);
     });
 

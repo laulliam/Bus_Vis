@@ -24,3 +24,7 @@
     -ms-user-select:none;
     user-select: none;
 }
+.brush{
+    fill: #878787;
+    fill-opacity: 0.3;
+}
