@@ -19,7 +19,15 @@ router.get('/section_route_data', function(req, res, next) {
                 "id":0,
                 "stay_time":0,
                 "from_station_name":0,
-                "_id":0
+                "_id":0,
+                "end_date_time":0,
+                "product_id":0,
+                "route_id": 0,
+                "section_id":0,
+                "sub_route_id": 0,
+                "target_station_id": 0,
+                "target_station_name": 0,
+                "type": 0
             })
             .toArray(function(err, result) {
             if(err)
@@ -35,7 +43,7 @@ router.get('/section_route_data', function(req, res, next) {
         selectData(db, function(result) {
 
             result.forEach(function (d) {
-                if(d.speed >= 60)d.speed = 0;
+                if(d.speed >= 80)d.speed = 0;
                 d.start_date_time = new Date(d.start_date_time);
                 d.start_date_time.setMinutes(0,0);
                 d.start_date_time.setSeconds(0,0);
@@ -70,18 +78,24 @@ router.get('/section_route_data', function(req, res, next) {
 
             data_line.forEach(function (d) {
 
-                if(d.hour==extent_hour[0]);
+                if(d.hour === extent_hour[0]);
                 else{
-                    if(d.hour+1 == extent_hour[1]){
+                    if(d.hour+1 === extent_hour[1]){
                         data_line.push({day:d.day,hour:d.hour+1});
                     }
                     else
-                    {
                         data_line.push({day:d.day,hour:d.hour-1});
-                    }
                 }
             });
             res.json(data_line);
+
+/*            result.sort(function(a,b){
+                return new Date(a.start_date_time).getTime() - new Date(b.start_date_time).getTime();
+            });
+            result.forEach(function (d) {
+                d.start_date_time = new Date(d.start_date_time);
+            });
+            res.json(result);*/
             db.close();
         });
     });

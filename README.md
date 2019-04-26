@@ -1,4 +1,4 @@
 ##Bus_Vis
 
 
-![image](public/Bus_Vis_Sys.png)
+![image](public/static/img/Bus_Vis_Sys.png)

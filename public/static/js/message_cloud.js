@@ -31,7 +31,6 @@ function message_cloud(route_id) {
                 d.values = val/d.values.length;
             });
             word_cloud(s);
-           // Slide_word(s);
         },
         complete: function () {//请求完成的处理
         },
@@ -39,27 +38,25 @@ function message_cloud(route_id) {
         }
     });
 
-
-
-
     function word_cloud(dataset) {
 
-        var border = 1;
-        var all_view = $("#all_view");
-        var body_width = all_view.width();
-        var body_height = all_view.height()-15;
-
-        var cloud = $("#message_cloud");
-
-        // var width = (body_width * 0.15 - border);
-        // var height = (body_height * 0.45 );
+        var cloud = $("#words_cloud");
         var width = cloud.width();
         var height = cloud.height();
 
+        d3.select('#words_cloud').append("div")
+            .attr('width',width)
+            .attr("height",height * 0.9 -18)
+            .style({
+                "position":"absolute",
+                "botttom":0,
+                "background":"#FFFFFF",
+                "z-index":99
+            });
 
-        var radius = width/2;//3D 球的半径
+        var radius = width/3;//3D 球的半径
         var dtr = Math.PI/180;
-        var d=200;
+        var d=300;
 
         var mcList = [];
         var active = false;
@@ -260,20 +257,19 @@ function message_cloud(route_id) {
             return d.val;
         });
 
-        d3.select("#cloud_div").remove("*");
-
-        var cloud_div = d3.select("#message_cloud")
+        var cloud_div = d3.select("#words_cloud")
             .append("div")
             .attr("id","cloud_div")
+            .attr("width",width)
+            .attr("height",height-100)
             .style({
                 "position":"relative",
-                "top":"55%",
-                "word-break":"keep-all",
-                "white-space":"nowrap"
+                "top":"60%",
+                //"word-break":"keep-all",
+                //"white-space":"nowrap"
                 //"margin": "20px auto 0"
-            })
-            .attr("width",width)
-            .attr("height",height);
+            });
+
 
         var a = d3.rgb(255,215,0);
         var b = d3.rgb(255,50,0);
@@ -305,19 +301,6 @@ function message_cloud(route_id) {
             .on("mouseout",function (d) {
             })
             .on("click",function (d) {
-                mainChart.data_point.features.forEach(function (s) {
-                    if(s.properties.station_id == d.station_id)
-                    {
-                        map.flyTo({center:s.geometry.coordinates });
-                        if(mainChart.Msg_pop)
-                            mainChart.Msg_pop.remove();
-                        mainChart.Msg_pop = new mapboxgl.Popup()
-                            .setLngLat(s.geometry.coordinates)
-                            .setHTML(s.properties.description)
-                            .addTo(map);
-                        ///update_radar(d.station_id);
-                    }
-                });
             });
 
 
@@ -348,7 +331,7 @@ function message_cloud(route_id) {
         {
            // active=false;
         };
-        document.getElementById("message_cloud").ondblclick= function(){
+        document.getElementById("words_cloud").ondblclick= function(){
             active_=!active_;
             active=false;
         };

@@ -6,6 +6,7 @@ var station_info;
 function Init_data() {
     get_station_data();
     get_section_data();
+
     function get_station_data(){
         $.ajax({
             url: "/station_info",    //请求的url地址

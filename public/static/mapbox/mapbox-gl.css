@@ -15,6 +15,7 @@
 
 .mapboxgl-canvas-container.mapboxgl-interactive,
 .mapboxgl-ctrl-nav-compass {
+    position: absolute;
     cursor: -webkit-grab;
     cursor: -moz-grab;
     cursor: grab;

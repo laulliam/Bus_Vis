@@ -7,7 +7,7 @@ var bounds = [
 mapboxgl.accessToken = 'pk.eyJ1Ijoic2lsZW50bGwiLCJhIjoiY2o4NGEycGN2MDZ4ZDMza2Exemg4YmtkaCJ9.LaSV_2wU1XbulGlrDiUgTw';
 
 var map =new mapboxgl.Map({
-    container: 'main',
+    container: 'map',
     style: 'mapbox://styles/silentll/cjckbaggi8de22sp5g6cblhnx',//'mapbox://styles/silentll/cjhynnwpq39yo2rt7nm41q58e', //
     zoom: 12,
     center: [104.7503025807656, 31.45559907197881]
@@ -91,7 +91,7 @@ mainChart.map_view = {
 
 function Init_tools() {
 
-    var mainChart_tool = d3.select("#main")
+    var mainChart_tool = d3.select("#map")
         .append("div")
         .attr("class", "btn-group btn-group-sm")
         .style({
@@ -163,7 +163,7 @@ function Init_tools() {
         }
     });
 
-    var layer_setting = d3.select("#main")
+    var layer_setting = d3.select("#map")
         .append("div")
         .attr("id","layer_setting")
         .attr("class", "dropdown")
@@ -278,7 +278,7 @@ function Init_tools() {
             "left":"-3%"
         });
 
-    var mainChart_search = d3.select("#main")
+    var mainChart_search = d3.select("#map")
         .append("div")
         .attr("id","main_search")
         .attr("height",20)
@@ -302,7 +302,7 @@ function Init_tools() {
         .append("span")
         .attr("class", "glyphicon glyphicon-search");
 
-    var suggest_div = d3.select("#main")
+    var suggest_div = d3.select("#map")
         .append("span")
         .attr("id","suggest_text")
         .attr("class","dropdown")
@@ -524,8 +524,9 @@ function DrawSection(section_info) {
         map.getCanvas().style.cursor = 'pointer';
 
         //section_message(section_id);
-        //Calendar(section_id);
-        update_stream(section_id);
+        Calendar(section_id);
+        console.log(section_id);
+        //update_stream(section_id);
     });
 
     map.on('mouseenter', 'section', function (e) {

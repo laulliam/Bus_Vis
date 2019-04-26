@@ -43,16 +43,11 @@ function update_radar(station_id) {
     });
 
 
-    var border = 1;
-    var all_view = $("#all_view");
-    var body_width = all_view.width();
-    var body_height = all_view.height()-15;
+    var radar= $("#radar");
+    var width = radar.width();
+    var height = radar.height();
 
-    // var width = radar.width();
-    // var height = radar.height();
     var margin ={top: 10, right: 10, bottom: 10, left: 10};
-    var width = (body_width * 0.15 -  border) ;
-    var height = (body_height * 0.3 - 3 * border );
 
     var radarChartOptions = {
         w: width,
@@ -65,7 +60,7 @@ function update_radar(station_id) {
     if(d3.select("#station_name_div"))
         d3.select("#station_name_div").remove();
 
-    $("#radar_station")[0].innerHTML = station_name;
+    //$("#radar_station")[0].innerHTML = station_name;
 
 //Call function to draw the Radar chart
     RadarChart("#radar", radar_data, radarChartOptions);

@@ -3136,7 +3136,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	GUI.CLASS_CLOSE_BOTTOM = 'close-bottom';
 	GUI.CLASS_DRAG = 'drag';
 	
-	GUI.DEFAULT_WIDTH = 245;
+	GUI.DEFAULT_WIDTH = 250;
 	GUI.TEXT_CLOSED = '关闭面板';
 	GUI.TEXT_OPEN = '打开面板';
 	
