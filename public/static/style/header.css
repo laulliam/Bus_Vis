@@ -1,0 +1,25 @@
+#header{
+    position: absolute;
+    box-shadow:20px 20px 50px #302b63 inset;
+    text-align: center;
+    top: 1%;
+    left: 0.5%;
+}
+.header_left{
+    position: absolute;
+    top:30%;
+    left: 1%;
+}
+
+.header_right{
+    position: absolute;
+    top: 30%;
+    right: 1%;
+}
+.header_title{
+    position: relative;
+    display: inline-block;
+    top: 20%;
+    margin: auto;
+    color: #ffffff;
+}

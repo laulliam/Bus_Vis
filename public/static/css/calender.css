@@ -5,18 +5,11 @@
 }
 
 .hour{
-    text-decoration:none;
     cursor:pointer;
-    -webkit-user-select:none;
-    -khtml-user-select:none;;
-    -moz-user-select:none;
-    -ms-user-select:none;
-    user-select: none;
 }
 
-rect.bordered {
-    stroke: #303030;
-    stroke-width:.5;
+.bordered {
+    border-width: 2px;
 }
 
 text.mono {

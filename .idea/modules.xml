@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Bus_Vis.iml" filepath="$PROJECT_DIR$/.idea/Bus_Vis.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/BYSJ.iml" filepath="$PROJECT_DIR$/.idea/BYSJ.iml" />
+      <module fileurl="file://E:\BYSJ\.idea\Bus_Vis.iml" filepath="E:\BYSJ\.idea\Bus_Vis.iml" />
     </modules>
   </component>
 </project>

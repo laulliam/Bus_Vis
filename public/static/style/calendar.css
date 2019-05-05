@@ -1,0 +1,23 @@
+#calendar{
+    position: absolute;
+    box-shadow:20px 20px 50px #302b63 inset;
+    top: 31%;
+    left: 0.5%;
+}
+
+#calendar #calendar_main{
+    position: absolute;
+    top:30px;
+}
+
+#calendar #calendar_area{
+    position: absolute;
+    bottom: 10px;
+}
+
+.q0-6{fill:#23D561}
+.q1-6{fill:#9CD523}
+.q2-6{fill:#F1E229}
+.q3-6{fill:#FFBF3A}
+.q4-6{fill:#FB8C00}
+.q5-6{fill:#FF5252}

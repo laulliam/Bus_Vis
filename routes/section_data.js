@@ -164,6 +164,55 @@ router.get('/section_heat', function(req, res, next) {
 
 });
 
+router.get('/section_id_date', function(req, res, next) {
+
+    var section_id = req.query.section_id;
+    var date_start = new Date(req.query.date);
+    var date_end = new Date(req.query.date);
+    date_end.setDate(date_end.getDate()+1);
+    console.log(date_start,date_end);
+    var selectData = function(db, callback) {
+        //连接到表
+        var collection = db.collection('section_run_data');
+        //查询数据
+        collection.find({"section_id" : parseInt(section_id),"start_date_time" : {$gte:date_start,$lte:date_end}},
+            {
+                "from_station_id":0,
+                "id":0,
+                "stay_time":0,
+                "from_station_name":0,
+                "_id":0,
+                "end_date_time":0,
+                "product_id":0,
+                "route_id": 0,
+                "section_id":0,
+                "sub_route_id": 0,
+                "target_station_id": 0,
+                "target_station_name": 0,
+                "type": 0
+            })
+            .toArray(function(err, result) {
+                if(err)
+                {
+                    console.log('Error:'+ err);
+                    return;
+                }
+                callback(result);
+            });
+    }
+
+    MongoClient.connect(DB_CONN_STR, function(err, db) {
+        selectData(db, function(result) {
+            result.sort(function(a,b){
+                return new Date(a.start_date_time).getTime() - new Date(b.start_date_time).getTime();
+            });
+            res.json(result);
+            db.close();
+        });
+    });
+
+});
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
     res.render('index', { title: 'Express' });
