@@ -9,8 +9,9 @@ mapboxgl.accessToken = 'pk.eyJ1Ijoic2lsZW50bGwiLCJhIjoiY2o4NGEycGN2MDZ4ZDMza2Exe
 var map =new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/silentll/cjckbaggi8de22sp5g6cblhnx',//'mapbox://styles/silentll/cjhynnwpq39yo2rt7nm41q58e', //
-    zoom: 12,
-    center: [104.7503025807656, 31.45559907197881]
+    zoom: 13,
+    center: [104.7503025807656, 31.45559907197881],
+    pitch:50
     //maxBounds: bounds // Sets bounds as max
 });
 

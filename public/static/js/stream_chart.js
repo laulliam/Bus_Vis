@@ -14,6 +14,22 @@ $.ajax({
     beforeSend: function () {//请求前的处理
     },
     success: function (data, textStatus) {
+        data.forEach(function (d) {
+            d.values.forEach(function (s) {
+                s.start_date_time = new Date(s.start_date_time);
+            });
+            d.values.sort(function (a,b) {
+                return a.start_date_time.getTime()-b.start_date_time.getTime();
+            });
+
+        });
+
+        var data_date =[];
+
+        for(var i = new Date(2016,0,1).getTime();i<new Date(2016,1,1).getTime();i += 3600000){
+            data_date.push({date:new Date(i),value:0});
+        }
+
         console.log(data);
     },
     complete: function () {//请求完成的处理

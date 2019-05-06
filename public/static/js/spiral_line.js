@@ -3,7 +3,7 @@ spiral_line(38001,date_extent = [new Date(2016,0,1,0,0,0),new Date(2016,0,2,0,0,
 
 function spiral_line(route_id,date_extent){
 
-    $("#spiral_route")[0].innerHTML=route_id;
+    d3.select("#route_name").text(route_id);
 
     $.ajax({
         url: "/spiral_data",    //请求的url地址
@@ -12,7 +12,7 @@ function spiral_line(route_id,date_extent){
             date_extent:date_extent
         },
         dataType: "json",   //返回格式为json
-        async: false, //请求是否异步，默认为异步，这也是ajax重要特性
+        async: true, //请求是否异步，默认为异步，这也是ajax重要特性
         type: "GET",   //请求方式
         contentType: "application/json",
         beforeSend: function () {//请求前的处理
@@ -35,17 +35,13 @@ function spiral_line(route_id,date_extent){
 
     function Draw_spiral_line(dataset) {
 
-        var border = 1;
-        var all_view = $("#all_view");
-        var body_width = all_view.width();
-        var body_height = all_view.height()-15;
+        var spiral_line = $("#spiral_line");
 
-        var width=(body_width * 0.15 -  border);
-        var height=(body_height * 0.25 - border);
+        var width=spiral_line.width();
+        var height=spiral_line.height()-20;
         var start = 0,
             end = 2.25,
-            numSpirals = 3,
-            margin = {top:5,bottom:5,left:5,right:5};
+            numSpirals = 3;
 
         var theta = function(r) {
             return numSpirals * Math.PI * r;
@@ -93,7 +89,7 @@ function spiral_line(route_id,date_extent){
         // used to assign nodes color by group
         var color = d3.scale.category10();
 
-        var r = d3.min([width, height])/2 -15;
+        var r = d3.min([width, height])/2;
 
         var radius = d3.scale.linear()
             .domain([start, end])
@@ -106,8 +102,31 @@ function spiral_line(route_id,date_extent){
             .attr("id","spiral_svg")
             .attr("width", width )
             .attr("height", height )
-            .append("g")
-            .attr("transform", "translate(" + width / 2 + "," + height/2  + ")");
+            .attr("transform", "translate(0," +20+ ")");
+
+        var g =svg.append("g")
+            .attr("transform", "translate(" + width / 2 + "," + height/1.8  + ")");
+
+        var legend = svg.append("g");
+
+
+        legend.append("circle")
+            .attr("r",5)
+            .attr("cx",20)
+            .attr("cy",20)
+            .style({
+                "fill":"#FFFFFF"
+            });
+
+        legend.append("text")
+            .attr("id","route_name")
+            .attr("x",40)
+            .attr("y",25)
+            .text("38001")
+            .style({
+                "fill":"#FFFFFF",
+                "font-size":15
+            });
 
         var points = d3.range(start, end + 0.001, (end - start) / 1000);
 
@@ -116,7 +135,7 @@ function spiral_line(route_id,date_extent){
             .angle(theta)
             .radius(radius);
 
-        var path = svg.append("path")
+        var path = g.append("path")
             .datum(points)
             .attr("id", "spiral")
             .attr("d", spiral)
@@ -140,7 +159,7 @@ function spiral_line(route_id,date_extent){
             })])
             .range([0, (r / numSpirals) -10]);
 
-        svg.selectAll("rect")
+        g.selectAll("rect")
             .data(data_10min)
             .enter()
             .append("rect")
@@ -178,7 +197,7 @@ function spiral_line(route_id,date_extent){
         var tF = d3.time.format("%H:%M"),
             firstInMonth = {};
 
-        svg.selectAll("text")
+        g.selectAll("text")
             .data(data_10min)
             .enter()
             .append("text")
@@ -201,12 +220,12 @@ function spiral_line(route_id,date_extent){
             })
             // place text along spiral
             .attr("xlink:href", "#spiral")
-            .style("fill", "grey")
+            .style("fill", "#FFFFFF")
             .attr("startOffset", function(d){
                 return ((d.linePer / spiralLength) * 100) + "%";
             });
 
-        svg.selectAll("rect")
+        g.selectAll("rect")
             .on('mouseover', function(d) {
                 d3.select("#spiral_line").selectAll("rect")
                     .style("opacity", 0.3);

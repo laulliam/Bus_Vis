@@ -96,7 +96,10 @@ router.get('/station_run_id', function(req, res, next) {
         //查询数据
         collection.find({"station_id":station_id},{
             "_id":0,
-            "id":0
+            "id":0,
+            "product_id":0,
+            "route_id":0,
+            "end_date_time":0
         }).toArray(function(err, result) {
             if(err)
             {

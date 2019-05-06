@@ -20,7 +20,7 @@ function Calendar(section_id){
             //     if(d.speed >80) d.speed =null;
             //     //d.key = new Date(d.key);
             // });
-            console.log(data);
+            //console.log(data);
             Draw_calender_main(data,section_id);
         },
         complete: function () {//请求完成的处理
@@ -69,7 +69,7 @@ function Draw_calender_main(data,section_id) {
 
     var colorRange=d3.range(6).map(function(i) { return "q" + i + "-6"; });
     var threshold=d3.scale.threshold()//阈值比例尺
-        .domain([20,25,30,35,50])
+        .domain([5,10,20,30,40])
         .range(colorRange);
 
     for(var i = 1;i<=31;i++){
@@ -196,7 +196,7 @@ function Draw_calender_main(data,section_id) {
             return d;
         });
 
-    var legend_content = [60,50,40,30,20,10,0];
+    var legend_content = [60,40,30,20,10,5,0];
 
     legend_g.selectAll(".legend_text")
         .data(legend_content)
