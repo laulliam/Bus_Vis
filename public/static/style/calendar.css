@@ -7,7 +7,7 @@
 
 #calendar #calendar_main{
     position: absolute;
-    top:30px;
+    top:20px;
 }
 
 #calendar #calendar_area{
@@ -15,9 +15,19 @@
     bottom: 10px;
 }
 
-.q0-6{fill:#23D561}
-.q1-6{fill:#9CD523}
-.q2-6{fill:#F1E229}
-.q3-6{fill:#FFBF3A}
-.q4-6{fill:#FB8C00}
-.q5-6{fill:#FF5252}
+.axis path, .axis line {
+    fill:none;
+    stroke: rgb(255, 255, 255);
+    stroke-width: 1px;
+}
+.axis text{
+    fill: rgb(255, 255, 255);
+    font-size: 8px;
+}
+
+.q0-6{fill:#FF5252}
+.q1-6{fill:#FB8C00}
+.q2-6{fill:#FFBF3A}
+.q3-6{fill:#F1E229}
+.q4-6{fill:#9CD523}
+.q5-6{fill:#23D561}

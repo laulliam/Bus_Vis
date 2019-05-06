@@ -80,8 +80,6 @@ var test_interval =setInterval(function (){
 
 },5000);*/
 
-
-
 mainChart.map_view = {
     "default":false,
     "heatmap":false,

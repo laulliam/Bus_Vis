@@ -30,22 +30,34 @@ router.get('/section_route_data', function(req, res, next) {
                 "type": 0
             })
             .toArray(function(err, result) {
-            if(err)
-            {
-                console.log('Error:'+ err);
-                return;
-            }
-            callback(result);
-        });
+                if(err)
+                {
+                    console.log('Error:'+ err);
+                    return;
+                }
+                callback(result);
+            });
     }
 
     MongoClient.connect(DB_CONN_STR, function(err, db) {
         selectData(db, function(result) {
 
+            var data =[];
+            for(var i = 1;i<=31;i++){
+                for(var j=6;j<24;j++)
+                    data.push({day:i,hour:j,speed:null});
+            }
+
             result.forEach(function (d) {
-                if(d.speed >= 80)d.speed = 0;
+                if(d.speed >= 80)
+                    d.speed = null;
                 d.start_date_time = new Date(d.start_date_time);
-                d.start_date_time.setMinutes(0,0);
+                if(d.start_date_time.getMinutes()>30){
+                    d.start_date_time.setHours(d.start_date_time.getHours()+1);
+                    d.start_date_time.setMinutes(0);
+                }
+                else
+                    d.start_date_time.setMinutes(0);
                 d.start_date_time.setSeconds(0,0);
             });
 
@@ -53,49 +65,50 @@ router.get('/section_route_data', function(req, res, next) {
                 return d.start_date_time;
             });
 
-            var data_line = nest.entries(result);
+            var dataset = nest.entries(result);
 
-            data_line.forEach(function (d) {
-                var sum =0;
-                d.key = new Date(d.key);
-                d.values.forEach(function (s) {
-                    sum += s.speed;
+            dataset.forEach(function (d) {
+
+               var sum =0;
+               d.values.forEach(function (s) {
+                   sum += s.speed;
+               });
+
+               d.day = new Date(d.key).getDate();
+               d.hour = new Date(d.key).getHours();
+               d.speed = sum/d.values.length;
+
+           });
+
+            data.forEach(function (d) {
+                dataset.forEach(function (s) {
+                    if(d.hour === s.hour &&d.day === s.day)
+                        d.speed = s.speed;
                 });
-                d.values = sum/d.values.length;
-                d.day = new Date(d.key).getDate();
-                d.hour = new Date(d.key).getHours();
-                d.speed = d.values;
-            });
 
-            data_line.sort(function (a,b) {
-                return a.key - b.key;
             });
+/*
+           data_line.sort(function (a,b) {
+               return a.key - b.key;
+           });
 
 
-            var extent_hour = d3.extent(data_line,function(d){
-                return d.hour;
-            });
+           var extent_hour = d3.extent(data_line,function(d){
+               return d.hour;
+           });
 
-            data_line.forEach(function (d) {
+           data_line.forEach(function (d) {
 
-                if(d.hour === extent_hour[0]);
-                else{
-                    if(d.hour+1 === extent_hour[1]){
-                        data_line.push({day:d.day,hour:d.hour+1});
-                    }
-                    else
-                        data_line.push({day:d.day,hour:d.hour-1});
-                }
-            });
-            res.json(data_line);
-
-/*            result.sort(function(a,b){
-                return new Date(a.start_date_time).getTime() - new Date(b.start_date_time).getTime();
-            });
-            result.forEach(function (d) {
-                d.start_date_time = new Date(d.start_date_time);
-            });
-            res.json(result);*/
+               if(d.hour === extent_hour[0]);
+               else{
+                   if(d.hour+1 === extent_hour[1]){
+                       data_line.push({day:d.day,hour:d.hour+1});
+                   }
+                   else
+                       data_line.push({day:d.day,hour:d.hour-1});
+               }
+           });*/
+            res.json(data);
             db.close();
         });
     });
@@ -205,6 +218,9 @@ router.get('/section_id_date', function(req, res, next) {
         selectData(db, function(result) {
             result.sort(function(a,b){
                 return new Date(a.start_date_time).getTime() - new Date(b.start_date_time).getTime();
+            });
+            result.forEach(function (d) {
+                if(d.speed>80) d.speed = null;
             });
             res.json(result);
             db.close();
