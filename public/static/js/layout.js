@@ -12,6 +12,10 @@ function Layout() {
     control.style.width = width * 0.2 + 'px';
     control.style.height = height * 0.2 + 'px';
 
+    var control_main = document.getElementById('control_main');
+    control_main.style.width = width * 0.2 + 'px';
+    control_main.style.height = height * 0.2 + 'px';
+
     var map = document.getElementById('map');
     map.style.width = width * 0.58 + 'px';
     map.style.height = height * 0.65 + 'px';
@@ -36,6 +40,10 @@ function Layout() {
     radar.style.width = width * 0.2 + 'px';
     radar.style.height = height * 0.44 + 'px';
 
+    var radar_main = document.getElementById('radar_main');
+    radar_main.style.width = width * 0.2 + 'px';
+    radar_main.style.height = height * 0.44 - 30 + 'px';
+
     var spiral_line = document.getElementById('spiral_line');
     spiral_line.style.width = width * 0.2 + 'px';
     spiral_line.style.height = height * 0.23 + 'px';
@@ -47,6 +55,10 @@ function Layout() {
     var words_cloud = document.getElementById('words_cloud');
     words_cloud.style.width = width * 0.2 + 'px';
     words_cloud.style.height = height * 0.23 + 'px';
+
+    var clouds_main = document.getElementById('clouds_main');
+    clouds_main.style.width = width * 0.2 + 'px';
+    clouds_main.style.height = height * 0.23 - 30 + 'px';
 
 
     d3.selectAll(".widgets_right").append("svg")

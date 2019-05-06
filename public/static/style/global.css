@@ -60,6 +60,15 @@ body{
 .view_name{
     position: absolute;
     color: #FFFFFF;
+    top:3px;
     left: 5%;
+    font-size:6px
+}
+
+.view_name_r{
+    position: absolute;
+    color: #FFFFFF;
+    top:3px;
+    right: 5%;
     font-size:6px
 }

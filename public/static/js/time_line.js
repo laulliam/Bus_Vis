@@ -1,311 +1,27 @@
+/**
+ * Created by Liang Liu on 2019/4/1.
+ */
+time_line(19030014);
 
-
-function Time_Line(data,section_id) {
-
-    d3.select("#time_line").html("");
-    var time_line ={
-        IsZoom:true,
-        IsChecked:false
-    };
-    var margin = {top: 10, right: 5, bottom: 20, left: 5};
-    var border = 1;
-    var all_view = $("#all_view");
-    var body_width = all_view.width();
-    var body_height = all_view.height()-15;
-
-    var width = (body_width * 0.7 - 2 * border);
-    var height = (body_height * 0.25 - 3 * border);
-
-    var data_extent = d3.extent(data,function (d) {
-        return d.start_date_time;
-    });
-
-    var nest = d3.nest()
-        .key(function(d) { return d.sub_route_id; });
-
-    var nest_data = nest.entries(data);
-
-    var legend_id=[];
-
-    nest_data.forEach(function (d) {
-        d.values.sort(function (a,b) {
-            return a.start_date_time - b.start_date_time;
-        });
-        legend_id.push(d.key);
-    });
-
-    var line_height = (height - margin.bottom)/(nest_data.length+1);
-
-    var xScale = d3.time.scale().range([0, width]);
-
-    var yScale = d3.scale.linear().range([line_height, 0]);
-
-    xScale.domain(data_extent);
-
-    yScale.domain([0,d3.max(data,function (d) {
-        return d.stay_time;
-    })]);
-
-    var xAxis = d3.svg.axis()
-        .scale(xScale)
-        .orient("bottom");
-
-    var zoom = d3.behavior.zoom()
-        .x(xScale)
-        //.scaleExtent(SCALE_EXTENT)
-        .on("zoom", zoomed);
-
-    var tooltip = d3.select("#time_line")
-        .append("div")
-        .attr("class", "remove")
-        .style("position", "absolute")
-        .style("z-index", "20")
-        .style("visibility", "hidden")
-        .style("top", "30px")
-        .style("left", "55px");
-
-    var svg = d3.select("#time_line").append("svg")
-        .attr("id","time_svg")
-        .attr("width",width)
-        .attr("height",height)
-        .style("position", "absolute")
-        .call(zoom);
-
-    var line = d3.svg.line()//d3中绘制曲线的函数
-        .x(function(d, i){
-            return xScale(d.start_date_time);
-        })//曲线中x的值
-        .y(function(d){
-            return yScale(d.stay_time);
-        })//曲线中y的值
-        .interpolate("basis")//把曲线设置光滑
-
-    var axis = svg.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(" + margin.left + "," + (height - margin.bottom) + ")")
-        .call(xAxis);
-
-    var routes_g = svg.selectAll(".route_line")
-        .data(nest_data)
-        .enter()
-        .append("g")
-        .attr("class","routes_line")
-        .attr("id", function(d){ return d.key})
-        .attr('transform', function(d, i){ return "translate(0," + (height - (i+1.5) * line_height) +")"; });
-
-    routes_g.append("path")
-        .attr('fill', "none")
-        .attr('opacity', 0.8)
-        .attr('stroke', function (d,i) {
-            return COLOR[i];
-        })
-        .attr("d", function (d) {
-            return line(d.values)
-        })
-        .attr("clip-path", "url(#clip_path)");
-
-    var line_g = svg.append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    line_g.append("clipPath")
-        .attr("id", "clip_path")
-        .append("rect")
-        .attr({
-            x: 0,
-            y: 0,
-            width: width,
-            height: height
-        });
-
-    InitTools();
-    CreateLegend();
-
-    function InitTools() {
-        var time_line_tool = d3.select("#time_line")
-            .append("div")
-            .attr("class", "btn-group btn-group-xs")
-            .style({
-                "position": "absolute",
-                "float":"left",
-                "z-index": "999",
-                "left": "7px",
-                "top":"15%"
-            })
-            .selectAll("btn btn-default")
-            .data(["play","unchecked"])
-            .enter()
-            .append("button")
-            .attr({
-                "id":function (d) {
-                    return d;
-                },
-                "type": "button",
-                "class": "btn btn-default"
-            })
-            .attr("title", function (d) {
-                switch (d) {
-                    case "play":
-                        return "播放暂停";
-                    case "unchecked":
-                        return "框选";
-                }
-            });
-
-        time_line_tool.append("span")
-            .attr("class", function (d) {
-                return "glyphicon glyphicon-"+ d;
-            })
-            .attr("aria-hidden",true);
-
-        time_line_tool.on("click",function (d) {
-            if(d == "play"){
-                var play_span = d3.select("#play span");
-                var stat = play_span.attr("class");
-                play_span.attr("class","glyphicon glyphicon-"+((stat == "glyphicon glyphicon-play")?"pause":"play"));
-                (stat == "glyphicon glyphicon-play")?play():stop();
-                time_line.IsZoom = !time_line.IsZoom;
-            }
-            else if(d == "unchecked"){
-                time_line.IsZoom=!time_line.IsZoom;
-                time_line.IsChecked=!time_line.IsChecked;
-                time_line.IsChecked?CreateBrush():RemoveBrush();
-            }
-        })
-    }
-
-    function play() {
-
-        var new_data_extent=data_extent;
-        time_line.interval = setInterval(function () {
-
-            new_data_extent=[new Date(new_data_extent[0].setHours(new_data_extent[0].getHours()+1)),new Date(new_data_extent[0].setHours(new_data_extent[0].getHours()+24))];
-            if(new_data_extent[1].getMonth()>0) {
-                new_data_extent=data_extent;
-            }
-            xScale.domain(new_data_extent);
-            //console.log(new_data_extent);
-            if( time_line.brush){
-                time_line.brush.x(xScale);
-                time_line.g_brush.call(time_line.brush);
-            }
-            xAxis.scale(xScale);
-            svg.select(".x.axis").call(xAxis);
-            routes_g.select("path").attr("d", function (d) {
-                return line(d.values);
-            });
-        },400);
-    }
-
-    function stop() {
-        clearInterval(time_line.interval);
-        xScale.domain(data_extent);
-        xAxis.scale(xScale);
-        svg.select(".x.axis").call(xAxis);
-        routes_g.select("path").attr("d", function (d) {
-            return line(d.values);
-        });
-    }
-
-
-    function zoomed() {
-        if(time_line.IsZoom) {
-            svg.select(".x.axis").call(xAxis);
-            routes_g.select("path").attr("d", function (d) {
-                return line(d.values);
-            });
-        }
-    }
-
-    function CreateBrush() {
-        time_line.brush = d3.svg.brush()
-            .x(xScale)
-            //.extent(data_extent)
-            .on("brushend", brushed);
-
-        function brushed() {
-
-            console.log(time_line.brush.extent());
-
-        }
-
-        time_line.g_brush = svg.append("g")
-            .attr("class", "brush")
-            .attr("transform", "translate(" + margin.left + "," + 0 + ")")
-            .call(time_line.brush);
-
-        time_line.g_brush.selectAll("rect").attr("height", height-margin.bottom);
-    }
-    
-    function RemoveBrush() {
-        time_line.brush=null;
-        time_line.g_brush.remove();
-        time_line.g_brush=null;
-    }
-
-    function CreateLegend() {
-        var legend_div = d3.select("#time_line").append("div")
-            .style({
-                "position": "absolute",
-                "float":"left",
-                "z-index": "999",
-                "left": "0%",
-                "top":"2%"
-            })
-            .selectAll("label label-default legend_label")
-            .data(legend_id)
-            .enter()
-            .append("span")
-            .attr("class","label label-default legend_label")
-            .on("mouseover",function (d) {
-
-            })
-            .on("mouseout",function (d) {
-
-            })
-            .style({
-                "background-color":function (d,i) {
-                    return COLOR[i];
-                },
-                "margin":"7px"
-            })
-            .html(function (d) {
-                return d;
-            });
-    }
-
-
-
-}
-
-update_stream(474);
-
-function update_stream(section_id) {
-
-    //new Date(2016,0,1,7,0,0),new Date(2016,0,2,7,0,0) day
-    //new Date(2016,0,1,7,0,0),new Date(2016,1,1,7,0,0) month
-
+function time_line(station_id){
     $.ajax({
-        url: "/section_id_data",    //请求的url地址
-        data:{
-            section_id:section_id.toLocaleString(),
-            date_extent:[new Date(2016,0,1,7,0,0),new Date(2016,1,1,7,0,0)]
-        },
+        url: "/station_run_id",    //请求的url地址
         dataType: "json",   //返回格式为json
+        data:{station_id:station_id},
         async: true, //请求是否异步，默认为异步，这也是ajax重要特性
         type: "GET",   //请求方式
         contentType: "application/json",
         beforeSend: function () {//请求前的处理
         },
-        success: function (section_data, textStatus) {
-
-            section_data.forEach(function (d) {
+        success: function (data, textStatus) {
+            data.forEach(function (d) {
+                if(d.stay_time>100)
+                    d.stay_time = 0;
                 d.start_date_time = new Date(d.start_date_time);
-                d.start_date_time.setSeconds(0,0);
-                d.stay_time = +d.stay_time;
             });
 
-            d3.select("#time_svg").remove("*");
-            Time_Line(section_data,section_id);
+            time_line_chart(data);
+
         },
         complete: function () {//请求完成的处理
         },
@@ -313,3 +29,366 @@ function update_stream(section_id) {
         }
     });
 }
+
+function time_line_chart(data) {
+
+    //console.log(data);
+
+    var route_nest = d3.nest().key(function (d) {
+        return d.sub_route_id;
+    });
+
+    var dataset = route_nest.entries(data);
+
+    console.log(dataset);
+
+    var time_line = $("#time_line");
+
+    var margin = {top: 20, right: 20, bottom: 20, left: 20},
+        width = time_line.width() - margin.left - margin.right,
+        height = time_line.height() - margin.top - margin.bottom;
+
+    var date_extent = d3.extent(data,function (d) {
+        return d.start_date_time;
+    });
+
+    var x_scale = d3.time.scale()
+        .domain(date_extent)
+        .range([0,width-20]);
+
+    var y_scale = d3.scale.sqrt()
+        .domain([0,d3.max(data,function (d) {
+            return d.stay_time;
+        })])
+        .range([height-20,0]);
+
+    var zoom = d3.behavior.zoom()
+        .x(x_scale)
+        .scale(50)
+        //.scaleExtent(SCALE_EXTENT)
+        .on("zoom", zoomed);
+
+    var svg = d3.select("#time_line").append("svg")
+        .attr("width", width )
+        .attr("height", height)
+        .attr("transform", "translate(" + margin.left + "," + margin.top*2 + ")")
+        .call(zoom);
+
+    var x_axis = d3.svg.axis()
+        .scale(x_scale)
+        .orient("bottom");
+
+    var y_axis = d3.svg.axis()
+        .scale(y_scale)
+        .orient("right");
+
+    svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(" + margin.left + "," + (height-20) + ")")
+        .call(x_axis);
+
+    svg.append("g")
+        .attr("class", "y axis")
+        //.attr("transform", "translate(" + margin.left + ",0)")
+        .call(y_axis);
+
+    var line = d3.svg.line()//d3中绘制曲线的函数
+        .x(function(d, i){
+            return x_scale(d.start_date_time);
+        })//曲线中x的值
+        .y(function(d){
+            return y_scale(d.stay_time);
+        })//曲线中y的值
+        .interpolate("basis");//把曲线设置光滑
+
+    var routes_g = svg.append("g")
+        .attr("transform", "translate(" + margin.left + ",0)");
+
+    var routes = routes_g.selectAll(".route_line")
+        .data(dataset)
+        .enter()
+        .append("g")
+        .attr("class","routes_line")
+        .attr("id", function(d){ return d.key});
+
+    routes.append("path")
+        .attr('fill', "none")
+        .attr('opacity', 0.6)
+        .attr('stroke', function (d,i) {
+            return COLOR[i];
+        })
+        .attr("stroke-width",2)
+        .attr("d", function (d) {
+            return line(d.values)
+        });
+
+    var legend_div = d3.select("#time_line").append("div")
+        .style({
+            "position": "absolute",
+            "float":"left",
+            "z-index": "999",
+            "left": "20px",
+            "top":"2%"
+        })
+        .selectAll("label label-default legend_label")
+        .data(dataset)
+        .enter()
+        .append("span")
+        .attr("class","label label-default legend_label")
+        .on("mouseover",function (d) {
+
+        })
+        .on("mouseout",function (d) {
+
+        })
+        .on("click",function (d) {
+
+        })
+        .style({
+            "background-color":function (d,i) {
+                return COLOR[i];
+            },
+            "margin":"7px"
+        })
+        .html(function (d) {
+            return d.key;
+        });
+
+    /*var tooltip = d3.select("time_line")
+        .append("div")
+        .attr("class", "label")
+        .style("position", "absolute")
+        .style("z-index", "20")
+        //.style("visibility", "hidden")
+        .style("top", "30px")
+        .style("left", "55px");
+
+    var vertical = d3.select("#time_line")
+        .append("div")
+        .attr("class", "remove")
+        .style("position", "absolute")
+        .style("z-index", "19")
+        .style("width", "1px")
+        .style("height", height-margin.top-margin.bottom)
+        .style("top", "10px")
+        .style("bottom", "0px")
+        .style("left", "0px")
+        .style("pointer-events","none")
+        .style("background", "#fff");
+
+    d3.select("#time_line")
+        .on("mousemove", function(){
+            let mousex = d3.mouse(this);
+            mousex = mousex[0] + 1;
+            vertical.style("left", mousex + "px" )})
+        .on("mouseover", function(){
+            let mousex = d3.mouse(this);
+            mousex = mousex[0] + 1;
+            vertical.style("left", mousex + "px")});*/
+
+    function zoomed() {
+        svg.select(".x.axis").call(x_axis);
+        routes.select("path").attr("d", function (d) {
+            return line(d.values);
+        });
+    }
+
+}
+
+function stack_graph(data) {
+
+    let time_line = $("#time_line");
+
+    let margin = {top: 40, right: 20, bottom: 40, left: 60},
+        width = time_line.width() - margin.left - margin.right,
+        height = time_line.height() - margin.top - margin.bottom,
+        lineheight = height;
+
+    let yScaleStacked = d3.scale.linear().range([height, 0]),
+        yScaleMultiples = d3.scale.linear().range([height, 0]),
+        xScale = d3.time.scale()
+            .range([0, width]);
+
+    let stack = d3.layout.stack()
+        .offset("wiggle")
+        .values(function(d) { return d.values; })
+        .x(function(d) { return d.date; })
+        .y(function(d) { return d.stay_time; });
+
+    let areaStacked = d3.svg.area()
+        .interpolate("basis")
+        .x(function(d) { return xScale(d.date); })
+        .y0(function(d) { return yScaleStacked(d.y0); })
+        .y1(function(d) { return yScaleStacked(d.y0 + d.y); });
+
+    let areaMultiples = d3.svg.area()
+        .interpolate("basis")
+        .x(function(d) { return xScale(d.date); })
+        .y0(function(d) { return yScaleMultiples(0); })
+        .y1(function(d) { return yScaleMultiples(d.stay_time); });
+
+    xScale.domain(d3.extent(data, function(d) { return d.date; }));
+
+    let zoom = d3.behavior.zoom()
+        .x(xScale)
+        //.scaleExtent([1, 16])
+        .on("zoom", zoomed);
+
+    let svg = d3.select("#time_line").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .call(zoom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    let tooltip = d3.select("time_line")
+        .append("div")
+        .attr("class", "label")
+        .style("position", "absolute")
+        .style("z-index", "20")
+        //.style("visibility", "hidden")
+        .style("top", "30px")
+        .style("left", "55px");
+
+    let vertical = d3.select("#time_line")
+        .append("div")
+        .attr("class", "remove")
+        .style("position", "absolute")
+        .style("z-index", "19")
+        .style("width", "1px")
+        .style("height", height)
+        .style("top", "10px")
+        .style("bottom", "0px")
+        .style("left", "0px")
+        .style("pointer-events","none")
+        .style("background", "#fff");
+
+    d3.select("#time_line")
+        .on("mousemove", function(){
+            let mousex = d3.mouse(this);
+            mousex = mousex[0] + 1;
+            vertical.style("left", mousex + "px" )})
+        .on("mouseover", function(){
+            let mousex = d3.mouse(this);
+            mousex = mousex[0] + 1;
+            vertical.style("left", mousex + "px")});
+
+    let nest = d3.nest()
+        .key(function(d) { return d.route_id; });
+
+    let nested = nest.entries(data);
+    let layers = stack(nested);
+
+    lineheight = height / nested.length;
+
+    yScaleStacked.domain([0, d3.max(data, function(d) { return d.y0 + d.y; })]);
+    yScaleMultiples.domain([0, d3.max(data, function(d) { return d.stay_time; })]).range([lineheight, 0]);
+
+    let xAxis = d3.svg.axis()
+        .scale(xScale)
+        .orient("bottom")
+        .tickFormat(d3.time.format("%H:%M"))
+    //.ticks(20);
+
+    let area = svg.selectAll(".area")
+        .data(layers)
+        .enter()
+        .append("g")
+        .attr("class", "area")
+        .attr("id", function(d){ return d.key})
+        .attr('transform', function(d, i){ return "translate(0," + (height - (i+1) * lineheight) +")"; });
+
+    area.append("text")
+        .attr("class", "area-label")
+        .attr("x", -6)
+        .attr('transform', function(d, i){ return "translate(0," + (lineheight - 6) +")"; })
+        .text(function(d) { return d.key; });
+
+    area.append("path")
+        .attr("class", "layer")
+        .attr("d", function(d) { return areaMultiples(d.values); })
+        .style("fill", function (d,i) {
+            return COLOR[i];
+        })
+        .attr("opacity",0.7)
+        .on("mouseover",function (d,i) {
+            d3.select(this)
+                .transition()
+                .duration(200)
+                .ease("bounce")
+                .attr("opacity",1);
+
+            let mousex = d3.mouse(this)[0];
+
+            let invert_x = xScale.invert(mousex);
+            let min = invert_x.getMinutes();
+            min = (min%10>=5)?(parseInt(min/10 + 1)*10):(parseInt(min/10)*10);
+            invert_x.setSeconds(0);
+            invert_x.setMinutes(min);
+
+            console.log(invert_x);
+
+            d.values.forEach((s)=>{
+                if(invert_x.getTime() === s.date.getTime()){
+                    tooltip.html( "<p>" +d.key +":   "+ s.value + "</p>" ).style("visibility", "visible");
+                    return false;
+                }
+            });
+
+        })
+        .on("mouseout",function (d,i) {
+            d3.select(this)
+                .transition()
+                .duration(200)
+                .ease("bounce")
+                .attr("opacity",.7);
+
+            tooltip.html( "<p>" +d.key + "</p>" ).style("visibility", "hidden");
+        });
+
+    svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + (height+10) + ")")
+        .call(xAxis);
+
+    d3.selectAll(".multi_stacked").on("click", change);
+
+    let area_type = "multiples";
+
+    function change() {
+        if (this.value === "multiples") {
+            transitionMultiples();
+            area_type = 'multiples';
+        }
+        else {
+            transitionStacked();
+            area_type = 'stacked';
+        }
+    }
+
+    function transitionMultiples() {
+        let t = svg.transition().duration(750),
+            g = t.selectAll(".area").attr('transform', function(d, i){ return "translate(0," + (height - (i+1) * lineheight) +")"; });
+        g.selectAll(".layer").attr("d", function(d) { return areaMultiples(d.values); });
+        g.selectAll(".area-label").style("display","block");
+        g.select(".area-label").attr('transform', function(d, i){ return "translate(0," + (lineheight - 6) +")"; });
+    }
+
+    function transitionStacked() {
+        let t = svg.transition().duration(750),
+            g = t.selectAll(".area").attr('transform', function(){ return "translate(0,0)"; });
+        g.selectAll(".layer").attr("d", function(d) { return areaStacked(d.values); });
+        g.selectAll(".area-label").style("display","none");
+    }
+
+    function zoomed() {
+        svg.select(".x.axis").call(xAxis);
+        if(area_type === 'multiples')
+            svg.selectAll(".layer").attr("d", function(d) { return areaMultiples(d.values); });
+        else
+            svg.selectAll(".layer").attr("d", function(d) { return areaStacked(d.values); });
+
+    }
+}
+
+

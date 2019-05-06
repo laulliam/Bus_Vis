@@ -112,31 +112,45 @@ router.get('/station_run_id', function(req, res, next) {
 
     MongoClient.connect(DB_CONN_STR, function(err, db) {
         selectData(db, function(result) {
-            let route_id_nest = d3.nest().key(function (d) {
-                return d.sub_route_id;
+
+            // let route_id_nest = d3.nest().key(function (d) {
+            //     return d.sub_route_id;
+            // });
+            // let data = route_id_nest.entries(result);
+
+            /*var res_arr = [];
+
+            data.forEach(function (d) {
+
+                var data_date ={};
+                for(var i = new Date(2016,0,1,6,0,0).getTime();i<new Date(2016,1,1).getTime();i += 300000)
+                    data_date[new Date(i)] = 0;
+
+                d.values.forEach(function (s) {
+                    s.start_date_time = new Date(s.start_date_time);
+
+                    if(s.stay_time>100)
+                        s.stay = 0;
+
+                    if(s.start_date_time.getSeconds()>30){
+                        s.start_date_time.setMinutes(s.start_date_time.getMinutes()+1);
+                        s.start_date_time.setSeconds(0);
+                    }
+                    s.start_date_time.setSeconds(0);
+                    s.start_date_time.setMinutes(s.start_date_time.getMinutes()-s.start_date_time.getMinutes()%5);
+                    data_date[s.start_date_time] = s.stay_time;
+                });
+
+                // d.values.sort(function (a,b) {
+                //     return a.start_date_time.getTime()-b.start_date_time.getTime();
+                // });
+                Object.keys(data_date).forEach(function (key) {
+                    res_arr.push({route_id:d.key,date:key,stay_time:data_date[key]});
+                });
+
             });
-            let data = route_id_nest.entries(result);
-
-            /*let date_extent = [new Date("2016-1-1 06:00:00"),new Date("2016-1-31 23:00:00")];
-
-            data.forEach((d)=>{
-
-                d.values.sort((a,b)=>{
-                    return new Date(a.start_date_time).getTime() - new Date(b.start_date_time).getTime();
-                });
-
-                let date_min= [];
-
-                for(let i = date_extent[0].getTime();i<=date_extent[1].getTime();i+=300000){
-                    date_min.push({sub_route_id:null,date:new Date(i),value:0});
-                }
-                });
-
-            });*/
-
-
-
-            res.json(data);
+*/
+            res.json(result);
             db.close();
         });
     });

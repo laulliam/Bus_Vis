@@ -413,7 +413,8 @@ function DrawStation(station_info) {
             .addTo(map);
 
         update_radar(e.features[0].properties.station_id,mainChart.date_extent);
-        Information(e.features[0].properties.station_id,e.features[0].properties.description);
+        //Information(e.features[0].properties.station_id,e.features[0].properties.description);
+        time_line(e.features[0].properties.station_id);
 
     });
     // Change the cursor to a pointer when the mouse is over the places layer.

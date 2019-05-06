@@ -1,28 +1,28 @@
 
 function Control_Chart() {
 
+    var control = $("#control_main");
+
     var obj_station = {
-        '大小': 5,
-        '颜色': "#eae33f",
-        '透明度': 0.5
+        '站点大小': 5,
+        '站点颜色': "#eae33f",
+        '站点透明度': 0.5
     };
 
     var obj_road = {
-        '宽度': 2,
-        '透明度': 0.5
+        '路线宽度': 2,
+        '路线透明度': 0.5
     };
     var gui = new dat.gui.GUI();
 
-    gui.width = 380;
+    gui.width = control.width();
 
-    var f1 = gui.addFolder('站点样式');
-    var station_size = f1.add(obj_station, '大小').min(1).max(10).step(0.1).listen();
-    var station_color = f1.addColor(obj_station, '颜色').listen();
-    var station_opacity = f1.add(obj_station, '透明度').min(0).max(1).step(0.1).listen();
-
-    var f2 = gui.addFolder('道路样式');
-    var road_width = f2.add(obj_road, '宽度').min(1).max(5).step(0.1).listen();
-    var road_opacity = f2.add(obj_road, '透明度').min(0).max(1).step(0.1).listen();
+    var f1 = gui.addFolder('样式设置');
+    var station_size = f1.add(obj_station, '站点大小').min(1).max(10).step(0.1).listen();
+    var station_color = f1.addColor(obj_station, '站点颜色').listen();
+    var station_opacity = f1.add(obj_station, '站点透明度').min(0).max(1).step(0.1).listen();
+    var road_width = f1.add(obj_road, '路线宽度').min(1).max(5).step(0.1).listen();
+    var road_opacity = f1.add(obj_road, '路线透明度').min(0).max(1).step(0.1).listen();
 
     station_size.onFinishChange(function (value) {
         map.setPaintProperty('station', 'circle-radius',value);
@@ -45,9 +45,8 @@ function Control_Chart() {
     });
 
     f1.open();
-    f2.open();
 
-    var customContainer = document.getElementById('control');
+    var customContainer = document.getElementById('control_main');
     customContainer.appendChild(gui.domElement);
 }
 Control_Chart();

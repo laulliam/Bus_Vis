@@ -43,7 +43,7 @@ function update_radar(station_id) {
     });
 
 
-    var radar= $("#radar");
+    var radar= $("#radar_main");
     var width = radar.width();
     var height = radar.height();
 
@@ -63,7 +63,7 @@ function update_radar(station_id) {
     //$("#radar_station")[0].innerHTML = station_name;
 
 //Call function to draw the Radar chart
-    RadarChart("#radar", radar_data, radarChartOptions);
+    RadarChart("#radar_main", radar_data, radarChartOptions);
 
     function RadarChart(id, data, options) {
 

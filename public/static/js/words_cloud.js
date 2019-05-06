@@ -3,6 +3,8 @@ message_cloud(38001);
 
 function message_cloud(route_id) {
 
+    d3.select("#words_cloud_id").html(route_id);
+
     $.ajax({
         url: "/route_station_data",    //请求的url地址
         dataType: "json",   //返回格式为json
@@ -40,19 +42,9 @@ function message_cloud(route_id) {
 
     function word_cloud(dataset) {
 
-        var cloud = $("#words_cloud");
+        var cloud = $("#clouds_main");
         var width = cloud.width();
         var height = cloud.height();
-
-        d3.select('#words_cloud').append("div")
-            .attr('width',width)
-            .attr("height",height * 0.9 -18)
-            .style({
-                "position":"absolute",
-                "botttom":0,
-                "background":"#FFFFFF",
-                "z-index":99
-            });
 
         var radius = width/3;//3D 球的半径
         var dtr = Math.PI/180;
@@ -257,19 +249,31 @@ function message_cloud(route_id) {
             return d.val;
         });
 
-        var cloud_div = d3.select("#words_cloud")
+        var cloud_div = d3.select("#clouds_main")
             .append("div")
             .attr("id","cloud_div")
             .attr("width",width)
-            .attr("height",height-100)
+            .attr("height",height)
             .style({
                 "position":"relative",
                 "top":"60%",
-                //"word-break":"keep-all",
-                //"white-space":"nowrap"
-                //"margin": "20px auto 0"
+                "word-break":"keep-all",
+                "white-space":"nowrap",
+                "margin": "20px auto 0"
             });
 
+        var legend = d3.select("#clouds_main")
+            .append("div")
+            .style({
+                "position":"absolute",
+                "top":0,
+                "right":"5%"
+            })
+            .append("span")
+            .attr("id","words_cloud_id")
+            .attr("class","label label-default legend_label")
+            .style("background-color","#07a6ff")
+            .html("38001");
 
         var a = d3.rgb(255,215,0);
         var b = d3.rgb(255,50,0);
