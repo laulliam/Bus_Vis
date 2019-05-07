@@ -5,22 +5,10 @@
     <bookmark url="file://$PROJECT_DIR$/public/static/js/main.js" line="224" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c7571ffe-9a61-46b8-bc7d-a0883f3a2cea" name="Default" comment="update calendar view.&#10;——Liang Liu">
-      <change afterPath="$PROJECT_DIR$/public/static/style/control.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/static/style/radar.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/static/style/words_cloud.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/bin_www.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/bin_www.xml" afterDir="false" />
+    <list default="true" id="c7571ffe-9a61-46b8-bc7d-a0883f3a2cea" name="Default" comment="update++.&#10;——Liang Liu">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/static/js/control.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/static/js/control.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/static/js/layout.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/static/js/layout.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/static/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/static/js/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/static/js/message_cloud.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/static/js/words_cloud.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/static/js/radar.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/static/js/radar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/static/js/stream_chart.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/static/js/time_line.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/static/lib/dat.gui/dat.gui.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/static/lib/dat.gui/dat.gui.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/static/style/global.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/static/style/global.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/station_run_data.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/station_run_data.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/static/js/time_line.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/static/style/header.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/static/style/header.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/test.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/test.html" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -37,8 +25,20 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/views/test.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="415">
-              <caret line="132" column="44" lean-forward="true" selection-start-line="132" selection-start-column="44" selection-end-line="132" selection-end-column="44" />
+            <state relative-caret-position="287">
+              <caret line="53" lean-forward="true" selection-start-line="53" selection-end-line="53" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/static/js/time_line.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="140">
+              <caret line="141" lean-forward="true" selection-start-line="141" selection-end-line="141" />
+              <folding>
+                <element signature="n#!!block;n#time_line#0" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -131,7 +131,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/public/static/css/area_line.css" />
         <option value="$PROJECT_DIR$/public/static/js/area_line.js" />
         <option value="$PROJECT_DIR$/public/static/js/word_cloud.js" />
         <option value="$PROJECT_DIR$/public/static/lib/radarChart.js" />
@@ -182,12 +181,13 @@
         <option value="$PROJECT_DIR$/public/static/js/control.js" />
         <option value="$PROJECT_DIR$/public/static/lib/dat.gui/dat.gui.js" />
         <option value="$PROJECT_DIR$/views/test.html" />
+        <option value="$PROJECT_DIR$/public/static/style/header.css" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="257" />
-    <option name="y" value="314" />
+    <option name="x" value="502" />
+    <option name="y" value="258" />
     <option name="width" value="1327" />
     <option name="height" value="951" />
   </component>
@@ -444,14 +444,8 @@
       <workItem from="1556236703549" duration="12745000" />
       <workItem from="1556285133268" duration="763000" />
       <workItem from="1556321706147" duration="10426000" />
-      <workItem from="1557102020828" duration="34083000" />
-    </task>
-    <task id="LOCAL-00001" summary="station data ajax   --Liang Liu">
-      <created>1516453352020</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1516453352020</updated>
+      <workItem from="1557102020828" duration="34911000" />
+      <workItem from="1557186504075" duration="1630000" />
     </task>
     <task id="LOCAL-00002" summary="optimize the map  --Liang Liu">
       <created>1516455808022</created>
@@ -789,14 +783,21 @@
       <option name="project" value="LOCAL" />
       <updated>1557120479790</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="update++.&#10;——Liang Liu">
+      <created>1557155730940</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1557155730941</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="913498000" />
+    <option name="totallyTimeSpent" value="915956000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="473" y="148" width="1327" height="951" extended-state="0" />
+    <frame x="502" y="258" width="1327" height="951" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24940805" />
@@ -805,7 +806,7 @@
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32996207" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.30720606" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.30720606" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -827,7 +828,6 @@
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.md" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="update optimize --Liang Liu" />
     <MESSAGE value="优化地图，优化布局 添加地图上控件 --Liang Liu" />
     <MESSAGE value="--Liang Liu" />
     <MESSAGE value="优化布局--Liang Liu" />
@@ -852,7 +852,8 @@
     <MESSAGE value="1.优化ing... 准备poster&#10;——Liang Liu" />
     <MESSAGE value="1.add time_line 播放暂停以及框选功能&#10;——Liang Liu" />
     <MESSAGE value="update calendar view.&#10;——Liang Liu" />
-    <option name="LAST_COMMIT_MESSAGE" value="update calendar view.&#10;——Liang Liu" />
+    <MESSAGE value="update++.&#10;——Liang Liu" />
+    <option name="LAST_COMMIT_MESSAGE" value="update++.&#10;——Liang Liu" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/public/static/lib/Concurrent.Thread.js" />
@@ -1080,20 +1081,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/static/js/time_line.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="554">
-          <caret line="271" column="15" lean-forward="true" selection-start-line="245" selection-start-column="8" selection-end-line="271" selection-end-column="15" />
-          <folding>
-            <element signature="n#!!block;n#InitTools#0;n#!!block;n#Time_Line#0" />
-            <element signature="n#!!block;n#play#0;n#!!block;n#Time_Line#0" />
-            <element signature="n#!!block;n#stop#0;n#!!block;n#Time_Line#0" />
-            <element signature="n#!!block;n#CreateBrush#0;n#!!block;n#Time_Line#0" />
-            <element signature="n#!!block;n#RemoveBrush#0;n#!!block;n#Time_Line#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/static/js/init_data.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1127">
@@ -1155,16 +1142,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/static/js/time_line.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="567">
-          <caret line="154" column="11" selection-start-line="146" selection-start-column="8" selection-end-line="154" selection-end-column="11" />
-          <folding>
-            <element signature="n#!!block;n#time_line#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/static/style/radar.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="207">
@@ -1210,10 +1187,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/public/static/js/time_line.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="141" lean-forward="true" selection-start-line="141" selection-end-line="141" />
+          <folding>
+            <element signature="n#!!block;n#time_line#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/static/style/header.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="163">
+          <caret line="16" column="14" lean-forward="true" selection-start-line="16" selection-start-column="14" selection-end-line="16" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/views/test.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="415">
-          <caret line="132" column="44" lean-forward="true" selection-start-line="132" selection-start-column="44" selection-end-line="132" selection-end-column="44" />
+        <state relative-caret-position="287">
+          <caret line="53" lean-forward="true" selection-start-line="53" selection-end-line="53" />
         </state>
       </provider>
     </entry>

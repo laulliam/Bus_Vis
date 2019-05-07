@@ -19,6 +19,7 @@
 .header_title{
     position: relative;
     display: inline-block;
+    pointer-events: none;
     top: 20%;
     margin: auto;
     color: #ffffff;
