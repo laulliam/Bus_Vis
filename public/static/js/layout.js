@@ -24,6 +24,11 @@ function Layout() {
     information.style.width = width * 0.2 + 'px';
     information.style.height = height * 0.2 + 'px';
 
+    var info_main = document.getElementById('info_main');
+    info_main.style.width = width * 0.2 + 'px';
+    info_main.style.height = (height * 0.2 - 30)  + 'px';
+
+
     var calendar = document.getElementById('calendar');
     calendar.style.width = width * 0.2 + 'px';
     calendar.style.height = height * 0.44 + 'px';

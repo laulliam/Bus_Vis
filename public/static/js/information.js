@@ -3,35 +3,33 @@
  */
 function Information(station_id,station_name) {
 
-    $("#current_station")[0].innerHTML=station_name;
-
     $.ajax({
-     url: "/sub_routes_numbers",    //请求的url地址
-     data:{
-     station_id:station_id
-     },
-     dataType: "json",   //返回格式为json
-     async: true, //请求是否异步，默认为异步，这也是ajax重要特性
-     type: "GET",   //请求方式
-     contentType: "application/json",
-     beforeSend: function () {//请求前的处理
-     },
-     success: function (routes_numbers, textStatus) {
-     var routes_id = routes_numbers[0].sub_routes_id.split(",");
-         $("#routes_number")[0].innerHTML = routes_id.length;
-         //Slide_word(routes_id);
-         routes_label(routes_id);
-     },
-     complete: function () {//请求完成的处理
-     },
-     error: function () {//请求出错处理
-     }
-     });
+        url: "/sub_routes_numbers",    //请求的url地址
+        data:{
+            station_id:station_id
+        },
+        dataType: "json",   //返回格式为json
+        async: true, //请求是否异步，默认为异步，这也是ajax重要特性
+        type: "GET",   //请求方式
+        contentType: "application/json",
+        beforeSend: function () {//请求前的处理
+        },
+        success: function (routes_numbers, textStatus) {
+            var routes_id = routes_numbers[0].sub_routes_id.split(",");
+            $("#routes_number")[0].innerHTML = routes_id.length;
+            //Slide_word(routes_id);
+            //routes_label(routes_id);
+        },
+        complete: function () {//请求完成的处理
+        },
+        error: function () {//请求出错处理
+        }
+    });
 
     function routes_label(data){
 
         if(d3.select("#routes_div"))
-        d3.select("#routes_div").remove();
+            d3.select("#routes_div").remove();
         var rotes_div = d3.select("#information").append("div")
             .attr("id","routes_div")
             .attr("class","message_scroll")
@@ -59,7 +57,7 @@ function Information(station_id,station_name) {
             .style({
                 "background-color":function (d,i) {
                     if(i%4 == 0)
-                    $("#route_label").after("<br>");
+                        $("#route_label").after("<br>");
                     return COLOR[i];
                 },
                 "margin":"7px"
@@ -146,4 +144,61 @@ function Information(station_id,station_name) {
 
 function section_message(section_id){
     d3.select("#current_section").html(section_info[section_id-1].from_name+">>>>>"+section_info[section_id-1].target_name);
+}
+
+info_main();
+function info_main() {
+
+    var info_ = {
+        station_info:false
+    };
+
+    var info_main = d3.select("#info_main").append("div")
+        .attr("class","panel-group")
+        .attr("id","accordion");
+
+    var panel = info_main.append("div")
+        .attr("class","panel panel-default");
+
+    panel.append("div")
+        .attr("class","panel-heading")
+        .append("h6")
+        .attr("class","panel-title")
+        .append("a")
+        .attr("class","collapsed")
+        .attr("aria_expanded",false)
+        .on("click",function () {
+
+            if(info_.station_info){
+                info_.station_info = !info_.station_info;
+                d3.select(this).attr("class","");
+                d3.select(this).attr("aria_expanded",true);
+                d3.select("#collapseOne").attr("aria_expanded",true);
+                d3.select("#collapseOne").attr('class',"panel-collapse collapse in");
+            }
+            else{
+                info_.station_info = !info_.station_info;
+                d3.select(this).attr("class","collapsed");
+                d3.select(this).attr("aria_expanded",false);
+                d3.select("#collapseOne").attr("aria_expanded",false);
+                d3.select("#collapseOne").attr('class',"panel-collapse collapse");
+            }
+
+
+        })
+        .attr("data-toggle","collapse")
+        .attr("data-parent","#accordion")
+        .attr("href","#collapseOne")
+        .text("站台信息")
+        .style({
+            "font-size":9
+        });
+
+    panel.append("div")
+        .attr("id","collapseOne")
+        .attr("class","panel-collapse collapse")
+        .attr("aria_expanded",false)
+        .append("div")
+        .attr("class","panel-body")
+        .html("test");
 }
