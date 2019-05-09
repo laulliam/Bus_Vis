@@ -1,4 +1,4 @@
-Calendar(757);
+Calendar(434);
 
 var legend = d3.select("#calendar")
     .append("div")
@@ -11,7 +11,7 @@ var legend = d3.select("#calendar")
     .attr("id","calendar_id")
     .attr("class","label label-default legend_label")
     .style("background-color","#07a6ff")
-    .html(section_info[757-1].from_name+">>>>>>>"+section_info[757-1].target_name);
+    .html(section_info[434-1].from_name+">>>>>>>"+section_info[434-1].target_name);
 
 function Calendar(section_id){
 
@@ -85,7 +85,7 @@ function Draw_calender_main(data,section_id) {
 
     var colorRange=d3.range(6).map(function(i) { return "q" + i + "-6"; });
     var threshold=d3.scale.threshold()//阈值比例尺
-        .domain([5,10,20,30,40])
+        .domain([10,15,25,30,35])
         .range(colorRange);
 
     for(var i = 1;i<=31;i++){
@@ -212,7 +212,7 @@ function Draw_calender_main(data,section_id) {
             return d;
         });
 
-    var legend_content = [60,40,30,20,10,5,0];
+    var legend_content = [30,25,20,15,10];
 
     legend_g.selectAll(".legend_text")
         .data(legend_content)
@@ -222,7 +222,7 @@ function Draw_calender_main(data,section_id) {
             return d;
         })
         .attr("x",function (d,i) {
-            return i*gridSize*31/6;
+            return (i+1)*gridSize*31/6;
         })
         .attr("y",15)
         .style({
