@@ -3,6 +3,34 @@
  */
 update_radar(20040063,date_extent=[new Date(2016,0,1,7,0,0),new Date(2016,0,2,7,0,0)]);
 
+var legend = d3.select("#radar")
+    .append("div")
+    .style({
+        "position":"absolute",
+        "top":"26px",
+        "right":"5px"
+    })
+    .append("span")
+    .attr("id","radar_main_id")
+    .attr("class","label label-default legend_label")
+    .style("background-color","#07a6ff")
+    .html("沈家坝下街");
+
+var route_legend = d3.select("#radar")
+    .append("div")
+    .style({
+        "position":"absolute",
+        "top":"48px",
+        "right":"5px"
+    })
+    .append("span")
+    .attr("id","radar_route_id")
+    .attr("class","label label-default legend_label")
+    .style({
+        "background-color":"#1a163c",
+        "display":"none"
+    });
+
 function update_radar(station_id) {
 
     var radarChart = {};
@@ -13,6 +41,8 @@ function update_radar(station_id) {
     });
 
     var station_name = radarChart.station_data.station_name;
+
+    d3.select("#radar_main_id").html(station_name)
 
     var routes_id = radarChart.station_data.sub_routes_id.split(",");
 
@@ -56,11 +86,6 @@ function update_radar(station_id) {
         roundStrokes: true,
         color: COLOR
     };
-
-    if(d3.select("#station_name_div"))
-        d3.select("#station_name_div").remove();
-
-    //$("#radar_station")[0].innerHTML = station_name;
 
 //Call function to draw the Radar chart
     RadarChart("#radar_main", radar_data, radarChartOptions);
@@ -229,12 +254,12 @@ function update_radar(station_id) {
                 d3.select(this)
                     .transition().duration(200)
                     .style("fill-opacity", 0.7);
-                $("#route_labels").css("visibility","visible");
-                $("#route_label")[0].innerHTML=d[0].route_id;
+                d3.select("#radar_route_id") .transition().duration(200).style("display","block");
+                $("#radar_route_id")[0].innerHTML=d[0].route_id;
                 //visibility:hidden;
             })
             .on('mouseout', function(){
-                $("#route_labels").css("visibility","hidden");
+                d3.select("#radar_route_id") .transition().duration(200).style("display","none");
                 //Bring back all blobs
                 d3.select(this)
                     .transition().duration(200)
@@ -275,8 +300,8 @@ function update_radar(station_id) {
             .attr("opacity",1)
             .style("fill", function(d, i) { return options.color[i%8]; })
             .on("mouseover",function (d,i) {
-                d3.select("#route_labels") .transition().duration(200).style("visibility","visible");
-                $("#route_label")[0].innerHTML=d;
+                d3.select("#radar_route_id") .transition().duration(200).style("display","block");
+                $("#radar_route_id")[0].innerHTML=d;
                 if(d3.select(this).attr("opacity")==1){
                     legend_id.forEach(function (value) {
                         if(d != value)
@@ -285,7 +310,7 @@ function update_radar(station_id) {
                 }
             })
             .on("mouseout",function (d) {
-                d3.select("#route_labels") .transition().duration(200).style("visibility","hidden");
+                d3.select("#radar_route_id") .transition().duration(200).style("display","none");
                 legend_id.forEach(function (value) {
                     d3.select(".radar_"+value).attr("opacity",1);
                 });

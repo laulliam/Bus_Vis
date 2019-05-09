@@ -40,7 +40,12 @@ function time_line_chart(data) {
 
     var dataset = route_nest.entries(data);
 
-    console.log(dataset);
+    dataset.forEach(function (d) {
+        d.values.sort(function (a,b) {
+            return a.start_date_time.getTime() - b.start_date_time.getTime();
+        });
+    });
+    //console.log(dataset);
 
     var time_line = $("#time_line");
 
@@ -108,8 +113,7 @@ function time_line_chart(data) {
         .data(dataset)
         .enter()
         .append("g")
-        .attr("class","routes_line")
-        .attr("id", function(d){ return d.key});
+        .attr("class",function(d){ return "routes_line route_"+d.key});
 
     routes.append("path")
         .attr('fill', "none")
@@ -125,10 +129,9 @@ function time_line_chart(data) {
     var legend_div = d3.select("#time_line").append("div")
         .style({
             "position": "absolute",
-            "float":"left",
             "z-index": "999",
-            "left": "20px",
-            "top":"2%"
+            "right": "20px",
+            "top":"10px"
         })
         .selectAll("label label-default legend_label")
         .data(dataset)
@@ -136,10 +139,11 @@ function time_line_chart(data) {
         .append("span")
         .attr("class","label label-default legend_label")
         .on("mouseover",function (d) {
-
+            d3.selectAll(".routes_line").style("opacity",0.3);
+            d3.select(".route_"+d.key).style("opacity",1);
         })
         .on("mouseout",function (d) {
-
+            d3.selectAll(".routes_line").style("opacity",1)
         })
         .on("click",function (d) {
 
@@ -148,18 +152,20 @@ function time_line_chart(data) {
             "background-color":function (d,i) {
                 return COLOR[i];
             },
-            "margin":"7px"
+            "cursor": "pointer",
+            "margin":"7px",
+            "curos-events":"none"
         })
         .html(function (d) {
             return d.key;
         });
 
-    /*var tooltip = d3.select("time_line")
+    var tooltip = d3.select("#time_line")
         .append("div")
         .attr("class", "label")
         .style("position", "absolute")
         .style("z-index", "20")
-        //.style("visibility", "hidden")
+        .style("visibility", "hidden")
         .style("top", "30px")
         .style("left", "55px");
 
@@ -170,8 +176,8 @@ function time_line_chart(data) {
         .style("z-index", "19")
         .style("width", "1px")
         .style("height", height-margin.top-margin.bottom)
-        .style("top", "10px")
-        .style("bottom", "0px")
+        .style("top", "30px")
+        .style("bottom", "20px")
         .style("left", "0px")
         .style("pointer-events","none")
         .style("background", "#fff");
@@ -184,7 +190,7 @@ function time_line_chart(data) {
         .on("mouseover", function(){
             let mousex = d3.mouse(this);
             mousex = mousex[0] + 1;
-            vertical.style("left", mousex + "px")});*/
+            vertical.style("left", mousex + "px")});
 
     function zoomed() {
         svg.select(".x.axis").call(x_axis);

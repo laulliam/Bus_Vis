@@ -1,5 +1,21 @@
 Calendar(757);
+
+var legend = d3.select("#calendar")
+    .append("div")
+    .style({
+        "position":"absolute",
+        "top":"25px",
+        "left":"5px"
+    })
+    .append("span")
+    .attr("id","calendar_id")
+    .attr("class","label label-default legend_label")
+    .style("background-color","#07a6ff")
+    .html(section_info[757-1].from_name+">>>>>>>"+section_info[757-1].target_name);
+
 function Calendar(section_id){
+
+    d3.select("#calendar_id").html(section_info[section_id-1].from_name+">>>>>>>"+section_info[section_id-1].target_name);
 
     section_id_date(section_id,new Date("Fri Jan 1 2016 00:00:00 GMT+0800"));
 
@@ -102,7 +118,7 @@ function Draw_calender_main(data,section_id) {
         })
         .text(function(d) { return d; })
         .attr("x", function(d, i) { return (i+1.5)* gridSize; })
-        .attr("y", 25)
+        .attr("y", 35)
         .style({
             "font-size":"8",
             "fill": "#ffffff",
@@ -113,7 +129,7 @@ function Draw_calender_main(data,section_id) {
         .data(data)
         .enter()
         .append("rect")
-        .attr("y", function(d,i) { return (d.hour-5.5) * gridSize + (i%18)*2; } )
+        .attr("y", function(d,i) { return (d.hour-4.5) * gridSize + (i%18)*2; } )
         .attr("x", function(d,i) {return (d.day  -1) * gridSize; })
         .attr("class",function (d) {
             if(d.speed === null)
@@ -174,7 +190,7 @@ function Draw_calender_main(data,section_id) {
 
     calendar_rects.append("title")
         .text(function (d) {
-            return "date:2016/1/"+d.day+" "+d.hour+":00  speed:"+d.speed;
+            return "date:2016/1/"+d.day+" "+d.hour+":00  speed:"+parseFloat(d.speed).toFixed(2);
         })
         .style({
             "font-size":"9",

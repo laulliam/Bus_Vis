@@ -4,6 +4,7 @@
 var section_info;
 var station_info;
 function Init_data() {
+
     get_station_data();
     get_section_data();
 
@@ -18,7 +19,7 @@ function Init_data() {
             },
             success: function (station, textStatus) {
                 station_info = station;
-                //;console.log(station_info);
+                console.log(station_info);
             },
             complete: function () {//请求完成的处理
             },

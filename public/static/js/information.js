@@ -173,29 +173,29 @@ function info_main() {
                 info_.station_info = !info_.station_info;
                 d3.select(this).attr("class","");
                 d3.select(this).attr("aria_expanded",true);
-                d3.select("#collapseOne").attr("aria_expanded",true);
-                d3.select("#collapseOne").attr('class',"panel-collapse collapse in");
+                d3.select("#collapseOne_station").attr("aria_expanded",true);
+                d3.select("#collapseOne_station").attr('class',"panel-collapse collapse in");
             }
             else{
                 info_.station_info = !info_.station_info;
                 d3.select(this).attr("class","collapsed");
                 d3.select(this).attr("aria_expanded",false);
-                d3.select("#collapseOne").attr("aria_expanded",false);
-                d3.select("#collapseOne").attr('class',"panel-collapse collapse");
+                d3.select("#collapseOne_station").attr("aria_expanded",false);
+                d3.select("#collapseOne_station").attr('class',"panel-collapse collapse");
             }
 
 
         })
         .attr("data-toggle","collapse")
         .attr("data-parent","#accordion")
-        .attr("href","#collapseOne")
+        .attr("href","#collapseOne_station")
         .text("站台信息")
         .style({
             "font-size":9
         });
 
     panel.append("div")
-        .attr("id","collapseOne")
+        .attr("id","collapseOne_station")
         .attr("class","panel-collapse collapse")
         .attr("aria_expanded",false)
         .append("div")

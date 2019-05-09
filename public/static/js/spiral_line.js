@@ -3,7 +3,7 @@ spiral_line(38001,date_extent = [new Date(2016,0,1,0,0,0),new Date(2016,0,2,0,0,
 
 function spiral_line(route_id,date_extent){
 
-    d3.select("#route_name").text(route_id);
+    d3.select("#spiral_line_id").html(route_id);
 
     $.ajax({
         url: "/spiral_data",    //请求的url地址
@@ -107,26 +107,19 @@ function spiral_line(route_id,date_extent){
         var g =svg.append("g")
             .attr("transform", "translate(" + width / 2 + "," + height/1.8  + ")");
 
-        var legend = svg.append("g");
 
-
-        legend.append("circle")
-            .attr("r",5)
-            .attr("cx",20)
-            .attr("cy",20)
+        var legend = d3.select("#spiral_line")
+            .append("div")
             .style({
-                "fill":"#FFFFFF"
-            });
-
-        legend.append("text")
-            .attr("id","route_name")
-            .attr("x",40)
-            .attr("y",25)
-            .text("38001")
-            .style({
-                "fill":"#FFFFFF",
-                "font-size":15
-            });
+                "position":"absolute",
+                "top":"26px",
+                "left":"5px"
+            })
+            .append("span")
+            .attr("id","spiral_line_id")
+            .attr("class","label label-default legend_label")
+            .style("background-color","#07a6ff")
+            .html("38001");
 
         var points = d3.range(start, end + 0.001, (end - start) / 1000);
 

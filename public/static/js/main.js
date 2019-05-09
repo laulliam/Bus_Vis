@@ -419,6 +419,9 @@ function DrawStation(station_info) {
     });
     // Change the cursor to a pointer when the mouse is over the places layer.
     map.on('mouseenter', 'station', function (e) {
+
+        d3.select("#collapseOne_station").html("公交站名:"+station_info[e.features[0].properties.station_id]+"<br>" + "路段终点");
+
         mainChart.station_timeout = setTimeout(function () {
             map.setFilter("station-hover", ["==", "station_id", e.features[0].properties.station_id]);
             if(mainChart.Msg_pop)

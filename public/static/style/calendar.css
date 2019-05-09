@@ -7,12 +7,12 @@
 
 #calendar #calendar_main{
     position: absolute;
-    top:20px;
+    top:30px;
 }
 
 #calendar #calendar_area{
     position: absolute;
-    bottom: 10px;
+    bottom: 5px;
 }
 
 .axis path, .axis line {

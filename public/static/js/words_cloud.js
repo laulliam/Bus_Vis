@@ -262,12 +262,12 @@ function message_cloud(route_id) {
                 "margin": "20px auto 0"
             });
 
-        var legend = d3.select("#clouds_main")
+        var legend = d3.select("#words_cloud")
             .append("div")
             .style({
                 "position":"absolute",
-                "top":0,
-                "right":"5%"
+                "top":"26px",
+                "right":"5px"
             })
             .append("span")
             .attr("id","words_cloud_id")
