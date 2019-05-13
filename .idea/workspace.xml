@@ -5,14 +5,9 @@
     <bookmark url="file://$PROJECT_DIR$/public/static/js/main.js" line="224" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c7571ffe-9a61-46b8-bc7d-a0883f3a2cea" name="Default" comment="update.&#10;——Liang Liu">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/runConfigurations/bin_www.xml" afterPath="$PROJECT_DIR$/.idea/runConfigurations/bin_www.xml" />
+    <list default="true" id="c7571ffe-9a61-46b8-bc7d-a0883f3a2cea" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/static/js/init_data.js" afterPath="$PROJECT_DIR$/public/static/js/init_data.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/static/js/main.js" afterPath="$PROJECT_DIR$/public/static/js/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/static/js/time_line.js" afterPath="$PROJECT_DIR$/public/static/js/time_line.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/section_run_data.js" afterPath="$PROJECT_DIR$/routes/section_run_data.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/test.html" afterPath="$PROJECT_DIR$/views/test.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/static/js/spiral_line.js" afterPath="$PROJECT_DIR$/public/static/js/spiral_line.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -53,11 +48,11 @@
       <file leaf-file-name="section_run_data.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/section_run_data.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="232">
-              <caret line="121" column="30" lean-forward="true" selection-start-line="121" selection-start-column="30" selection-end-line="121" selection-end-column="30" />
+            <state relative-caret-position="837">
+              <caret line="108" column="55" lean-forward="false" selection-start-line="108" selection-start-column="55" selection-end-line="108" selection-end-column="55" />
               <folding>
                 <element signature="e#1073#2094#0" expanded="false" />
-                <element signature="e#2164#2964#0" expanded="false" />
+                <element signature="e#3035#3940#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -85,11 +80,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/static/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="546" column="98" lean-forward="true" selection-start-line="546" selection-start-column="98" selection-end-line="546" selection-end-column="98" />
+            <state relative-caret-position="214">
+              <caret line="548" column="43" lean-forward="true" selection-start-line="548" selection-start-column="43" selection-end-line="548" selection-end-column="43" />
               <folding>
                 <element signature="n#!!block;n#Init_Animation_route#0" expanded="false" />
                 <element signature="e#22123#23151#0" expanded="false" />
@@ -105,6 +100,16 @@
                 <marker date="1557737218276" expanded="true" signature="14722:14728" ph=" " />
                 <marker date="1557737218276" expanded="true" signature="14728:14734" ph=" " />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="spiral_line.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/public/static/js/spiral_line.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="207">
+              <caret line="186" column="14" lean-forward="true" selection-start-line="186" selection-start-column="14" selection-end-line="186" selection-end-column="14" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -238,7 +243,6 @@
         <option value="$PROJECT_DIR$/routes/station_run_data.js" />
         <option value="$PROJECT_DIR$/public/static/js/stream_chart.js" />
         <option value="$PROJECT_DIR$/public/static/style/information.css" />
-        <option value="$PROJECT_DIR$/public/static/js/spiral_line.js" />
         <option value="$PROJECT_DIR$/public/static/bootstrap/css/bootstrap.min.css" />
         <option value="$PROJECT_DIR$/public/static/js/information.js" />
         <option value="$PROJECT_DIR$/public/static/js/control.js" />
@@ -252,6 +256,7 @@
         <option value="$PROJECT_DIR$/views/test.html" />
         <option value="$PROJECT_DIR$/public/static/js/time_line.js" />
         <option value="$PROJECT_DIR$/public/static/js/main.js" />
+        <option value="$PROJECT_DIR$/public/static/js/spiral_line.js" />
       </list>
     </option>
   </component>
@@ -638,14 +643,7 @@
       <workItem from="1557033389416" duration="21342000" />
       <workItem from="1557130150456" duration="3857000" />
       <workItem from="1557219789590" duration="311000" />
-      <workItem from="1557384040142" duration="18273000" />
-    </task>
-    <task id="LOCAL-00003" summary="optimize the map  --Liang Liu">
-      <created>1516457588632</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1516457588633</updated>
+      <workItem from="1557384040142" duration="19281000" />
     </task>
     <task id="LOCAL-00004" summary="Draw station position  --Liang Liu">
       <created>1516459425375</created>
@@ -983,11 +981,18 @@
       <option name="project" value="LOCAL" />
       <updated>1557732545599</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="update.&#10;——Liang Liu">
+      <created>1557737319395</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1557737319395</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="914079000" />
+    <option name="totallyTimeSpent" value="915087000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="0" />
@@ -1291,14 +1296,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/static/js/spiral_line.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="116" column="14" lean-forward="true" selection-start-line="116" selection-start-column="14" selection-end-line="116" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/static/js/information.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="193">
@@ -1385,17 +1382,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/section_run_data.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="232">
-          <caret line="121" column="30" lean-forward="true" selection-start-line="121" selection-start-column="30" selection-end-line="121" selection-end-column="30" />
-          <folding>
-            <element signature="e#1073#2094#0" expanded="false" />
-            <element signature="e#2164#2964#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/routes/station_run_data.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="347">
@@ -1419,8 +1405,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/static/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="546" column="98" lean-forward="true" selection-start-line="546" selection-start-column="98" selection-end-line="546" selection-end-column="98" />
+        <state relative-caret-position="214">
+          <caret line="548" column="43" lean-forward="true" selection-start-line="548" selection-start-column="43" selection-end-line="548" selection-end-column="43" />
           <folding>
             <element signature="n#!!block;n#Init_Animation_route#0" expanded="false" />
             <element signature="e#22123#23151#0" expanded="false" />
@@ -1436,6 +1422,25 @@
             <marker date="1557737218276" expanded="true" signature="14722:14728" ph=" " />
             <marker date="1557737218276" expanded="true" signature="14728:14734" ph=" " />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/section_run_data.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="837">
+          <caret line="108" column="55" lean-forward="false" selection-start-line="108" selection-start-column="55" selection-end-line="108" selection-end-column="55" />
+          <folding>
+            <element signature="e#1073#2094#0" expanded="false" />
+            <element signature="e#3035#3940#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/static/js/spiral_line.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="186" column="14" lean-forward="true" selection-start-line="186" selection-start-column="14" selection-end-line="186" selection-end-column="14" />
+          <folding />
         </state>
       </provider>
     </entry>

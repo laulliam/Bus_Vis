@@ -82,7 +82,7 @@ function spiral_line(route_id,date_extent){
                     index++;
                 }
             });
-            sum = Math.pow(sum,6);
+            sum = Math.pow(sum,4);
             data_10min.push({date:new Date(i),value:(index)?(sum/index):0});
         }
 
@@ -184,7 +184,11 @@ function spiral_line(route_id,date_extent){
             })
             .attr("transform", function(d){
                 return "rotate(" + d.a + "," + d.x  + "," + d.y + ")"; // rotate the bar
-            });
+            })
+            // .append("title")
+            // .text(function (d) {
+            //     return d.value;
+            // });
 
         // add date labels
         var tF = d3.time.format("%H:%M"),
