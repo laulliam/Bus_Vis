@@ -60,7 +60,7 @@ function section_id_date(section_id,date){
         beforeSend: function () {//请求前的处理
         },
         success: function (data, textStatus) {
-            //console.log(data);
+            console.log(data);
             data.forEach(function (d) {
                 d.start_date_time = new Date(d.start_date_time);
             });
@@ -85,7 +85,7 @@ function Draw_calender_main(data,section_id) {
 
     var colorRange=d3.range(6).map(function(i) { return "q" + i + "-6"; });
     var threshold=d3.scale.threshold()//阈值比例尺
-        .domain([10,15,25,30,35])
+        .domain([10,20,30,40,50])
         .range(colorRange);
 
     for(var i = 1;i<=31;i++){

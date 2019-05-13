@@ -1,7 +1,7 @@
 /**
  * Created by Liang Liu on 2019/4/1.
  */
-time_line(19030014);
+time_line(20040063);
 
 function time_line(station_id){
     $.ajax({

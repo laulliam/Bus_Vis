@@ -72,3 +72,10 @@ function currentTime() {
 window.setInterval(currentTime, 1000);
 
 var COLOR = ["#EDC951","#CC333F","#00A0B0","#ff5a29","#2f71b0","#55ff30","#570eb0","#883378"];
+
+var color_scale = ["#FF5252","#FB8C00","#FFBF3A","#F1E229","#9CD523","#23D561"];
+
+var threshold=d3.scale.threshold()//阈值比例尺
+    .domain([10,20,30,40,50])
+    .range(color_scale);
+

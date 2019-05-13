@@ -56,6 +56,7 @@ $("#ECalendar").ECalendar({
 
         var date_start1 = new Date(temp_date);
         var date_end1 = new Date(new Date(temp_date).setDate(new Date(temp_date).getDate()+1));
+
         Update_section([date_start,date_end]);
         //Update_heat_map([date_start,date_end]);
     }
@@ -1412,7 +1413,7 @@ function Update_section(date_extent) {
             date_extent:date_extent
         },
         dataType: "json",   //返回格式为json
-        async: false,//true, //请求是否异步，默认为异步，这也是ajax重要特性
+        async: true, //请求是否异步，默认为异步，这也是ajax重要特性
         type: "GET",   //请求方式
         contentType: "application/json",
         beforeSend: function () {//请求前的处理
@@ -1455,12 +1456,7 @@ function Update_section(date_extent) {
 
             function section_render(value){
                 if(value) {
-                    if (value < 20)
-                        return "#ff2513";
-                    else if (value >= 20 && value <= 35)
-                        return "#f2f73f";
-                    else
-                        return "#51ff20";
+                    return threshold(value);
                 }
             }
             mainChart.section_data = {

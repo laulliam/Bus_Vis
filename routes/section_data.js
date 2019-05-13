@@ -78,6 +78,8 @@ router.get('/section_route_data', function(req, res, next) {
                d.hour = new Date(d.key).getHours();
                d.speed = sum/d.values.length;
 
+               d.values = null;
+
            });
 
             data.forEach(function (d) {
