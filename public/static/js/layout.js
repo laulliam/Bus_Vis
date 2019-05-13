@@ -112,7 +112,7 @@ function Layout() {
 }
 Layout();
 
-var color_scale = ["#23D561","#9CD523","#F1E229","#FFBF3A","#FB8C00","#FF5252"];
+var color_scale = ["#23D561","#9CD523","#FFBF3A","#FB8C00","#FF5252"];
 
 $(window).resize(function () {
     window.location.reload();

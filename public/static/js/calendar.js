@@ -83,9 +83,9 @@ function Draw_calender_main(data,section_id) {
         days = []
     //data=[];
 
-    var colorRange=d3.range(6).map(function(i) { return "q" + i + "-6"; });
+    var colorRange=d3.range(5).map(function(i) { return "q" + i + "-6"; });
     var threshold=d3.scale.threshold()//阈值比例尺
-        .domain([5,10,20,30,40])
+        .domain([10,20,30,40])
         .range(colorRange);
 
     for(var i = 1;i<=31;i++){
@@ -203,16 +203,16 @@ function Draw_calender_main(data,section_id) {
         .enter()
         .append("rect")
         .attr("x",function (d,i) {
-            return i*gridSize*31/6;
+            return i*gridSize*31/5;
         })
         .attr("y",0)
-        .attr("width",gridSize*31/6)
+        .attr("width",gridSize*31/5)
         .attr("height",5)
         .style("fill",function (d) {
             return d;
         });
 
-    var legend_content = [60,40,30,20,10,5,0];
+    var legend_content = [40,30,20,10];
 
     legend_g.selectAll(".legend_text")
         .data(legend_content)
@@ -222,7 +222,7 @@ function Draw_calender_main(data,section_id) {
             return d;
         })
         .attr("x",function (d,i) {
-            return i*gridSize*31/6;
+            return (i+1)*gridSize*31/5;
         })
         .attr("y",15)
         .style({

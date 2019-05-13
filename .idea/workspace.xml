@@ -6,21 +6,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c7571ffe-9a61-46b8-bc7d-a0883f3a2cea" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/runConfigurations/bin_www.xml" afterPath="$PROJECT_DIR$/.idea/runConfigurations/bin_www.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/static/bootstrap/css/bootstrap.min.css" afterPath="$PROJECT_DIR$/public/static/bootstrap/css/bootstrap.min.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/static/js/calendar.js" afterPath="$PROJECT_DIR$/public/static/js/calendar.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/static/js/information.js" afterPath="$PROJECT_DIR$/public/static/js/information.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/static/js/init_data.js" afterPath="$PROJECT_DIR$/public/static/js/init_data.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/static/js/layout.js" afterPath="$PROJECT_DIR$/public/static/js/layout.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/static/js/main.js" afterPath="$PROJECT_DIR$/public/static/js/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/static/js/radar.js" afterPath="$PROJECT_DIR$/public/static/js/radar.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/static/js/spiral_line.js" afterPath="$PROJECT_DIR$/public/static/js/spiral_line.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/static/js/time_line.js" afterPath="$PROJECT_DIR$/public/static/js/time_line.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/static/js/words_cloud.js" afterPath="$PROJECT_DIR$/public/static/js/words_cloud.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/static/style/calendar.css" afterPath="$PROJECT_DIR$/public/static/style/calendar.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/static/style/information.css" afterPath="$PROJECT_DIR$/public/static/style/information.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/test.html" afterPath="$PROJECT_DIR$/views/test.html" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -35,21 +26,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="test.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/test.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="140">
-              <caret line="122" column="56" lean-forward="true" selection-start-line="122" selection-start-column="56" selection-end-line="122" selection-end-column="56" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="init_data.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/static/js/init_data.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="207">
-              <caret line="21" column="16" lean-forward="false" selection-start-line="21" selection-start-column="16" selection-end-line="21" selection-end-column="16" />
+            <state relative-caret-position="255">
+              <caret line="74" column="0" lean-forward="true" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -68,14 +49,95 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/static/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="152">
-              <caret line="422" column="122" lean-forward="false" selection-start-line="422" selection-start-column="122" selection-end-line="422" selection-end-column="122" />
+            <state relative-caret-position="237">
+              <caret line="994" column="33" lean-forward="true" selection-start-line="994" selection-start-column="33" selection-end-line="994" selection-end-column="33" />
               <folding>
+                <element signature="n#!!block;n#DrawStation#0" expanded="false" />
                 <element signature="n#!!block;n#DrawSection#0" expanded="false" />
+                <element signature="n#!!block;n#Init_Animation_route#0" expanded="false" />
+                <element signature="n#!!block;n#Update_Animation_route#0" expanded="false" />
+                <element signature="n#!!block;n#Init_heat_Map#0" expanded="false" />
+                <element signature="n#!!block;n#Update_heat_map#0" expanded="false" />
+                <element signature="n#!!block;n#Message_search#0" expanded="false" />
+                <element signature="n#!!block;n#Update_section#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="words_cloud.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/static/js/words_cloud.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="117">
+              <caret line="305" column="21" lean-forward="true" selection-start-line="305" selection-start-column="21" selection-end-line="305" selection-end-column="21" />
+              <folding>
+                <element signature="e#121#1082#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="radar.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/static/js/radar.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="161">
+              <caret line="367" column="18" lean-forward="true" selection-start-line="367" selection-start-column="18" selection-end-line="367" selection-end-column="18" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="time_line.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/static/js/time_line.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2898">
+              <caret line="162" column="27" lean-forward="false" selection-start-line="162" selection-start-column="27" selection-end-line="162" selection-end-column="27" />
+              <folding>
+                <element signature="n#!!block;n#stack_graph#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="calendar.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/static/js/calendar.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="161">
+              <caret line="88" column="27" lean-forward="true" selection-start-line="88" selection-start-column="27" selection-end-line="88" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="layout.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/static/js/layout.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="186">
+              <caret line="117" column="29" lean-forward="true" selection-start-line="117" selection-start-column="29" selection-end-line="117" selection-end-column="29" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="calendar.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/static/style/calendar.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="138">
+              <caret line="27" column="19" lean-forward="true" selection-start-line="27" selection-start-column="19" selection-end-line="27" selection-end-column="19" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="control.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/public/static/js/control.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="184">
+              <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -200,19 +262,19 @@
         <option value="$PROJECT_DIR$/routes/station_run_data.js" />
         <option value="$PROJECT_DIR$/public/static/js/stream_chart.js" />
         <option value="$PROJECT_DIR$/views/test.html" />
-        <option value="$PROJECT_DIR$/public/static/js/layout.js" />
         <option value="$PROJECT_DIR$/public/static/style/information.css" />
-        <option value="$PROJECT_DIR$/public/static/style/calendar.css" />
-        <option value="$PROJECT_DIR$/public/static/js/words_cloud.js" />
-        <option value="$PROJECT_DIR$/public/static/js/calendar.js" />
         <option value="$PROJECT_DIR$/public/static/js/spiral_line.js" />
         <option value="$PROJECT_DIR$/public/static/bootstrap/css/bootstrap.min.css" />
         <option value="$PROJECT_DIR$/public/static/js/time_line.js" />
-        <option value="$PROJECT_DIR$/public/static/js/radar.js" />
-        <option value="$PROJECT_DIR$/public/static/js/control.js" />
         <option value="$PROJECT_DIR$/public/static/js/information.js" />
         <option value="$PROJECT_DIR$/public/static/js/init_data.js" />
+        <option value="$PROJECT_DIR$/public/static/js/control.js" />
         <option value="$PROJECT_DIR$/public/static/js/main.js" />
+        <option value="$PROJECT_DIR$/public/static/style/calendar.css" />
+        <option value="$PROJECT_DIR$/public/static/js/layout.js" />
+        <option value="$PROJECT_DIR$/public/static/js/calendar.js" />
+        <option value="$PROJECT_DIR$/public/static/js/radar.js" />
+        <option value="$PROJECT_DIR$/public/static/js/words_cloud.js" />
       </list>
     </option>
   </component>
@@ -599,14 +661,7 @@
       <workItem from="1557033389416" duration="21342000" />
       <workItem from="1557130150456" duration="3857000" />
       <workItem from="1557219789590" duration="311000" />
-      <workItem from="1557384040142" duration="7928000" />
-    </task>
-    <task id="LOCAL-00001" summary="station data ajax   --Liang Liu">
-      <created>1516453352020</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1516453352020</updated>
+      <workItem from="1557384040142" duration="13463000" />
     </task>
     <task id="LOCAL-00002" summary="optimize the map  --Liang Liu">
       <created>1516455808022</created>
@@ -944,11 +999,18 @@
       <option name="project" value="LOCAL" />
       <updated>1557133473814</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="update.&#10;——Liang Liu">
+      <created>1557394091701</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1557394091701</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="903734000" />
+    <option name="totallyTimeSpent" value="909269000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="0" />
@@ -983,7 +1045,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="update optimize --Liang Liu" />
     <MESSAGE value="优化地图，优化布局 添加地图上控件 --Liang Liu" />
     <MESSAGE value="--Liang Liu" />
     <MESSAGE value="优化布局--Liang Liu" />
@@ -1008,7 +1069,8 @@
     <MESSAGE value="1.优化ing... 准备poster&#10;——Liang Liu" />
     <MESSAGE value="1.add time_line 播放暂停以及框选功能&#10;——Liang Liu" />
     <MESSAGE value="1.add spiral_line&#10;2.add stream ing.....&#10;——Liang Liu" />
-    <option name="LAST_COMMIT_MESSAGE" value="1.add spiral_line&#10;2.add stream ing.....&#10;——Liang Liu" />
+    <MESSAGE value="update.&#10;——Liang Liu" />
+    <option name="LAST_COMMIT_MESSAGE" value="update.&#10;——Liang Liu" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1241,44 +1303,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/static/js/layout.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1493">
-          <caret line="30" column="0" lean-forward="true" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/static/style/words_cloud.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="161">
           <caret line="19" column="19" lean-forward="true" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/static/style/calendar.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="13" lean-forward="true" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/static/js/words_cloud.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="269" column="26" lean-forward="false" selection-start-line="269" selection-start-column="26" selection-end-line="269" selection-end-column="26" />
-          <folding>
-            <element signature="e#121#1082#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/static/js/calendar.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="7" column="17" lean-forward="false" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
           <folding />
         </state>
       </provider>
@@ -1299,36 +1327,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/static/js/radar.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="20" column="12" lean-forward="true" selection-start-line="20" selection-start-column="12" selection-end-line="20" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/static/js/time_line.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="162" column="27" lean-forward="false" selection-start-line="162" selection-start-column="27" selection-end-line="162" selection-end-column="27" />
-          <folding>
-            <element signature="n#!!block;n#stack_graph#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/views/test.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="140">
           <caret line="122" column="56" lean-forward="true" selection-start-line="122" selection-start-column="56" selection-end-line="122" selection-end-column="56" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/static/js/control.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1346,19 +1348,86 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/static/js/init_data.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="21" column="16" lean-forward="false" selection-start-line="21" selection-start-column="16" selection-end-line="21" selection-end-column="16" />
+        <state relative-caret-position="255">
+          <caret line="74" column="0" lean-forward="true" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/static/js/time_line.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2898">
+          <caret line="162" column="27" lean-forward="false" selection-start-line="162" selection-start-column="27" selection-end-line="162" selection-end-column="27" />
+          <folding>
+            <element signature="n#!!block;n#stack_graph#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/static/style/calendar.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="27" column="19" lean-forward="true" selection-start-line="27" selection-start-column="19" selection-end-line="27" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/static/js/layout.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="186">
+          <caret line="117" column="29" lean-forward="true" selection-start-line="117" selection-start-column="29" selection-end-line="117" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/static/js/calendar.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="88" column="27" lean-forward="true" selection-start-line="88" selection-start-column="27" selection-end-line="88" selection-end-column="27" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/static/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="422" column="122" lean-forward="false" selection-start-line="422" selection-start-column="122" selection-end-line="422" selection-end-column="122" />
+        <state relative-caret-position="237">
+          <caret line="994" column="33" lean-forward="true" selection-start-line="994" selection-start-column="33" selection-end-line="994" selection-end-column="33" />
           <folding>
+            <element signature="n#!!block;n#DrawStation#0" expanded="false" />
             <element signature="n#!!block;n#DrawSection#0" expanded="false" />
+            <element signature="n#!!block;n#Init_Animation_route#0" expanded="false" />
+            <element signature="n#!!block;n#Update_Animation_route#0" expanded="false" />
+            <element signature="n#!!block;n#Init_heat_Map#0" expanded="false" />
+            <element signature="n#!!block;n#Update_heat_map#0" expanded="false" />
+            <element signature="n#!!block;n#Message_search#0" expanded="false" />
+            <element signature="n#!!block;n#Update_section#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/static/js/radar.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="367" column="18" lean-forward="true" selection-start-line="367" selection-start-column="18" selection-end-line="367" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/static/js/words_cloud.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="305" column="21" lean-forward="true" selection-start-line="305" selection-start-column="21" selection-end-line="305" selection-end-column="21" />
+          <folding>
+            <element signature="e#121#1082#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/static/js/control.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

@@ -300,11 +300,20 @@ function message_cloud(route_id) {
             })
             .attr("class","name_message")
             .text(function(d){return d.key})
-            .on("mouseover",function (d) {
-            })
-            .on("mouseout",function (d) {
-            })
             .on("click",function (d) {
+                mainChart.data_point.features.forEach(function (s) {
+                    if(s.properties.station_id === d.station_id)
+                    {
+                        map.flyTo({center:s.geometry.coordinates });
+                        if(mainChart.Msg_pop)
+                            mainChart.Msg_pop.remove();
+                        mainChart.Msg_pop = new mapboxgl.Popup()
+                            .setLngLat(s.geometry.coordinates)
+                            .setHTML(s.properties.description)
+                            .addTo(map);
+                        //update_radar(d.station_id);
+                    }
+                });
             });
 
 

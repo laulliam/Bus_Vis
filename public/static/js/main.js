@@ -971,9 +971,9 @@ function Init_Animation() {
                 'visibility': 'none'
             },
             "paint": {
-                "circle-radius": 3,
+                "circle-radius": 6,
                 "circle-color":['get','color'],//station_color
-                "circle-opacity":0.7
+                "circle-opacity":1
             }
         });
 
@@ -992,7 +992,7 @@ function Init_Animation() {
             },
             'paint': {
                 'line-color':['get','color'],
-                'line-width': 1.2,
+                'line-width': .8,
                 'line-opacity': .1
             }
         },'init_animation');
