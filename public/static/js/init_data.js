@@ -19,7 +19,7 @@ function Init_data() {
             },
             success: function (station, textStatus) {
                 station_info = station;
-                console.log(station_info);
+                //console.log(station_info);
             },
             complete: function () {//请求完成的处理
             },

@@ -1,27 +1,26 @@
 /**
  * Created by Liang Liu on 2019/4/1.
  */
-time_line(20040063);
+time_line(434);
 
-function time_line(station_id){
+function time_line(section_id){
     $.ajax({
-        url: "/station_run_id",    //请求的url地址
+        url: "/time_line_data",    //请求的url地址
         dataType: "json",   //返回格式为json
-        data:{station_id:station_id},
+        data:{section_id:section_id},
         async: true, //请求是否异步，默认为异步，这也是ajax重要特性
         type: "GET",   //请求方式
         contentType: "application/json",
         beforeSend: function () {//请求前的处理
         },
         success: function (data, textStatus) {
+            //console.log(data);
             data.forEach(function (d) {
-                if(d.stay_time>100)
-                    d.stay_time = 0;
+                if(d.stay_time>1800)
+                    d.stay_time = 1800;
                 d.start_date_time = new Date(d.start_date_time);
             });
-
             time_line_chart(data);
-
         },
         complete: function () {//请求完成的处理
         },
@@ -61,7 +60,7 @@ function time_line_chart(data) {
         .domain(date_extent)
         .range([0,width-20]);
 
-    var y_scale = d3.scale.sqrt()
+    var y_scale = d3.scale.linear()
         .domain([0,d3.max(data,function (d) {
             return d.stay_time;
         })])
@@ -73,7 +72,11 @@ function time_line_chart(data) {
         //.scaleExtent(SCALE_EXTENT)
         .on("zoom", zoomed);
 
+    d3.select("#time_line_svg").remove();
+    d3.select("#time_line_label").remove();
+
     var svg = d3.select("#time_line").append("svg")
+        .attr("id","time_line_svg")
         .attr("width", width )
         .attr("height", height)
         .attr("transform", "translate(" + margin.left + "," + margin.top*2 + ")")
@@ -127,6 +130,7 @@ function time_line_chart(data) {
         });
 
     var legend_div = d3.select("#time_line").append("div")
+        .attr("id","time_line_label")
         .style({
             "position": "absolute",
             "z-index": "999",
