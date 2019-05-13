@@ -420,7 +420,12 @@ function DrawStation(station_info) {
     // Change the cursor to a pointer when the mouse is over the places layer.
     map.on('mouseenter', 'station', function (e) {
 
-        d3.select("#collapseOne_station").html("公交站名:"+station_info[e.features[0].properties.station_id]+"<br>" + "路段终点");
+        station_info.forEach(function (d) {
+            if(d.station_id === e.features[0].properties.station_id)
+                d3.select("#collapseOne_station").html("<p>&nbsp;&nbsp;&nbsp;公交站名:"+d.station_name+"</p>" + "<p>&nbsp;&nbsp;&nbsp;人流高峰:"+"08:00-08:30"+"</p>"
+                );
+        });
+
 
         mainChart.station_timeout = setTimeout(function () {
             map.setFilter("station-hover", ["==", "station_id", e.features[0].properties.station_id]);
@@ -534,7 +539,8 @@ function DrawSection(section_info) {
 
     map.on('mouseenter', 'section', function (e) {
         var section_id = e.features[0].properties.section_id;
-        console.log(section_id);
+        //console.log(section_id);
+        d3.select("#collapseOne_section").html("<p>&nbsp;&nbsp;&nbsp;路段起点 : "+section_info[section_id-1].from_name+"   " + "路段终点 : "+section_info[section_id-1].target_name+"</p>" + "<p>&nbsp;&nbsp;&nbsp;人流高峰:"+"08:00-08:30"+"</p>");
         map.setFilter("section-hover", ["==", "section_id",""]);
         mainChart.section_timeout = setTimeout(function () {
             map.setFilter("section-hover", ["==", "section_id", e.features[0].properties.section_id]);

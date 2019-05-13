@@ -150,7 +150,8 @@ info_main();
 function info_main() {
 
     var info_ = {
-        station_info:false
+        station_info:false,
+        section_info:false
     };
 
     var info_main = d3.select("#info_main").append("div")
@@ -191,7 +192,7 @@ function info_main() {
         .attr("href","#collapseOne_station")
         .text("站台信息")
         .style({
-            "font-size":9
+            "font-size":"75%"
         });
 
     panel.append("div")
@@ -200,5 +201,49 @@ function info_main() {
         .attr("aria_expanded",false)
         .append("div")
         .attr("class","panel-body")
-        .html("test");
+        .html(""+"<br><br>");
+
+
+    var panel_section = info_main.append("div")
+        .attr("class","panel panel-default");
+
+    panel_section.append("div")
+        .attr("class","panel-heading")
+        .append("h6")
+        .attr("class","panel-title")
+        .append("a")
+        .attr("class","collapsed")
+        .attr("aria_expanded",false)
+        .on("click",function () {
+
+            if(info_.section_info){
+                info_.section_info = !info_.section_info;
+                d3.select(this).attr("class","");
+                d3.select(this).attr("aria_expanded",true);
+                d3.select("#collapseOne_section").attr("aria_expanded",true);
+                d3.select("#collapseOne_section").attr('class',"panel-collapse collapse in");
+            }
+            else{
+                info_.section_info = !info_.section_info;
+                d3.select(this).attr("class","collapsed");
+                d3.select(this).attr("aria_expanded",false);
+                d3.select("#collapseOne_section").attr("aria_expanded",false);
+                d3.select("#collapseOne_section").attr('class',"panel-collapse collapse");
+            }
+        })
+        .attr("data-toggle","collapse")
+        .attr("data-parent","#accordion")
+        .attr("href","#collapseOne_section")
+        .text("路段信息")
+        .style({
+            "font-size":"75%"
+        });
+
+    panel_section.append("div")
+        .attr("id","collapseOne_section")
+        .attr("class","panel-collapse collapse")
+        .attr("aria_expanded",false)
+        .append("div")
+        .attr("class","panel-body")
+        .html(""+"<br><br>");
 }
