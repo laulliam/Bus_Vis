@@ -105,6 +105,45 @@ router.get('/spiral_data', function(req, res, next) {
 
 });
 
+//time_line
+router.get('/time_line_data', function(req, res, next) {
+
+    var section_id = req.query.section_id;
+    console.log(section_id);
+
+    var selectData = function(db, callback) {
+        //连接到表
+        var collection = db.collection('section_run_data');
+        //查询数据
+        collection.find({
+            "section_id":parseInt(section_id)},{
+            "_id":0,
+            "id":0,
+            "end_date_time":0,
+            "product_id":0,
+            "route_id": 0,
+            "section_id": 0,
+            "speed":0,
+            "type":0
+        }).toArray(function(err, result) {
+            if(err)
+            {
+                console.log('Error:'+ err);
+                return;
+            }
+            callback(result);
+        });
+    }
+
+    MongoClient.connect(DB_CONN_STR, function(err, db) {
+        selectData(db, function(result) {
+            res.json(result);
+            //console.log(result);
+            db.close();
+        });
+    });
+
+});
 
 /* GET home page. */
 router.get('/', function(req, res, next) {

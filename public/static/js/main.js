@@ -414,7 +414,6 @@ function DrawStation(station_info) {
 
         update_radar(e.features[0].properties.station_id,mainChart.date_extent);
         //Information(e.features[0].properties.station_id,e.features[0].properties.description);
-        time_line(e.features[0].properties.station_id);
 
     });
     // Change the cursor to a pointer when the mouse is over the places layer.
@@ -525,9 +524,11 @@ function DrawSection(section_info) {
 
         var section_id = e.features[0].properties.section_id;
 
+        time_line(section_id);
+
         mainChart.Msg_pop= new mapboxgl.Popup()
             .setLngLat(section_info[section_id-1].path[parseInt(section_info[section_id-1].path.length/2)])
-            .setHTML("路段起点 : "+section_info[section_id-1].from_name+"<br>" + "路段终点 : "+section_info[section_id-1].target_name)
+            .setHTML(section_info[section_id-1].from_name+">>>>>" +section_info[section_id-1].target_name)
             .addTo(map);
         map.getCanvas().style.cursor = 'pointer';
 
@@ -540,7 +541,7 @@ function DrawSection(section_info) {
     map.on('mouseenter', 'section', function (e) {
         var section_id = e.features[0].properties.section_id;
         //console.log(section_id);
-        d3.select("#collapseOne_section").html("<p>&nbsp;&nbsp;&nbsp;路段起点 : "+section_info[section_id-1].from_name+"   " + "路段终点 : "+section_info[section_id-1].target_name+"</p>" + "<p>&nbsp;&nbsp;&nbsp;人流高峰:"+"08:00-08:30"+"</p>");
+        d3.select("#collapseOne_section").html(section_info[section_id-1].from_name+">>>>>" +section_info[section_id-1].target_name);
         map.setFilter("section-hover", ["==", "section_id",""]);
         mainChart.section_timeout = setTimeout(function () {
             map.setFilter("section-hover", ["==", "section_id", e.features[0].properties.section_id]);
@@ -548,7 +549,7 @@ function DrawSection(section_info) {
                 mainChart.Msg_pop.remove();
             mainChart.Msg_pop= new mapboxgl.Popup()
                 .setLngLat(section_info[section_id-1].path[parseInt(section_info[section_id-1].path.length/2)])
-                .setHTML("路段起点 : "+section_info[section_id-1].from_name+"<br>" + "路段终点 : "+section_info[section_id-1].target_name)
+                .setHTML(section_info[section_id-1].from_name+">>>>>" +section_info[section_id-1].target_name)
                 .addTo(map);
         },500);
         map.getCanvas().style.cursor = 'pointer';
