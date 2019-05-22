@@ -6,14 +6,15 @@ var MongoClient = require('mongodb').MongoClient;
 var DB_CONN_STR = 'mongodb://localhost:27017/traffic_data';
 var d3 = require('./d3.min');
 
+
+//Calendar View
 router.get('/section_route_data', function(req, res, next) {
 
     var section_id = req.query.section_id;
+
     var selectData = function(db, callback) {
-        //连接到表
-        var collection = db.collection('section_run_data');
-        //查询数据
-        collection.find({"section_id" : parseInt(section_id)},
+
+        db.collection('section_run_data').find({"section_id" : parseInt(section_id)},
             {
                 "from_station_id":0,
                 "id":0,
@@ -30,16 +31,14 @@ router.get('/section_route_data', function(req, res, next) {
                 "type": 0
             })
             .toArray(function(err, result) {
-                if(err)
-                {
-                    console.log('Error:'+ err);
-                    return;
-                }
+                if (err) throw err;
                 callback(result);
             });
+
     }
 
     MongoClient.connect(DB_CONN_STR, function(err, db) {
+
         selectData(db, function(result) {
 
             var data =[];
@@ -49,68 +48,83 @@ router.get('/section_route_data', function(req, res, next) {
             }
 
             result.forEach(function (d) {
+
                 if(d.speed >= 80)
                     d.speed = null;
+
                 d.start_date_time = new Date(d.start_date_time);
-                if(d.start_date_time.getMinutes()>30){
+
+                if(d.start_date_time.getSeconds()>=30){
+                    d.start_date_time.setMinutes(d.start_date_time.getMinutes()+1);
+                    d.start_date_time.setSeconds(0);
+                }
+                else
+                    d.start_date_time.setSeconds(0);
+
+                if(d.start_date_time.getMinutes()>=30){
                     d.start_date_time.setHours(d.start_date_time.getHours()+1);
                     d.start_date_time.setMinutes(0);
                 }
                 else
                     d.start_date_time.setMinutes(0);
-                d.start_date_time.setSeconds(0,0);
+
             });
 
-            var nest = d3.nest().key(function (d) {
+            var dataset = d3.nest().key(function (d) {
                 return d.start_date_time;
-            });
-
-            var dataset = nest.entries(result);
+            }).entries(result);
 
             dataset.forEach(function (d) {
 
-               var sum =0;
-               d.values.forEach(function (s) {
-                   sum += s.speed;
-               });
-
-               d.day = new Date(d.key).getDate();
-               d.hour = new Date(d.key).getHours();
-               d.speed = sum/d.values.length;
-
-               d.values = null;
-
-           });
-
-            data.forEach(function (d) {
-                dataset.forEach(function (s) {
-                    if(d.hour === s.hour &&d.day === s.day)
-                        d.speed = s.speed;
+                var sum =0;
+                d.values.forEach(function (s) {
+                    sum += s.speed;
                 });
 
+                d.day = new Date(d.key).getDate();
+                d.hour = new Date(d.key).getHours();
+                d.speed = sum/d.values.length;
+
             });
-/*
-           data_line.sort(function (a,b) {
-               return a.key - b.key;
-           });
 
+            data.forEach(function (d){
+                dataset.forEach(function (s) {
+                    if(d.hour === s.hour &&d.day === s.day)
+                        d.speed = parseFloat(s.speed.toFixed(2));
+                });
+            });
 
-           var extent_hour = d3.extent(data_line,function(d){
-               return d.hour;
-           });
+            db.collection('section_hour_data').insertMany([{section_id:parseInt(req.query.section_id),hour_data:data}],function(err, res) {
+                if (err) throw err;
+            });
 
-           data_line.forEach(function (d) {
-
-               if(d.hour === extent_hour[0]);
-               else{
-                   if(d.hour+1 === extent_hour[1]){
-                       data_line.push({day:d.day,hour:d.hour+1});
-                   }
-                   else
-                       data_line.push({day:d.day,hour:d.hour-1});
-               }
-           });*/
             res.json(data);
+            db.close();
+
+        });
+    });
+
+});
+
+router.get('/section_hour_data', function(req, res, next) {
+
+    var selectData = function(db, callback) {
+        //连接到表
+        var collection = db.collection('section_hour_data');
+        //查询数据
+        collection.find({"section_id" : parseInt(req.query.section_id)}).toArray(function(err, result) {
+            if(err)
+            {
+                console.log('Error:'+ err);
+                return;
+            }
+            callback(result);
+        });
+    }
+
+    MongoClient.connect(DB_CONN_STR, function(err, db) {
+        selectData(db, function(result) {
+            res.json(result);
             db.close();
         });
     });
@@ -172,7 +186,28 @@ router.get('/section_heat', function(req, res, next) {
 
     MongoClient.connect(DB_CONN_STR, function(err, db) {
         selectData(db, function(result) {
-            res.json(result);
+
+            var nest = d3.nest().key(function (d) {
+                return d.section_id;
+            });
+            var section_heat = nest.entries(result);
+
+            for(var i=0;i<section_heat.length;i++){
+                if(section_heat[i].key === "null") section_heat.splice(i,1);
+            }
+            for(i=0;i<section_heat.length;i++){
+                if(section_heat[i].key>2611) section_heat.splice(i,1);
+            }
+
+            section_heat.forEach(function (d) {
+                var sum =0;
+                d.values.forEach(function (s) {
+                    if(s.speed>80) s.speed = null;
+                    sum += s.speed;
+                });
+                d.values = parseFloat(sum/d.values.length).toFixed(2);
+            });
+            res.json(section_heat);
             db.close();
         });
     });

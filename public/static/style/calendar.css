@@ -10,17 +10,21 @@
     top:30px;
 }
 
+.days_Label{
+    cursor: pointer;
+}
+
 #calendar #calendar_area{
     position: absolute;
     bottom: 5px;
 }
 
-.axis path, .axis line {
+#calendar .axis path, .axis line {
     fill:none;
     stroke: rgb(255, 255, 255);
     stroke-width: 1px;
 }
-.axis text{
+#calendar .axis text{
     fill: rgb(255, 255, 255);
     font-size: 8px;
 }

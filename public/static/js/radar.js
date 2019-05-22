@@ -140,7 +140,7 @@ function update_radar(station_id) {
             .attr("height", cfg.h)
             .attr("class", "radar"+id);
         //Append a g element
-        var g = svg.append("g").attr("transform", "translate(" + (cfg.w/2 ) + "," + (cfg.h/2+10 ) + ")");
+        var g = svg.append("g").attr("transform", "translate(" + (cfg.w/2 ) + "," + (cfg.h/2 ) + ")");
 
         /////////////////////////////////////////////////////////
         ////////// Glow filter for some extra pizzazz ///////////
@@ -327,9 +327,9 @@ function update_radar(station_id) {
             });
        var offset_legend = cfg.w/2-d3.select("#rect_legend_"+legend_id[parseInt(legend_id.length/2)]).attr("x");
        if(legend_id.length%2)
-           legend_g.attr("transform","translate("+(offset_legend-legendElementWidth/2)+",0)");
+           legend_g.attr("transform","translate("+(offset_legend-legendElementWidth/2)+",-10)");
        else
-           legend_g.attr("transform","translate("+(offset_legend+2.5)+",0)");
+           legend_g.attr("transform","translate("+(offset_legend+2.5)+",-10)");
         //Wraps SVG text
         function wrap(text, width) {
             text.each(function() {

@@ -1,9 +1,24 @@
 
-message_cloud(38001);
+message_cloud(27001);
+
+var legend = d3.select("#words_cloud")
+    .append("div")
+    .style({
+        "position":"absolute",
+        "top":"26px",
+        "right":"5px"
+    })
+    .append("span")
+    .attr("id","words_cloud_id")
+    .attr("class","label label-default legend_label")
+    .style("background-color","#07a6ff")
+    .html("27001");
 
 function message_cloud(route_id) {
 
     d3.select("#words_cloud_id").html(route_id);
+    d3.select("#cloud_div").remove();
+
 
     $.ajax({
         url: "/route_station_data",    //请求的url地址
@@ -46,16 +61,16 @@ function message_cloud(route_id) {
         var width = cloud.width();
         var height = cloud.height();
 
-        var radius = width/3;//3D 球的半径
+        var radius = width/4;//3D 球的半径
         var dtr = Math.PI/180;
-        var d=300;
+        var d=250;
 
         var mcList = [];
         var active = false;
         var lasta = 1;
         var lastb = 1;
         var distr = true;
-        var tspeed=1;//文字移动速度
+        var tspeed=.1;//文字移动速度
         var size=140;
 
         var mouseX=0;
@@ -256,27 +271,68 @@ function message_cloud(route_id) {
             .attr("height",height)
             .style({
                 "position":"relative",
-                "top":"60%",
+                "top":"50%",
                 "word-break":"keep-all",
                 "white-space":"nowrap",
                 "margin": "20px auto 0"
             });
 
-        var legend = d3.select("#words_cloud")
-            .append("div")
-            .style({
-                "position":"absolute",
-                "top":"26px",
-                "right":"5px"
-            })
-            .append("span")
-            .attr("id","words_cloud_id")
-            .attr("class","label label-default legend_label")
-            .style("background-color","#07a6ff")
-            .html("38001");
+
 
         var a = d3.rgb(255,215,0);
         var b = d3.rgb(255,50,0);
+
+        /*var svg = d3.select("#words_cloud")
+            .append("div")
+            .style({
+                "position":"absolute",
+                "right":"5px",
+                "top":"40%",
+                "z-index":"999"
+            })
+            .append("svg")
+            .attr("width",30)
+            .attr("height",100);
+
+        var defs = svg.append("defs");
+
+        var linearGradient = defs.append("linearGradient")
+            .attr("id","linearColor")
+            .attr("x1","0%")
+            .attr("y1","100%")
+            .attr("x2","0%")
+            .attr("y2","0%");
+
+        var stop1 = linearGradient.append("stop")
+            .attr("offset","0%")
+            .style("stop-color",a.toString());
+
+        var stop2 = linearGradient.append("stop")
+            .attr("offset","100%")
+            .style("stop-color",b.toString());
+
+        var colorRect = svg.append("rect")
+            .attr("x", 15)
+            .attr("y",0)
+            .attr("width", 8)
+            .attr("height", 100)
+            .style("fill","url(#" + linearGradient.attr("id") + ")");
+
+        svg.selectAll(".cloud_index")
+            .data([40,0])
+            .enter()
+            .append("text")
+            .attr("x",0)
+            .attr("y",function (d,i) {
+                return i*85+10;
+            })
+            .text(function (d) {
+                return d;
+            })
+            .style({
+                "fill":"#FFFFFF",
+                "font-size":"10px"
+            });*/
 
         var linear = d3.scale.linear()
             .domain([min_data,max_data])
@@ -290,7 +346,7 @@ function message_cloud(route_id) {
             .append("a")
             .style({
                 "font-size":function(d){
-                    return d.val + "px";},
+                    return (d.val>40)? "40px":d.val+"px";},
                 "fill":function(d){
                     return compute(linear(d.val)).toString();
                 },

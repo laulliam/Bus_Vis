@@ -1,6 +1,8 @@
 
 function Control_Chart() {
 
+    d3.select("#control_main").html('');
+
     var control = $("#control_main");
 
     var obj_station = {
@@ -11,7 +13,7 @@ function Control_Chart() {
 
     var obj_road = {
         '路线宽度': 2,
-        '路线透明度': 0.5
+        '路线透明度': 0.7
     };
     var gui = new dat.gui.GUI();
 

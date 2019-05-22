@@ -3,6 +3,7 @@
  */
 var express = require('express');
 var router = express.Router();
+var d3 = require('./d3.min');
 
 var MongoClient = require('mongodb').MongoClient;
 var DB_CONN_STR = 'mongodb://localhost:27017/traffic_data';
@@ -28,7 +29,24 @@ router.get('/section_run_data', function(req, res, next) {
 
     MongoClient.connect(DB_CONN_STR, function(err, db) {
         selectData(db, function(result) {
-            res.json(result);
+            var nest = d3.nest().key(function (d) {
+                return d.section_id;
+            });
+            var section_data = nest.entries(result);
+            for(var i=0;i<section_data.length;i++){
+                if(section_data[i].key === "null") section_data.splice(i,1);
+            }
+            for(i=0;i<section_data.length;i++){
+                if(section_data[i].key>2611) section_data.splice(i,1);
+            }
+            section_data.forEach(function (d) {
+                var sum =0;
+                d.values.forEach(function (s) {
+                    sum += s.speed;
+                });
+                d.values = parseFloat(sum/d.values.length).toFixed(2);
+            });
+            res.json(section_data);
             //console.log(result);
             db.close();
         });
@@ -116,7 +134,10 @@ router.get('/time_line_data', function(req, res, next) {
         var collection = db.collection('section_run_data');
         //查询数据
         collection.find({
-            "section_id":parseInt(section_id)},{
+            "section_id":parseInt(section_id),
+            'stay_time':{$lte:300},
+            start_date_time:{$gte:new Date(2016,0,1),$lte:new Date(2016,0,7)}},
+            {
             "_id":0,
             "id":0,
             "end_date_time":0,
@@ -138,7 +159,6 @@ router.get('/time_line_data', function(req, res, next) {
     MongoClient.connect(DB_CONN_STR, function(err, db) {
         selectData(db, function(result) {
             res.json(result);
-            //console.log(result);
             db.close();
         });
     });

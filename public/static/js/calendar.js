@@ -1,4 +1,3 @@
-Calendar(434);
 
 var legend = d3.select("#calendar")
     .append("div")
@@ -10,8 +9,9 @@ var legend = d3.select("#calendar")
     .append("span")
     .attr("id","calendar_id")
     .attr("class","label label-default legend_label")
-    .style("background-color","#07a6ff")
-    .html(section_info[434-1].from_name+">>>>>>>"+section_info[434-1].target_name);
+    .style("background-color","#07a6ff");
+
+Calendar(757);
 
 function Calendar(section_id){
 
@@ -20,7 +20,7 @@ function Calendar(section_id){
     section_id_date(section_id,new Date("Fri Jan 1 2016 00:00:00 GMT+0800"));
 
     $.ajax({
-        url: "/section_route_data",    //请求的url地址
+        url: "/section_hour_data",    //请求的url地址
         dataType: "json",   //返回格式为json
         data:{
             section_id:section_id
@@ -32,12 +32,31 @@ function Calendar(section_id){
         },
         success: function (data, textStatus) {
 
-            // data.forEach(function (d) {
-            //     if(d.speed >80) d.speed =null;
-            //     //d.key = new Date(d.key);
-            // });
             //console.log(data);
-            Draw_calender_main(data,section_id);
+            if(data.length>0)
+                Draw_calender_main(data[0].hour_data,section_id);
+            else
+                $.ajax({
+                    url: "/section_route_data",    //请求的url地址
+                    dataType: "json",   //返回格式为json
+                    data:{
+                        section_id:section_id
+                    },
+                    async: true, //请求是否异步，默认为异步，这也是ajax重要特性
+                    type: "GET",   //请求方式
+                    contentType: "application/json",
+                    beforeSend: function () {//请求前的处理
+                    },
+                    success: function (data, textStatus) {
+                        //console.log(data);
+                        Draw_calender_main(data,section_id);
+                    },
+                    complete: function () {//请求完成的处理
+                    },
+                    error: function () {//请求出错处理
+                    }
+                });
+
         },
         complete: function () {//请求完成的处理
         },
@@ -73,15 +92,13 @@ function section_id_date(section_id,date){
     });
 }
 
-//Draw_calender_main();
 function Draw_calender_main(data,section_id) {
 
     var calendar = $("#calendar_main"),
         width=calendar.width() ,
         height=calendar.height() ,
         gridSize = width/33,
-        days = []
-    //data=[];
+        days = [];
 
     var colorRange=d3.range(5).map(function(i) { return "q" + i + "-6"; });
     var threshold=d3.scale.threshold()//阈值比例尺
@@ -90,8 +107,6 @@ function Draw_calender_main(data,section_id) {
 
     for(var i = 1;i<=31;i++){
         days.push(i);
-        // for(var j=6;j<24;j++)
-        //     data.push({day:i,hour:j,speed:Math.floor(Math.random()*60)});
     }
 
     if(d3.select("#calendar_svg")) d3.select("#calendar_svg").remove();
@@ -106,7 +121,7 @@ function Draw_calender_main(data,section_id) {
     var calender_g = svg.append("g")
         .attr("transform","translate("+gridSize+",0)");
     var legend_g = svg.append("g")
-        .attr("transform","translate("+gridSize+","+(height-20)+")");
+        .attr("transform","translate("+gridSize+","+(height-15)+")");
 
     var days_Labels = days_label.selectAll(".days_Label")
         .data(days)
@@ -118,7 +133,12 @@ function Draw_calender_main(data,section_id) {
         })
         .text(function(d) { return d; })
         .attr("x", function(d, i) { return (i+1.5)* gridSize; })
-        .attr("y", 35)
+        .attr("y", 30)
+        .on("click",function (d,i) {
+            d3.select("#section_date").text("2016/1/"+d);
+            section_id_date(section_id,new Date(2016,0,d,0,0,0));
+            //console.log(new Date(2016,0,d.day,0,0,0));
+        })
         .style({
             "font-size":"8",
             "fill": "#ffffff",
@@ -129,7 +149,7 @@ function Draw_calender_main(data,section_id) {
         .data(data)
         .enter()
         .append("rect")
-        .attr("y", function(d,i) { return (d.hour-4.5) * gridSize + (i%18)*2; } )
+        .attr("y", function(d,i) { return (d.hour-5) * gridSize + (i%18)*2; } )
         .attr("x", function(d,i) {return (d.day  -1) * gridSize; })
         .attr("class",function (d) {
             if(d.speed === null)
@@ -179,9 +199,6 @@ function Draw_calender_main(data,section_id) {
             d3.selectAll(".hour").style("opacity", .7);
         })
         .on("click",function (d,i) {
-            d3.select("#section_date").text("2016/1/"+d.day);
-            section_id_date(section_id,new Date(2016,0,d.day,0,0,0));
-            console.log(new Date(2016,0,d.day,0,0,0));
         })
         .style({
             "opacity": .7
@@ -190,7 +207,7 @@ function Draw_calender_main(data,section_id) {
 
     calendar_rects.append("title")
         .text(function (d) {
-            return "date:2016/1/"+d.day+" "+d.hour+":00  speed:"+parseFloat(d.speed).toFixed(2);
+            return "date:2016/1/"+d.day+" "+d.hour+":00  speed:"+d.speed;
         })
         .style({
             "font-size":"9",
@@ -219,7 +236,7 @@ function Draw_calender_main(data,section_id) {
         .enter()
         .append("text")
         .text(function (d) {
-            return d;
+            return d+"km/h";
         })
         .attr("x",function (d,i) {
             return (i+1)*gridSize*31/5;
@@ -227,7 +244,7 @@ function Draw_calender_main(data,section_id) {
         .attr("y",15)
         .style({
             "fill":"#FFFFFF",
-            "font-size":"9",
+            "font-size":"8",
             "text-anchor":"middle"
         });
 }

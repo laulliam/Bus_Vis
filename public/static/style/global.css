@@ -72,3 +72,11 @@ body{
     right: 5%;
     font-size:6px
 }
+
+.view_name_t{
+    position: absolute;
+    color: #FFFFFF;
+    top:12px;
+    left: 10%;
+    font-size:10px;
+}
