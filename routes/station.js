@@ -6,11 +6,9 @@ var router = express.Router();
 
 var MongoClient = require('mongodb').MongoClient;
 var DB_CONN_STR = 'mongodb://localhost:27017/traffic_data';
-//站点信息
 router.get('/station_info', function(req, res, next) {
         var selectData = function(db, callback) {
-        //连接到表
-        var collection = db.collection('station');
+                var collection = db.collection('station');
         collection.find({}).toArray(function(err, result) {
             if(err)
             {
@@ -30,7 +28,6 @@ router.get('/station_info', function(req, res, next) {
 
 });
 
-//路线上的站点查询
 router.get('/route_station', function(req, res, next) {
 
     var route = req.query.route_id;
@@ -40,9 +37,7 @@ router.get('/route_station', function(req, res, next) {
     var pattern = new RegExp(""+route+"");
 
     var selectData = function(db, callback) {
-        //连接到表
         var collection = db.collection('station');
-        //查询数据
         var whereStr = {}
         collection.find({sub_routes_id:{$regex:pattern}},{
             "sub_routes_id":0,
@@ -69,7 +64,6 @@ router.get('/route_station', function(req, res, next) {
 
 });
 
-//站点名称查询
 router.get('/station_name_search', function(req, res, next) {
 
     var station_name = req.query.station_name;
@@ -79,10 +73,8 @@ router.get('/station_name_search', function(req, res, next) {
     var pattern = new RegExp(""+station_name+"");
 
     var selectData = function(db, callback) {
-        //连接到表
-        var collection = db.collection('station');
-        //查询数据
-        var whereStr = {}
+                var collection = db.collection('station');
+                var whereStr = {}
         collection.find({station_name:{$regex:pattern}},{
             "sub_routes_id":0,
             "sub_routes_number":0,
@@ -108,14 +100,11 @@ router.get('/station_name_search', function(req, res, next) {
 
 });
 
-//站点经过路线查询
 router.get('/sub_routes_numbers', function(req, res, next) {
     var station_id = req.query.station_id;
     var selectData = function(db, callback) {
-        //连接到表
-        var collection = db.collection('station');
-        //查询数据
-        collection.find({"station_id":station_id}).toArray(function(err, result) {
+                var collection = db.collection('station');
+                collection.find({"station_id":station_id}).toArray(function(err, result) {
             if(err)
             {
                 console.log('Error:'+ err);

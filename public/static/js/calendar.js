@@ -20,75 +20,55 @@ function Calendar(section_id){
     section_id_date(section_id,new Date("Fri Jan 1 2016 00:00:00 GMT+0800"));
 
     $.ajax({
-        url: "/section_hour_data",    //请求的url地址
-        dataType: "json",   //返回格式为json
-        data:{
+        url: "/section_hour_data",            dataType: "json",           data:{
             section_id:section_id
         },
-        async: true, //请求是否异步，默认为异步，这也是ajax重要特性
-        type: "GET",   //请求方式
-        contentType: "application/json",
-        beforeSend: function () {//请求前的处理
-        },
+        async: true,         type: "GET",           contentType: "application/json",
+        beforeSend: function () {        },
         success: function (data, textStatus) {
 
-            //console.log(data);
-            if(data.length>0)
+                        if(data.length>0)
                 Draw_calender_main(data[0].hour_data,section_id);
             else
                 $.ajax({
-                    url: "/section_route_data",    //请求的url地址
-                    dataType: "json",   //返回格式为json
-                    data:{
+                    url: "/section_route_data",                        dataType: "json",                       data:{
                         section_id:section_id
                     },
-                    async: true, //请求是否异步，默认为异步，这也是ajax重要特性
-                    type: "GET",   //请求方式
-                    contentType: "application/json",
-                    beforeSend: function () {//请求前的处理
-                    },
+                    async: true,                     type: "GET",                       contentType: "application/json",
+                    beforeSend: function () {                    },
                     success: function (data, textStatus) {
-                        //console.log(data);
-                        Draw_calender_main(data,section_id);
+                                                Draw_calender_main(data,section_id);
                     },
-                    complete: function () {//请求完成的处理
-                    },
-                    error: function () {//请求出错处理
-                    }
+                    complete: function () {                    },
+                    error: function () {                    }
                 });
 
         },
-        complete: function () {//请求完成的处理
-        },
-        error: function () {//请求出错处理
-        }
+        complete: function () {        },
+        error: function () {        }
     });
 }
 
 function section_id_date(section_id,date){
     $.ajax({
-        url: "/section_id_date",    //请求的url地址
-        dataType: "json",   //返回格式为json
+        url: "/section_id_date",
+        dataType: "json",
         data:{
             section_id:section_id,
             date:date
         },
-        async: true, //请求是否异步，默认为异步，这也是ajax重要特性
-        type: "GET",   //请求方式
+        async: true,
+        type: "GET",
         contentType: "application/json",
-        beforeSend: function () {//请求前的处理
-        },
+        beforeSend: function () {        },
         success: function (data, textStatus) {
-            //console.log(data);
-            data.forEach(function (d) {
+                        data.forEach(function (d) {
                 d.start_date_time = new Date(d.start_date_time);
             });
             Draw_calendar_area(data);
         },
-        complete: function () {//请求完成的处理
-        },
-        error: function () {//请求出错处理
-        }
+        complete: function () {        },
+        error: function () {        }
     });
 }
 
@@ -101,8 +81,7 @@ function Draw_calender_main(data,section_id) {
         days = [];
 
     var colorRange=d3.range(5).map(function(i) { return "q" + i + "-6"; });
-    var threshold=d3.scale.threshold()//阈值比例尺
-        .domain([10,20,30,40])
+    var threshold=d3.scale.threshold()        .domain([10,20,30,40])
         .range(colorRange);
 
     for(var i = 1;i<=31;i++){
@@ -137,8 +116,7 @@ function Draw_calender_main(data,section_id) {
         .on("click",function (d,i) {
             d3.select("#section_date").text("2016/1/"+d);
             section_id_date(section_id,new Date(2016,0,d,0,0,0));
-            //console.log(new Date(2016,0,d.day,0,0,0));
-        })
+                    })
         .style({
             "font-size":"8",
             "fill": "#ffffff",
@@ -190,8 +168,7 @@ function Draw_calender_main(data,section_id) {
                     "text-anchor":"middle"
                 })
                 .attr("transform","translate(0,31)");
-            //d3.selectAll(".hour").style("opacity",0.2);
-            d3.select(this).style("opacity",.7);
+                        d3.select(this).style("opacity",.7);
         })
         .on("mouseout",function (d) {
             d3.selectAll(".days_Label").attr("opacity",1);
@@ -269,15 +246,13 @@ _calendar_area.y_scale = d3.scale.linear()
 _calendar_area.x_axis = d3.svg.axis()
     .orient("bottom")
     .tickFormat(d3.time.format("%H:%M"));
-//.ticks(20);
 
 var area_time = d3.select("#calendar_area")
     .append("div")
     .style({
         "position":"absolute",
         "pointer-events":"none",
-        //"text-align":"center",
-        "z-index":99,
+                "z-index":99,
         "top":0,
         "right":_calendar_area.margin+'px'
     })
@@ -294,16 +269,15 @@ area_time.append("a")
         "opacity":0.1,
         "color":"#ffffff",
         "text-align":"center",
-        //"line-height":_calendar_area.height-10+"px"
-    });
+            });
 
 
 _calendar_area.y_axis = d3.svg.axis()
-    .orient("right");
+    .orient("right")
+    .ticks(6);
 
 function Draw_calendar_area(data) {
-    //console.log(data);
-
+    
     _calendar_area.svg.html("");
     var date_extent = d3.extent(data,function(d){
         return d.start_date_time;

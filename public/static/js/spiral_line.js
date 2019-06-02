@@ -19,17 +19,12 @@ function spiral_line(route_id,date_extent){
     d3.select("#spiral_line_id").html(route_id);
 
     $.ajax({
-        url: "/spiral_data",    //请求的url地址
-        data:{
+        url: "/spiral_data",            data:{
             sub_route_id:route_id.toString(),
             date_extent:date_extent
         },
-        dataType: "json",   //返回格式为json
-        async: true, //请求是否异步，默认为异步，这也是ajax重要特性
-        type: "GET",   //请求方式
-        contentType: "application/json",
-        beforeSend: function () {//请求前的处理
-        },
+        dataType: "json",           async: true,         type: "GET",           contentType: "application/json",
+        beforeSend: function () {        },
         success: function (route_data, textStatus) {
             route_data.forEach(function (d) {
                 d.start_date_time = new Date(d.start_date_time);
@@ -40,10 +35,8 @@ function spiral_line(route_id,date_extent){
             });
             Draw_spiral_line(route_data);
         },
-        complete: function () {//请求完成的处理
-        },
-        error: function () {//请求出错处理
-        }
+        complete: function () {        },
+        error: function () {        }
     });
 
     function Draw_spiral_line(dataset) {
@@ -99,8 +92,7 @@ function spiral_line(route_id,date_extent){
             data_10min.push({date:new Date(i),value:(index)?(sum/index):0});
         }
 
-        // used to assign nodes color by group
-        var color = d3.scale.category10();
+                var color = d3.scale.category10();
 
         var r = d3.min([width, height])/2;
 
@@ -145,8 +137,7 @@ function spiral_line(route_id,date_extent){
             }))
             .range([0, spiralLength]);
 
-        // yScale for the bar height
-        var yScale = d3.scale.linear()
+                var yScale = d3.scale.linear()
             .domain([0, d3.max(data_10min, function(d){
                 return d.value;
             })])
@@ -162,12 +153,8 @@ function spiral_line(route_id,date_extent){
                     posOnLine = path.node().getPointAtLength(linePer),
                     angleOnLine = path.node().getPointAtLength(linePer - barWidth);
 
-                d.linePer = linePer; // % distance are on the spiral
-                d.x = posOnLine.x; // x postion on the spiral
-                d.y = posOnLine.y; // y position on the spiral
-
-                d.a = (Math.atan2(angleOnLine.y, angleOnLine.x) * 180 / Math.PI) - 90; //angle at the spiral position
-                return d.x;
+                d.linePer = linePer;                 d.x = posOnLine.x;                 d.y = posOnLine.y; 
+                d.a = (Math.atan2(angleOnLine.y, angleOnLine.x) * 180 / Math.PI) - 90;                 return d.x;
             })
             .attr("y", function(d){
                 return d.y;
@@ -183,15 +170,9 @@ function spiral_line(route_id,date_extent){
                 "stroke":"none"
             })
             .attr("transform", function(d){
-                return "rotate(" + d.a + "," + d.x  + "," + d.y + ")"; // rotate the bar
-            })
-            // .append("title")
-            // .text(function (d) {
-            //     return d.value;
-            // });
-
-        // add date labels
-        var tF = d3.time.format("%H:%M"),
+                return "rotate(" + d.a + "," + d.x  + "," + d.y + ")";             })
+                                                
+                var tF = d3.time.format("%H:%M"),
             firstInMonth = {};
 
         g.selectAll("text")
@@ -202,8 +183,7 @@ function spiral_line(route_id,date_extent){
             .style("text-anchor", "start")
             .style("font", "8px arial")
             .append("textPath")
-            // only add for the first of each month
-            .filter(function(d){
+                        .filter(function(d){
                 var Format = d3.time.format("%H");
                 var sd = Format(d.date);
                 if (!firstInMonth[sd]){
@@ -215,8 +195,7 @@ function spiral_line(route_id,date_extent){
             .text(function(d){
                 return tF(d.date);
             })
-            // place text along spiral
-            .attr("xlink:href", "#spiral")
+                        .attr("xlink:href", "#spiral")
             .style("fill", "#FFFFFF")
             .attr("startOffset", function(d){
                 return ((d.linePer / spiralLength) * 100) + "%";

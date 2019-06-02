@@ -21,16 +21,11 @@ function message_cloud(route_id) {
 
 
     $.ajax({
-        url: "/route_station_data",    //请求的url地址
-        dataType: "json",   //返回格式为json
-        async: true, //请求是否异步，默认为异步，这也是ajax重要特性
-        type: "GET",   //请求方式
-        contentType: "application/json",
+        url: "/route_station_data",            dataType: "json",           async: true,         type: "GET",           contentType: "application/json",
         data:{
             sub_route_id:route_id
         },
-        beforeSend: function () {//请求前的处理
-        },
+        beforeSend: function () {        },
         success: function (rank_data, textStatus) {
 
             var nest = d3.nest().key(function (d) {
@@ -49,10 +44,8 @@ function message_cloud(route_id) {
             });
             word_cloud(s);
         },
-        complete: function () {//请求完成的处理
-        },
-        error: function () {//请求出错处理
-        }
+        complete: function () {        },
+        error: function () {        }
     });
 
     function word_cloud(dataset) {
@@ -61,17 +54,15 @@ function message_cloud(route_id) {
         var width = cloud.width();
         var height = cloud.height();
 
-        var radius = width/4;//3D 球的半径
-        var dtr = Math.PI/180;
-        var d=250;
+        var radius = width/4;        var dtr = Math.PI/180;
+        var d=200;
 
         var mcList = [];
         var active = false;
         var lasta = 1;
         var lastb = 1;
         var distr = true;
-        var tspeed=.1;//文字移动速度
-        var size=140;
+        var tspeed=.5;        var size=100;
 
         var mouseX=0;
         var mouseY=0;
@@ -219,9 +210,7 @@ function message_cloud(route_id) {
                 mcList[i-1].cy = radius * Math.sin(theta)*Math.sin(phi);
                 mcList[i-1].cz = radius * Math.cos(phi);
 
-                //aA[i-1].style.left=mcList[i-1].cx+oDiv.offsetWidth/2-mcList[i-1].offsetWidth/2+'px';
-                //aA[i-1].style.top=mcList[i-1].cy+oDiv.offsetHeight/2-mcList[i-1].offsetHeight/2+'px';
-            }
+                                            }
         }
 
         function doPosition() {
@@ -232,8 +221,7 @@ function message_cloud(route_id) {
             {
                 aA[i].style.left=mcList[i].cx+l-mcList[i].offsetWidth/2+'px';
                 aA[i].style.top=mcList[i].cy+t-mcList[i].offsetHeight/2+'px';
-                //aA[i].style.fontSize=Math.ceil(12*mcList[i].scale/2)+8+'px';
-                aA[i].style.filter="alpha(opacity="+100*mcList[i].alpha+")";
+                                aA[i].style.filter="alpha(opacity="+100*mcList[i].alpha+")";
                 aA[i].style.opacity=mcList[i].alpha;
             }
         }
@@ -367,8 +355,7 @@ function message_cloud(route_id) {
                             .setLngLat(s.geometry.coordinates)
                             .setHTML(s.properties.description)
                             .addTo(map);
-                        //update_radar(d.station_id);
-                    }
+                                            }
                 });
             });
 
@@ -398,8 +385,7 @@ function message_cloud(route_id) {
 
         oDiv.onmouseout=function ()
         {
-           // active=false;
-        };
+                   };
         document.getElementById("words_cloud").ondblclick= function(){
             active_=!active_;
             active=false;

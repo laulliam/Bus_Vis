@@ -1,18 +1,13 @@
 /**
  * Created by Liang Liu on 2018/3/17.
  */
-/**
- * Created by Liang Liu on 2018/1/20.
- */
  let express = require('express');
  let router = express.Router();
  let d3 = require('./d3.min');
 
  let MongoClient = require('mongodb').MongoClient;
  let DB_CONN_STR = 'mongodb://localhost:27017/traffic_data';
-
-
-//获取站点雷达数据
+ 
 router.get('/sub_route_data', function(req, res, next) {
 
     let sub_route_id = req.query.sub_route_id;
@@ -21,10 +16,8 @@ router.get('/sub_route_data', function(req, res, next) {
 
 
     let selectData = function(db, callback) {
-        //连接到表
-        let collection = db.collection('station_run_data');
-        //查询数据
-        collection.find({
+                let collection = db.collection('station_run_data');
+                collection.find({
             "sub_route_id":sub_route_id,
             "station_id":station_id,
             "start_date_time":{$gte:new Date(date_extent[0]),$lte:new Date(date_extent[1])}
@@ -58,10 +51,8 @@ router.get('/route_station_data', function(req, res, next) {
     console.log(route_id,typeof(route_id));
 
     let selectData = function(db, callback) {
-        //连接到表
-        let collection = db.collection('station_run_data');
-        //查询数据
-        collection.find({"sub_route_id":route_id,"start_date_time":{$gte:new Date(2016,0,1,7,0,0),$lte:new Date(2016,0,2,7,0,0)}
+                let collection = db.collection('station_run_data');
+                collection.find({"sub_route_id":route_id,"start_date_time":{$gte:new Date(2016,0,1,7,0,0),$lte:new Date(2016,0,2,7,0,0)}
         },{
             "_id":0,
             "id":0,
@@ -91,10 +82,8 @@ router.get('/station_run_id', function(req, res, next) {
     let station_id = req.query.station_id;
 
     let selectData = function(db, callback) {
-        //连接到表
-        let collection = db.collection('station_run_data');
-        //查询数据
-        collection.find({"station_id":station_id},{
+                let collection = db.collection('station_run_data');
+                collection.find({"station_id":station_id},{
             "_id":0,
             "id":0,
             "product_id":0,
@@ -113,11 +102,7 @@ router.get('/station_run_id', function(req, res, next) {
     MongoClient.connect(DB_CONN_STR, function(err, db) {
         selectData(db, function(result) {
 
-            // let route_id_nest = d3.nest().key(function (d) {
-            //     return d.sub_route_id;
-            // });
-            // let data = route_id_nest.entries(result);
-
+                                                
             /*var res_arr = [];
 
             data.forEach(function (d) {
@@ -141,10 +126,7 @@ router.get('/station_run_id', function(req, res, next) {
                     data_date[s.start_date_time] = s.stay_time;
                 });
 
-                // d.values.sort(function (a,b) {
-                //     return a.start_date_time.getTime()-b.start_date_time.getTime();
-                // });
-                Object.keys(data_date).forEach(function (key) {
+                                                                Object.keys(data_date).forEach(function (key) {
                     res_arr.push({route_id:d.key,date:key,stay_time:data_date[key]});
                 });
 

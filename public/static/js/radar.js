@@ -93,19 +93,19 @@ function update_radar(station_id) {
     function RadarChart(id, data, options) {
 
         var cfg = {
-            w: 600,				//Width of the circle
-            h: 600,				//Height of the circle
-            margin: {top: 10, right: 10, bottom: 10, left: 10}, //The margins of the SVG
-            levels: 3,				//How many levels or inner circles should there be drawn
-            maxValue: 0, 			//What is the value that the biggest circle will represent
-            labelFactor: 1.25, 	//How much farther than the radius of the outer circle should the labels be placed
-            wrapWidth: 60, 		//The number of pixels after which a label needs to be given a new line
-            opacityArea: 0.15, 	//The opacity of the area of the blob
-            dotRadius: 4, 			//The size of the colored circles of each blog
-            opacityCircles: 0.2, 	//The opacity of the circles of each blob
-            strokeWidth: 2, 		//The width of the stroke around each blob
-            roundStrokes: false,	//If true the area and stroke will follow a round path (cardinal-closed)
-            color: d3.scale.category10()	//Color function
+            w: 600,			
+            h: 600,			
+            margin: {top: 10, right: 10, bottom: 10, left: 10}, 
+            levels: 3,
+            maxValue: 0,
+            labelFactor: 1.25,
+            wrapWidth: 60,
+            opacityArea: 0.15,
+            dotRadius: 4,
+            opacityCircles: 0.2,
+            strokeWidth: 2,
+            roundStrokes: false,	
+            color: d3.scale.category10()	
         };
 
         //Put all of the options into a variable called cfg
@@ -127,11 +127,7 @@ function update_radar(station_id) {
         var rScale = d3.scale.linear()
             .range([0, radius])
             .domain([0, maxValue]);
-        /////////////////////////////////////////////////////////
-        //////////// Create the container SVG and g /////////////
-        /////////////////////////////////////////////////////////
 
-        //Remove whatever chart with the same id/class was present before
         d3.select(id).select("svg").remove();
 
         //Initiate the radar chart SVG
@@ -142,20 +138,12 @@ function update_radar(station_id) {
         //Append a g element
         var g = svg.append("g").attr("transform", "translate(" + (cfg.w/2 ) + "," + (cfg.h/2 ) + ")");
 
-        /////////////////////////////////////////////////////////
-        ////////// Glow filter for some extra pizzazz ///////////
-        /////////////////////////////////////////////////////////
-
         //Filter for the outside glow
         var filter = g.append('defs').append('filter').attr('id','glow'),
             feGaussianBlur = filter.append('feGaussianBlur').attr('stdDeviation','1').attr('result','coloredBlur'),
             feMerge = filter.append('feMerge'),
             feMergeNode_1 = feMerge.append('feMergeNode').attr('in','coloredBlur'),
             feMergeNode_2 = feMerge.append('feMergeNode').attr('in','SourceGraphic');
-
-        /////////////////////////////////////////////////////////
-        /////////////// Draw the Circular grid //////////////////
-        /////////////////////////////////////////////////////////
 
         //Wrapper for the grid & axes
         var axisGrid = g.append("g").attr("class", "axisWrapper");
@@ -174,11 +162,7 @@ function update_radar(station_id) {
                 "fill-opacity":cfg.opacityCircles,
                 "filter":"url(#glow)"
             });
-        /////////////////////////////////////////////////////////
-        //////////////////// Draw the axes //////////////////////
-        /////////////////////////////////////////////////////////
 
-        //Create the straight lines radiating outward from the center
         var axis = axisGrid.selectAll(".axis")
             .data(allAxis)
             .enter()
@@ -196,9 +180,7 @@ function update_radar(station_id) {
                 "stroke-width":"1px",
                 "stroke-opacity":0.5
             })
-        //.style("filter" , "url(#glow)");
 
-        //Append the labels at each axis
         axis.append("text")
             .attr("class", "axis_legend")
             .style("font-size", "8px")
@@ -208,12 +190,7 @@ function update_radar(station_id) {
             .attr("y", function(d, i){ return rScale(maxValue * 0.88*cfg.labelFactor) * Math.sin(angleSlice*i - Math.PI/2); })
             .text(function(d){return d})
             .call(wrap, cfg.wrapWidth);
-
-        /////////////////////////////////////////////////////////
-        ///////////// Draw the radar chart blobs ////////////////
-        /////////////////////////////////////////////////////////
-
-        //The radial line function
+        
         var radarLine = d3.svg.line.radial()
             .interpolate("basis-closed")
             .radius(function(d) { return rScale(d.value); })
@@ -364,15 +341,15 @@ function update_radar(station_id) {
         var route_data;
 
         $.ajax({
-            url: "/sub_route_data",    //请求的url地址
+            url: "/sub_route_data",    
             data:{
                 sub_route_id:route_id,
                 station_id:station_id,
                 date_extent:date_extent
             },
-            dataType: "json",   //返回格式为json
-            async: false, //请求是否异步，默认为异步，这也是ajax重要特性
-            type: "GET",   //请求方式
+            dataType: "json",   
+            async: false, 
+            type: "GET",   
             contentType: "application/json",
             beforeSend: function () {//请求前的处理
             },

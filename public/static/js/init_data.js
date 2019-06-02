@@ -10,32 +10,27 @@ function Init_data() {
 
     function get_station_data(){
         $.ajax({
-            url: "/station_info",    //请求的url地址
-            dataType: "json",   //返回格式为json
-            async: false, //请求是否异步，默认为异步，这也是ajax重要特性
-            type: "GET",   //请求方式
+            url: "/station_info",
+            dataType: "json",
+            async: false,
+            type: "GET",
             contentType: "application/json",
-            beforeSend: function () {//请求前的处理
-            },
+            beforeSend: function () {            },
             success: function (station, textStatus) {
                 station_info = station;
-                //console.log(station_info);
             },
-            complete: function () {//请求完成的处理
-            },
-            error: function () {//请求出错处理
-            }
+            complete: function () {            },
+            error: function () {            }
         });
     }
     function get_section_data(){
         $.ajax({
-            url: "/section_info",    //请求的url地址
-            dataType: "json",   //返回格式为json
-            async: false,//true, //请求是否异步，默认为异步，这也是ajax重要特性
-            type: "GET",   //请求方式
+            url: "/section_info",
+            dataType: "json",
+            async: false,
+            type: "GET",
             contentType: "application/json",
-            beforeSend: function () {//请求前的处理
-            },
+            beforeSend: function () {            },
             success: function (section_data, textStatus) {
 
                 section_data.forEach(function (d) {
@@ -51,10 +46,8 @@ function Init_data() {
                 });
                 section_info = section_data;
             },
-            complete: function () {//请求完成的处理
-            },
-            error: function () {//请求出错处理
-            }
+            complete: function () {            },
+            error: function () {            }
         });
     }
 }
@@ -75,7 +68,6 @@ var COLOR = ["#EDC951","#CC333F","#00A0B0","#ff5a29","#2f71b0","#55ff30","#570eb
 
 var color_scale = ["#FF5252","#FB8C00","#FFBF3A","#F1E229","#9CD523","#23D561"];
 
-var threshold=d3.scale.threshold()//阈值比例尺
-    .domain([10,20,30,40,50])
+var threshold=d3.scale.threshold()    .domain([10,20,30,40,50])
     .range(color_scale);
 

@@ -1,28 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/public/static/js/main.js" line="1416" />
-    <bookmark url="file://$PROJECT_DIR$/public/static/js/main.js" line="306" />
+    <bookmark url="file://$PROJECT_DIR$/public/static/js/main.js" line="1341" />
+    <bookmark url="file://$PROJECT_DIR$/public/static/js/main.js" line="327" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c7571ffe-9a61-46b8-bc7d-a0883f3a2cea" name="Default" comment="update++.&#10;——Liang Liu">
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/bin_www.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/bin_www.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/static/css/all_view.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/static/css/calender.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/static/css/control.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/static/css/information.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/static/css/main.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/static/css/message_cloud.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/static/css/radar.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/static/css/spiral_line.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/static/css/time_line.css" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/public/static/js/calendar.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/static/js/calendar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/static/js/control.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/static/js/control.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/static/js/init_data.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/static/js/init_data.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/static/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/static/js/main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/static/js/radar.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/static/js/radar.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/static/js/spiral_line.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/static/js/spiral_line.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/static/js/time_line.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/static/js/time_line.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/static/js/words_cloud.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/static/js/words_cloud.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/static/lib/Ecalendar.jquery.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/static/lib/Ecalendar.jquery.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/static/style/calendar.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/static/style/calendar.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/static/style/global.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/static/style/global.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/static/style/radar.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/static/style/radar.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/all_routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/all_routes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/section_data.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/section_data.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/section_run_data.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/section_run_data.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/test.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/station.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/station.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/station_run_data.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/station_run_data.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/index.html" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -35,46 +38,61 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/public/static/js/main.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="156">
-              <caret line="55" column="44" selection-start-line="55" selection-start-column="44" selection-end-line="55" selection-end-column="44" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-                <element signature="e#3#9#0" expanded="true" />
-                <element signature="e#9#15#0" expanded="true" />
-                <element signature="e#15#21#0" expanded="true" />
-                <element signature="e#3#9#0" expanded="true" />
-                <element signature="e#9#15#0" expanded="true" />
-                <element signature="e#15#21#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/static/js/calendar.js">
+        <entry file="file://$PROJECT_DIR$/public/static/js/control.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="207">
-              <caret line="9" column="29" selection-start-line="9" selection-start-column="29" selection-end-line="9" selection-end-column="29" />
+              <caret line="9" column="26" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/static/js/information.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1955">
+              <caret line="226" column="57" selection-start-line="226" selection-start-column="57" selection-end-line="226" selection-end-column="57" />
               <folding>
-                <element signature="n#!!block;n#Calendar#0" />
-                <element signature="n#!!block;n#section_id_date#0" />
+                <element signature="n#!!block;n#Information#0" />
+                <element signature="n#!!block;n#routes_label#0;n#!!block;n#Information#0" />
+                <element signature="n#!!block;n#Slide_word#0;n#!!block;n#Information#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/static/js/time_line.js">
+        <entry file="file://$PROJECT_DIR$/public/static/js/init_data.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6670">
-              <caret line="303" column="53" selection-start-line="303" selection-start-column="53" selection-end-line="303" selection-end-column="53" />
-              <folding>
-                <element signature="n#!!block;n#stop#0;n#!!block;n#time_line_chart#0" />
-                <element signature="n#!!block;n#CreateBrush#0;n#!!block;n#time_line_chart#0" />
-              </folding>
+            <state relative-caret-position="713">
+              <caret line="31" column="12" selection-start-line="31" selection-start-column="12" selection-end-line="31" selection-end-column="12" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/views/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="253">
+              <caret line="11" column="24" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="24" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/static/js/spiral_line.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="4531">
+              <caret line="197" column="39" selection-start-line="197" selection-start-column="39" selection-end-line="197" selection-end-column="39" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/static/js/layout.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2622">
+              <caret line="114" column="69" lean-forward="true" selection-start-line="114" selection-start-column="18" selection-end-line="114" selection-end-column="69" />
             </state>
           </provider>
         </entry>
@@ -92,11 +110,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>383</find>
-      <find>DEFAULT_WIDTH</find>
-      <find>chart</find>
-      <find>var</find>
-      <find>%20</find>
       <find>d.value</find>
       <find>d.stay_times</find>
       <find>zoom</find>
@@ -122,6 +135,11 @@
       <find>:00</find>
       <find>itimebox</find>
       <find>itime</find>
+      <find>//[\s\S]*?/n</find>
+      <find>//[\s\S]*/n</find>
+      <find>//[\s\S]*\n</find>
+      <find>//[\s\S]*</find>
+      <find>//[\s\S]*?\n</find>
     </findStrings>
     <replaceStrings>
       <replace>speed</replace>
@@ -181,7 +199,6 @@
         <option value="$PROJECT_DIR$/public/static/css/lib/Ecalendar.jqery.min.css" />
         <option value="$PROJECT_DIR$/public/static/js/undefine.js" />
         <option value="$PROJECT_DIR$/public/static/css/spiral_line.css" />
-        <option value="$PROJECT_DIR$/routes/station.js" />
         <option value="$PROJECT_DIR$/routes/section.js" />
         <option value="$PROJECT_DIR$/public/static/css/information.css" />
         <option value="$PROJECT_DIR$/public/static/css/time_line.css" />
@@ -189,7 +206,6 @@
         <option value="$PROJECT_DIR$/public/static/css/all_view.css" />
         <option value="$PROJECT_DIR$/public/static/mapbox/mapbox-gl.css" />
         <option value="$PROJECT_DIR$/public/static/css/lib/dat.gui.css" />
-        <option value="$PROJECT_DIR$/routes/station_run_data.js" />
         <option value="$PROJECT_DIR$/public/static/js/stream_chart.js" />
         <option value="$PROJECT_DIR$/public/static/css/message_cloud.css" />
         <option value="$PROJECT_DIR$/public/static/style/words_cloud.css" />
@@ -202,27 +218,30 @@
         <option value="$PROJECT_DIR$/public/static/bootstrap/css/bootstrap.min.css" />
         <option value="$PROJECT_DIR$/public/static/js/information.js" />
         <option value="$PROJECT_DIR$/views/test.html" />
-        <option value="$PROJECT_DIR$/public/static/js/init_data.js" />
-        <option value="$PROJECT_DIR$/public/static/js/spiral_line.js" />
         <option value="$PROJECT_DIR$/routes/all_routes.js" />
-        <option value="$PROJECT_DIR$/public/static/js/radar.js" />
         <option value="$PROJECT_DIR$/public/static/style/global.css" />
         <option value="$PROJECT_DIR$/public/static/style/calendar.css" />
         <option value="$PROJECT_DIR$/views/index.html" />
         <option value="$PROJECT_DIR$/public/static/style/radar.css" />
-        <option value="$PROJECT_DIR$/public/static/js/calendar.js" />
         <option value="$PROJECT_DIR$/routes/section_data.js" />
         <option value="$PROJECT_DIR$/public/static/js/control.js" />
         <option value="$PROJECT_DIR$/routes/section_run_data.js" />
-        <option value="$PROJECT_DIR$/public/static/js/words_cloud.js" />
         <option value="$PROJECT_DIR$/public/static/lib/Ecalendar.jquery.min.js" />
-        <option value="$PROJECT_DIR$/public/static/js/time_line.js" />
         <option value="$PROJECT_DIR$/public/static/js/main.js" />
+        <option value="$PROJECT_DIR$/routes/station.js" />
+        <option value="$PROJECT_DIR$/routes/station_run_data.js" />
+        <option value="$PROJECT_DIR$/public/static/js/time_line.js" />
+        <option value="$PROJECT_DIR$/public/static/js/words_cloud.js" />
+        <option value="$PROJECT_DIR$/public/static/js/calendar.js" />
+        <option value="$PROJECT_DIR$/public/static/js/radar.js" />
+        <option value="$PROJECT_DIR$/public/static/js/spiral_line.js" />
+        <option value="$PROJECT_DIR$/public/static/js/init_data.js" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="467" />
+    <option name="x" value="293" />
+    <option name="y" value="93" />
     <option name="width" value="1327" />
     <option name="height" value="1038" />
   </component>
@@ -234,6 +253,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -258,14 +278,6 @@
               <item name="public" type="462c0819:PsiDirectoryNode" />
               <item name="static" type="462c0819:PsiDirectoryNode" />
               <item name="css" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="BYSJ" type="b2602c69:ProjectViewProjectNode" />
-              <item name="BYSJ" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="css" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="BYSJ" type="b2602c69:ProjectViewProjectNode" />
@@ -310,7 +322,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -506,14 +517,15 @@
       <workItem from="1558137255517" duration="10596000" />
       <workItem from="1558250806964" duration="677000" />
       <workItem from="1558328024898" duration="38759000" />
-      <workItem from="1558491894716" duration="405000" />
-    </task>
-    <task id="LOCAL-00007" summary="Read section_run_data  --Liang Liu">
-      <created>1516602765684</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1516602765684</updated>
+      <workItem from="1558491894716" duration="4770000" />
+      <workItem from="1558568995787" duration="1476000" />
+      <workItem from="1558629589122" duration="3165000" />
+      <workItem from="1558666293396" duration="799000" />
+      <workItem from="1558754302170" duration="270000" />
+      <workItem from="1558927535565" duration="1861000" />
+      <workItem from="1559001637335" duration="983000" />
+      <workItem from="1559110423178" duration="594000" />
+      <workItem from="1559189043315" duration="636000" />
     </task>
     <task id="LOCAL-00008" summary="optimize map --Liang Liu">
       <created>1516791801595</created>
@@ -851,16 +863,43 @@
       <option name="project" value="LOCAL" />
       <updated>1557751911348</updated>
     </task>
-    <option name="localTasksCounter" value="56" />
+    <task id="LOCAL-00056" summary="update++.&#10;——Liang Liu">
+      <created>1558492348978</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1558492348979</updated>
+    </task>
+    <option name="localTasksCounter" value="57" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1029895000" />
+    <option name="totallyTimeSpent" value="1044044000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="467" y="0" width="1327" height="1038" extended-state="0" />
-    <editor active="true" />
+    <frame x="293" y="93" width="1327" height="1038" extended-state="0" />
     <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24940805" />
+      <window_info id="Structure" order="1" weight="0.25" />
+      <window_info id="npm" order="2" side_tool="true" />
+      <window_info id="Favorites" order="3" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32996207" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.30523917" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="8" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Docker" order="10" show_stripe_button="false" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Mongo Explorer" order="3" />
+    </layout>
+    <layout-to-restore>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24940805" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
@@ -880,7 +919,7 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Mongo Explorer" order="3" />
-    </layout>
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -925,13 +964,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/static/css/main.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="5" selection-start-line="5" selection-end-line="6" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/public/static/css/main.css" />
     <entry file="file://$PROJECT_DIR$/public/static/css/lib/dat.gui.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-251">
@@ -942,13 +975,7 @@
     <entry file="file://$PROJECT_DIR$/.gitattributes">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/static/css/time_line.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="8" selection-start-line="8" selection-end-line="15" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/public/static/css/time_line.css" />
     <entry file="file://E:/ChinaVis19_C1_v2/public/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="230">
@@ -970,13 +997,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/static/css/message_cloud.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="10" column="1" lean-forward="true" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/public/static/css/message_cloud.css" />
     <entry file="file://$PROJECT_DIR$/public/static/style/words_cloud.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="253">
@@ -984,9 +1005,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/static/css/control.css">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/public/static/css/control.css" />
     <entry file="file://$PROJECT_DIR$/public/static/lib/dat.gui/dat.gui.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="163">
@@ -1022,13 +1041,7 @@
     <entry file="file://$PROJECT_DIR$/public/static/img/widget.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/static/css/information.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="463">
-          <caret line="21" column="39" selection-start-line="21" selection-start-column="39" selection-end-line="21" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/public/static/css/information.css" />
     <entry file="file://$PROJECT_DIR$/public/static/style/control.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="161">
@@ -1060,32 +1073,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/static/js/information.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1955">
-          <caret line="226" column="57" selection-start-line="226" selection-start-column="57" selection-end-line="226" selection-end-column="57" />
-          <folding>
-            <element signature="n#!!block;n#Information#0" />
-            <element signature="n#!!block;n#routes_label#0;n#!!block;n#Information#0" />
-            <element signature="n#!!block;n#Slide_word#0;n#!!block;n#Information#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/static/js/init_data.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1633">
-          <caret line="71" column="38" selection-start-line="71" selection-start-column="38" selection-end-line="71" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/static/js/spiral_line.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="15" selection-start-line="15" selection-end-line="15" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/routes/all_routes.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="227">
@@ -1097,13 +1084,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-292">
           <caret line="13" column="19" selection-start-line="13" selection-start-column="19" selection-end-line="13" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/static/js/radar.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="329" column="96" lean-forward="true" selection-start-line="329" selection-start-column="96" selection-end-line="329" selection-end-column="96" />
         </state>
       </provider>
     </entry>
@@ -1128,16 +1108,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/static/css/calender.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="19" column="1" selection-start-line="19" selection-start-column="1" selection-end-line="19" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/static/css/all_view.css">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/public/static/css/calender.css" />
+    <entry file="file://$PROJECT_DIR$/public/static/css/all_view.css" />
     <entry file="file://$PROJECT_DIR$/public/static/style/all_view.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="253">
@@ -1149,13 +1121,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="368">
           <caret line="16" column="1" lean-forward="true" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/static/js/layout.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="393">
-          <caret line="114" column="69" lean-forward="true" selection-start-line="114" selection-start-column="18" selection-end-line="114" selection-end-column="69" />
         </state>
       </provider>
     </entry>
@@ -1171,34 +1136,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-690">
-          <caret line="36" column="9" lean-forward="true" selection-start-line="28" selection-start-column="7" selection-end-line="36" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/static/js/control.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="9" column="26" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/station.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="9" column="53" selection-start-line="9" selection-start-column="53" selection-end-line="9" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/station_run_data.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="49" column="7" selection-start-line="49" selection-start-column="7" selection-end-line="49" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/routes/section_run_data.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="367">
@@ -1207,16 +1144,6 @@
             <element signature="e#324#1749#0" />
             <element signature="e#1810#2831#0" />
             <element signature="e#2901#3701#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/static/js/words_cloud.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-488">
-          <caret line="75" column="21" lean-forward="true" selection-start-line="75" selection-start-column="21" selection-end-line="75" selection-end-column="21" />
-          <folding>
-            <element signature="e#7476#7621#0" />
           </folding>
         </state>
       </provider>
@@ -1233,10 +1160,51 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/routes/station.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="12" column="19" lean-forward="true" selection-start-line="12" selection-start-column="19" selection-end-line="12" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/station_run_data.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="45" lean-forward="true" selection-start-line="45" selection-end-line="45" />
+          <folding>
+            <element signature="e#313#1234#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/static/js/time_line.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="169" column="25" lean-forward="true" selection-start-line="169" selection-start-column="25" selection-end-line="169" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/static/js/words_cloud.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8129">
+          <caret line="388" column="6" selection-start-line="388" selection-start-column="6" selection-end-line="388" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/static/js/calendar.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="366">
+          <caret line="69" column="41" lean-forward="true" selection-start-line="69" selection-start-column="41" selection-end-line="69" selection-end-column="41" />
+          <folding>
+            <element signature="n#!!block;n#Calendar#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/public/static/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="156">
-          <caret line="55" column="44" selection-start-line="55" selection-start-column="44" selection-end-line="55" selection-end-column="44" />
+        <state relative-caret-position="276">
+          <caret line="123" column="16" lean-forward="true" selection-start-line="123" selection-start-column="16" selection-end-line="123" selection-end-column="16" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <element signature="e#3#9#0" expanded="true" />
@@ -1249,25 +1217,57 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/static/js/calendar.js">
+    <entry file="file://$PROJECT_DIR$/public/static/js/radar.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="11" column="6" lean-forward="true" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/static/js/control.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="207">
-          <caret line="9" column="29" selection-start-line="9" selection-start-column="29" selection-end-line="9" selection-end-column="29" />
+          <caret line="9" column="26" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/static/js/information.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1955">
+          <caret line="226" column="57" selection-start-line="226" selection-start-column="57" selection-end-line="226" selection-end-column="57" />
           <folding>
-            <element signature="n#!!block;n#Calendar#0" />
-            <element signature="n#!!block;n#section_id_date#0" />
+            <element signature="n#!!block;n#Information#0" />
+            <element signature="n#!!block;n#routes_label#0;n#!!block;n#Information#0" />
+            <element signature="n#!!block;n#Slide_word#0;n#!!block;n#Information#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/static/js/time_line.js">
+    <entry file="file://$PROJECT_DIR$/public/static/js/init_data.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6670">
-          <caret line="303" column="53" selection-start-line="303" selection-start-column="53" selection-end-line="303" selection-end-column="53" />
-          <folding>
-            <element signature="n#!!block;n#stop#0;n#!!block;n#time_line_chart#0" />
-            <element signature="n#!!block;n#CreateBrush#0;n#!!block;n#time_line_chart#0" />
-          </folding>
+        <state relative-caret-position="713">
+          <caret line="31" column="12" selection-start-line="31" selection-start-column="12" selection-end-line="31" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/static/js/spiral_line.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4531">
+          <caret line="197" column="39" selection-start-line="197" selection-start-column="39" selection-end-line="197" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/static/js/layout.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2622">
+          <caret line="114" column="69" lean-forward="true" selection-start-line="114" selection-start-column="18" selection-end-line="114" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="11" column="24" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="24" />
         </state>
       </provider>
     </entry>

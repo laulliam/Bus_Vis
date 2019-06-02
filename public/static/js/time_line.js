@@ -5,32 +5,23 @@ time_line(757);
 
 function time_line(section_id){
     $.ajax({
-        url: "/time_line_data",    //请求的url地址
-        dataType: "json",   //返回格式为json
-        data:{section_id:section_id},
-        async: true, //请求是否异步，默认为异步，这也是ajax重要特性
-        type: "GET",   //请求方式
-        contentType: "application/json",
-        beforeSend: function () {//请求前的处理
-        },
+        url: "/time_line_data",            dataType: "json",           data:{section_id:section_id},
+        async: true,         type: "GET",           contentType: "application/json",
+        beforeSend: function () {        },
         success: function (data, textStatus) {
-            //console.log(data);
-            data.forEach(function (d) {
+                        data.forEach(function (d) {
                 d.start_date_time = new Date(d.start_date_time);
             });
             time_line_chart(data);
         },
-        complete: function () {//请求完成的处理
-        },
-        error: function () {//请求出错处理
-        }
+        complete: function () {        },
+        error: function () {        }
     });
 }
 
 function time_line_chart(data) {
 
-    //console.log(data);
-
+    
     var route_nest = d3.nest().key(function (d) {
         return d.sub_route_id;
     });
@@ -42,8 +33,7 @@ function time_line_chart(data) {
             return a.start_date_time.getTime() - b.start_date_time.getTime();
         });
     });
-    //console.log(dataset);
-
+    
     var time_line_wh = $("#time_line");
 
     var margin = {top: 20, right: 20, bottom: 20, left: 20},
@@ -66,9 +56,7 @@ function time_line_chart(data) {
 
     var zoom = d3.behavior.zoom()
         .x(x_scale)
-        //.scale(50)
-        //.scaleExtent(SCALE_EXTENT)
-        .on("zoom", zoomed);
+                        .on("zoom", zoomed);
 
     var time_line ={
         IsZoom:true,
@@ -106,15 +94,11 @@ function time_line_chart(data) {
         .attr("transform", "translate(30,20)")
         .call(y_axis);
 
-    var line = d3.svg.line()//d3中绘制曲线的函数
-        .x(function(d, i){
+    var line = d3.svg.line()        .x(function(d, i){
             return x_scale(d.start_date_time);
-        })//曲线中x的值
-        .y(function(d){
+        })        .y(function(d){
             return y_scale(d.stay_time);
-        })//曲线中y的值
-        .interpolate("basis");//把曲线设置光滑
-
+        })        .interpolate("basis");
     var routes_g = svg.append("g")
         .attr("transform", "translate(" + (margin.left+10) + ",20)");
 
@@ -143,9 +127,7 @@ function time_line_chart(data) {
         .attr("id", "clip_path")
         .append("rect")
         .attr({
-            // x: 0,
-            // y: 0,
-            width: width,
+                                    width: width,
             height: height
         });
 
@@ -188,38 +170,6 @@ function time_line_chart(data) {
             return d.key;
         });
 
-    /*    var tooltip = d3.select("#time_line")
-            .append("div")
-            .attr("class", "label")
-            .style("position", "absolute")
-            .style("z-index", "20")
-            .style("visibility", "hidden")
-            .style("top", "30px")
-            .style("left", "55px");
-
-        var vertical = d3.select("#time_line")
-            .append("div")
-            .attr("class", "remove")
-            .style("position", "absolute")
-            .style("z-index", "19")
-            .style("width", "1px")
-            .style("height", height-margin.top-margin.bottom)
-            .style("top", "30px")
-            .style("bottom", "20px")
-            .style("left", "0px")
-            .style("pointer-events","none")
-            .style("background", "#fff");
-
-        d3.select("#time_line")
-            .on("mousemove", function(){
-                let mousex = d3.mouse(this);
-                mousex = mousex[0] + 1;
-                vertical.style("left", mousex + "px" )})
-            .on("mouseover", function(){
-                let mousex = d3.mouse(this);
-                mousex = mousex[0] + 1;
-                vertical.style("left", mousex + "px")});*/
-
     InitTools();
 
     function play() {
@@ -233,8 +183,7 @@ function time_line_chart(data) {
                 time_line.new_data_extent=date_extent;
             }
             x_scale.domain(time_line.new_data_extent);
-            //console.log(new_data_extent);
-            x_axis.scale(x_scale);
+                        x_axis.scale(x_scale);
             svg.select(".x.axis").call(x_axis);
             routes_g.selectAll("path").attr("d", function (d) {
                 return line(d.values.sort(function (a,b) {
@@ -246,18 +195,8 @@ function time_line_chart(data) {
 
     function stop() {
         clearInterval(time_line.interval);
-        //x_scale.domain(time_line.new_data_extent);
-
-        // if( time_line.brush){
-        //     time_line.brush.x(x_scale);
-        //     time_line.g_brush.call(time_line.brush);
-        // }
-        //x_axis.scale(x_scale);
-        //svg.select(".x.axis").call(x_axis);
-        // routes_g.selectAll("path").attr("d", function (d) {
-        //     return line(d.values);
-        // });
-    }
+        
+                                                                            }
 
     function InitTools() {
         var time_line_tool = d3.select("#time_line")
@@ -312,11 +251,7 @@ function time_line_chart(data) {
                         return a.start_date_time.getTime() - b.start_date_time.getTime();
                     }));
                 });
-                //time_line.IsZoom=!time_line.IsZoom;
-                //time_line.IsChecked=!time_line.IsChecked;
-                //time_line.IsChecked?CreateBrush():RemoveBrush();
-                //CreateBrush();
-            }
+                                                                            }
         })
 
     }
@@ -325,8 +260,7 @@ function time_line_chart(data) {
 
         time_line.brush = d3.svg.brush()
             .x(x_scale)
-            //.extent(time_line.new_data_extent)
-            .on("brushend", brushed);
+                        .on("brushend", brushed);
 
         function brushed() {
             console.log(time_line.brush.extent());
@@ -336,17 +270,12 @@ function time_line_chart(data) {
             .attr("class", "brush")
             .attr("transform", "translate(" + margin.left + "," + 0 + ")")
             .call(time_line.brush)
-        //.call(time_line.brush.move, x_scale.range());
-
+        
         time_line.g_brush.selectAll("rect").attr("height", height-margin.bottom);
     }
 
     function RemoveBrush() {
-        // time_line.brush = d3.svg.brush();
-        // time_line.g_brush = svg.append("g")
-        //     .attr("class", "brush")
-        //     .attr("transform", "translate(" + margin.left + "," + 0 + ")");
-    }
+                                    }
 
 
     function zoomed() {
@@ -396,8 +325,7 @@ function stack_graph(data) {
 
     let zoom = d3.behavior.zoom()
         .x(x_scale)
-        //.scaleExtent([1, 16])
-        .on("zoom", zoomed);
+                .on("zoom", zoomed);
 
     let svg = d3.select("#time_line").append("svg")
         .attr("width", width + margin.left + margin.right)
@@ -411,8 +339,7 @@ function stack_graph(data) {
         .attr("class", "label")
         .style("position", "absolute")
         .style("z-index", "20")
-        //.style("visibility", "hidden")
-        .style("top", "30px")
+                .style("top", "30px")
         .style("left", "55px");
 
     let vertical = d3.select("#time_line")
@@ -453,8 +380,7 @@ function stack_graph(data) {
         .scale(x_scale)
         .orient("bottom")
         .tickFormat(d3.time.format("%H:%M"))
-    //.ticks(20);
-
+    
     let area = svg.selectAll(".area")
         .data(layers)
         .enter()
