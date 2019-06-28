@@ -1,2 +1,2 @@
 ##Bus_Vis
-![img]("static/img/System.png")
+![img](https://github.com/52HzMaster/Bus_Vis/blob/master/public/static/img/System.png?raw=true)
